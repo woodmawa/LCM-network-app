@@ -15,7 +15,7 @@ class RootEntitySpec extends Specification implements DomainUnitTest<RootEntity>
 
     void "test create new rootEntity handles auto dates "() {
         setup: "create a new entity"
-        RootEntity entity = new RootEntity()
+        RootEntity entity = new Device()
 
         when: "we save object"
         entity.name = "William"

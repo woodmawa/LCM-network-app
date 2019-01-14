@@ -1,6 +1,6 @@
 package com.softwood.domain
 
-class ResourceRoles {
+class ResourceRole {
 
     static enum ResourceRoleType {
         Switch,

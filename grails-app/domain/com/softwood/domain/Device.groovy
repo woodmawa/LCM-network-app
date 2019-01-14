@@ -6,24 +6,27 @@ package com.softwood.domain
  */
 class Device extends ManagedEntity {
 
-    ManagedEntity ci
-    Site site
-    Location location
-    NetworkDomain domain
-    Collection deviceRoles
+    //OrgRoleInstance org
+    //Site site
+    //Location location
+    //NetworkDomain domain
+    //Collection<ResourceRole> deviceRoles
 
     boolean isFreeStanding = false
     String licence = "none"
     String memory
     String storage
 
-    static hasMany = [deviceRoles: ResourceRoles]
+    //static hasMany = [deviceRoles: ResourceRole]
+
+    //static belongsTo = [org:OrgRoleInstance]
 
     static constraints = {
-        ci nullable : false
-        site nullable:true
-        location nullable:true
-        domain nullable:true
+        //org nullable:false
+        //ci nullable : false
+        //site nullable:true
+        //location nullable:true
+        //domain nullable:true
         memory nullable:true
         storage nullable:true
     }

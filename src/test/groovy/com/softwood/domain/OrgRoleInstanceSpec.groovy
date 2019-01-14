@@ -11,8 +11,18 @@ class OrgRoleInstanceSpec extends Specification implements DomainUnitTest<OrgRol
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
+    void "create new org role instance"() {
+        given:"new instance"
+            OrgRoleInstance org = new OrgRoleInstance()
+            org.name = "test customer"
+            org.role = OrgRoleInstance.OrgRoleType.Customer
+
+        when : "we save it "
+            org.save(failOnError:true)
+
+        then :
+            org.id == 1
+            org.name == "test customer"
+            org.role == OrgRoleInstance.OrgRoleType.Customer
     }
 }

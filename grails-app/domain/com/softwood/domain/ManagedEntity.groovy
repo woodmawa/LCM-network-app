@@ -4,6 +4,7 @@ import java.time.LocalDateTime
 
 class ManagedEntity extends RootEntity {
 
+
     boolean isManaged = true
     boolean isVirtual = false
     String manHostName
@@ -14,6 +15,8 @@ class ManagedEntity extends RootEntity {
     String ownedBy
     LocalDateTime installedDate
     LocalDateTime commissionedDate
+
+    static belongsTo = [org:OrgRoleInstance]
 
     static constraints = {
         isManaged()

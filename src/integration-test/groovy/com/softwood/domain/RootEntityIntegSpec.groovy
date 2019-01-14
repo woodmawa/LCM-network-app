@@ -16,7 +16,7 @@ class RootEntityIntegSpec extends Specification {
 
     void "test create "() {
         given : "new object"
-        RootEntity entity = new RootEntity()
+        RootEntity entity = new Device()
         entity.name = "william"
         entity.save(failOnError:true)
         println "created on" + entity.dateCreated
