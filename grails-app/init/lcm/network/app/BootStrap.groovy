@@ -1,10 +1,11 @@
 package lcm.network.app
 
-import com.softwood.domain.Location
+
 import com.softwood.domain.MaintenanceAgreement
 import com.softwood.domain.NetworkDomain
 import com.softwood.domain.OrgRoleInstance
 import com.softwood.domain.Site
+import com.softwood.domain.Location
 
 class BootStrap {
 
@@ -27,8 +28,8 @@ class BootStrap {
         acme.addToSites(new Site (name:"10 South Close", status:"closed"))
         acme.save ()
 
-        //headOffice.addToLocations(new Location(name:"comms room"))
-        //headOffice.save (failOnError:true)
+        headOffice.addToLocations(new Location(name:"comms room"))
+        headOffice.save (failOnError:true)
 
         MaintenanceAgreement mag = new MaintenanceAgreement()
         mag.level = "Gold"
