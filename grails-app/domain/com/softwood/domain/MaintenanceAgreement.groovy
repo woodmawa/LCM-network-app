@@ -3,7 +3,7 @@ package com.softwood.domain
 class MaintenanceAgreement extends Agreement {
 
     String level
-    Map category = [:]
+    Map category = [:]  //p1 to p5 and sla details 
 
     //static belongsTo = [serviceProvider : OrgRoleInstance, maintainer: OrgRoleInstance]
 

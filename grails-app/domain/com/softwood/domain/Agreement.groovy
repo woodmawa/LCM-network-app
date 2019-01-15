@@ -2,6 +2,10 @@ package com.softwood.domain
 
 import java.time.LocalDateTime
 
+/**
+ * abstract parent for types of contracts and agreements
+ *
+ */
 abstract class Agreement {
 
     String contractReference
