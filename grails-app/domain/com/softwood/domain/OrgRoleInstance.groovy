@@ -13,14 +13,17 @@ class OrgRoleInstance {
 
     String name
     OrgRoleType role
-    Collection<MaintenanceAgreement> mags       //optional only set if role is service provider
+    //Collection<MaintenanceAgreement> mags       //optional only set if role is service provider
     //Collection<Device> ci
 
-    static hasMany = [/*ci:Device,*/ mags : MaintenanceAgreement]
+    //static hasMany = [/*ci:Device,*/ mags : MaintenanceAgreement]
+    //static hasMany = [mags : MaintenanceAgreement]
+
+    //static mappedBy  = [mags: "maintainer"]  //disambiguate column in mags
 
     static constraints = {
         name nullable:false
         role  nullable:true
-        mags nullable:true
+        //mags nullable:true  //optional
     }
 }
