@@ -9,15 +9,18 @@ class Device extends ManagedEntity {
     //OrgRoleInstance org
     //Site site
     //Location location
-    //NetworkDomain domain
-    //Collection<ResourceRole> deviceRoles
+    Collection domains = []
+    //simpler option than deviceRoles - not an entity in this case but  a join table
+    Collection<Resource.ResourceRoleType> roles = [] // creates device_roles table no versioning */
 
     boolean isFreeStanding = false
+    String deviceStatus
     String licence = "none"
     String memory
     String storage
+    String numberOfCpu
 
-    //static hasMany = [deviceRoles: ResourceRole]
+    static hasMany = [deviceRoles: Resource, domains: NetworkDomain, roles: Resource.ResourceRoleType]
 
     //static belongsTo = [org:OrgRoleInstance]
 
@@ -26,9 +29,13 @@ class Device extends ManagedEntity {
         //ci nullable : false
         //site nullable:true
         //location nullable:true
-        //domain nullable:true
+        domains nullable:true
+        deviceStatus nullable:true
+        licence nullable:true
         memory nullable:true
         storage nullable:true
+        numberOfCpu nullable:true
+        roles nullable:true
     }
 
 

@@ -1,11 +1,14 @@
 package lcm.network.app
 
-
+import com.softwood.domain.Device
 import com.softwood.domain.MaintenanceAgreement
 import com.softwood.domain.NetworkDomain
 import com.softwood.domain.OrgRoleInstance
+import com.softwood.domain.Resource
 import com.softwood.domain.Site
 import com.softwood.domain.Location
+
+import java.time.LocalDateTime
 
 class BootStrap {
 
@@ -37,7 +40,8 @@ class BootStrap {
         mag.maintainer = maintainer
         mag.contractReference = "my cisco support contract"
         mag.status = "Active"
-        mag.save ()
+        //mag.save ()
+        vf.addToMags(mag)
 
         mag = new MaintenanceAgreement()
         mag.level = "Silver"
@@ -46,7 +50,26 @@ class BootStrap {
         mag.contractReference = "my cisco support contract"
         mag.status = "Active"
         mag.save (failOnError:true)
-        assert MaintenanceAgreement.count() == 2
+
+        vf.save (flush:true)
+        println "number of mags : " + MaintenanceAgreement.count()
+
+        Device router = new Device ()
+        router.name = "ACME-HO-WAN1"
+        router.installedDate = LocalDateTime.now()
+        router.isVirtual = false
+        router.manHostName = "VF-ACME-HO-WAN1"
+        router.manIpAddress = "192.57.3.28"
+        router.ownedBy = "Customer Owned"
+        router.usage = "HO wan router"
+        router.deviceStatus = "Operational"
+        router.org = acme
+        router.addToRoles(Resource.ResourceRoleType.CustomerEdge)
+        router.save (failOnError:true)
+
+        assert Device.count() == 1
+        assert router.roles[0] == Resource.ResourceRoleType.CustomerEdge
+
     }
 
     def destroy = {

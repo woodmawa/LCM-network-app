@@ -1,6 +1,10 @@
 package com.softwood.domain
 
-class ResourceRole {
+/**
+ * root for resources types logical and physical
+ */
+
+abstract class Resource {
 
     static enum ResourceRoleType {
         Switch,
@@ -22,11 +26,10 @@ class ResourceRole {
         Gateway
     }
 
-    ResourceRoleType roleType
-
-    static belongsTo = [device: Device]
+    String name
 
     static constraints = {
-        roleType nullable:false
+        name nullable:false
+
     }
 }
