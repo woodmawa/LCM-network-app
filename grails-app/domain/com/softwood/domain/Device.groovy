@@ -16,6 +16,7 @@ class Device extends ManagedEntity {
     Collection<Equipment> buildConfiguration = []
     Collection<Interface> interfaces = []
 
+
     boolean isFreeStanding = false
     ProductOffering productType  //ref to portfolio offering if exists
     String deviceStatus = "Operational"  //or Ceased or ...
