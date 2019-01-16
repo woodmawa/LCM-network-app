@@ -15,6 +15,7 @@ class Device extends ManagedEntity {
     Collection<FlexAttribute> attributes = []
     Collection<Equipment> buildConfiguration = []
     Collection<Interface> interfaces = []
+    Collection<Alias> aliasNames = []
 
 
     boolean isFreeStanding = false
@@ -27,7 +28,7 @@ class Device extends ManagedEntity {
     String numberOfCpu
     Software runtimeOS
 
-    static hasMany = [deviceRoles: Resource, domains: NetworkDomain, roles: Resource.ResourceRoleType, attributes:FlexAttribute, buildConfiguration: Equipment, interfaces:Interface]
+    static hasMany = [deviceRoles: Resource, domains: NetworkDomain, roles: Resource.ResourceRoleType, attributes:FlexAttribute, buildConfiguration: Equipment, interfaces:Interface, aliasNames:Alias]
 
     static belongsTo = [org:OrgRoleInstance]
 
@@ -48,6 +49,7 @@ class Device extends ManagedEntity {
         attributes nullable:true
         buildConfiguration nullable:true
         interfaces nullable:true
+        aliasNames nullable:true
     }
 
 
