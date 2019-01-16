@@ -8,6 +8,7 @@ import com.softwood.domain.OrgRoleInstance
 import com.softwood.domain.Resource
 import com.softwood.domain.Site
 import com.softwood.domain.Location
+import com.softwood.domain.Software
 
 import java.time.LocalDateTime
 
@@ -23,6 +24,9 @@ class BootStrap {
         OrgRoleInstance maintainer = new OrgRoleInstance(role: OrgRoleInstance.OrgRoleType.Maintainer, name:"Cisco" )
         maintainer.save(flush:true)
 
+        OrgRoleInstance ciscoSupplier = new OrgRoleInstance(role: OrgRoleInstance.OrgRoleType.Supplier, name:"Cisco" )
+        ciscoSupplier.save(flush:true)
+
         //create Acme as a customer and a domain
         OrgRoleInstance acme = new OrgRoleInstance(role: OrgRoleInstance.OrgRoleType.Customer, name:"Acme" )
         acme.addToDomains(new NetworkDomain(name:"corporate WAN"))
@@ -32,7 +36,8 @@ class BootStrap {
         acme.addToSites(new Site (name:"10 South Close", status:"closed"))
         acme.save ()
 
-        headOffice.addToLocations(new Location(name:"comms room"))
+        Location commsRoom
+        headOffice.addToLocations(commsRoom = new Location(name:"comms room", site:headOffice))
         headOffice.save (failOnError:true)
 
         MaintenanceAgreement mag = new MaintenanceAgreement()
@@ -55,6 +60,11 @@ class BootStrap {
         vf.save (flush:true)
         println "number of mags : " + MaintenanceAgreement.count()
 
+        //build master software instance 'singleton'
+        Software ios = new Software (name: "IOS 13.4", version: "13.4", type: Software.SoftwareType.InternetworkOperatingSystem, supplier :ciscoSupplier )
+        ios.save (failonError:true)
+        assert Software.count() ==1
+
         Device router = new Device ()
         router.name = "ACME-HO-WAN1"
         router.installedDate = LocalDateTime.now()
@@ -65,9 +75,13 @@ class BootStrap {
         router.usage = "HO wan router"
         router.deviceStatus = "Operational"
         router.org = acme
+        router.runtimeOS = ios
+        router.site = headOffice
+        router.location = commsRoom
         router.addToRoles(Resource.ResourceRoleType.CustomerEdge)
         router.addToAttributes(new FlexAttribute(type: FlexAttribute.AttributeType.Single, name:"Bandwidth", value: "28Mbits"))
         router.save (failOnError:true)
+
 
         assert Device.count() == 1
         assert router.roles[0] == Resource.ResourceRoleType.CustomerEdge
