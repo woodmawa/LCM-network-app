@@ -1,5 +1,6 @@
 package lcm.network.app
 
+import com.softwood.domain.Alias
 import com.softwood.domain.Device
 import com.softwood.domain.Equipment
 import com.softwood.domain.FlexAttribute
@@ -102,6 +103,10 @@ class BootStrap {
         router.addToBuildConfiguration(wanCard)
         router.save(failOnError:true)
         assert router.buildConfiguration.size() == 2
+
+        router.addToAliasNames(new Alias (name:"My 6509", ipAddress: "10.2.5.1", associatedOrg:acme))
+        router.save(failOnError:true)
+        assert router.aliasNames.size() == 1
     }
 
     def destroy = {

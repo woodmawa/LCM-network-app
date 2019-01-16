@@ -6,6 +6,7 @@ class Alias {
     String ipAddress
     String netMask
     Device device
+    OrgRoleInstance associatedOrg
 
     static belongsTo = [device:Device]
 
@@ -14,5 +15,6 @@ class Alias {
         ipAddress nullable:true
         netMask nullable:true
         device nullable:false
+        associatedOrg nullable:false
     }
 }
