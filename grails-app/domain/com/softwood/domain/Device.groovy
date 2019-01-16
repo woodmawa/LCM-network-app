@@ -12,6 +12,7 @@ class Device extends ManagedEntity {
     Collection domains = []
     //simpler option than deviceRoles - not an entity in this case but  a join table
     Collection<Resource.ResourceRoleType> roles = [] // creates device_roles table no versioning */
+    Collection<FlexAttribute> attributes = []
 
     boolean isFreeStanding = false
     String deviceStatus
@@ -20,7 +21,7 @@ class Device extends ManagedEntity {
     String storage
     String numberOfCpu
 
-    static hasMany = [deviceRoles: Resource, domains: NetworkDomain, roles: Resource.ResourceRoleType]
+    static hasMany = [deviceRoles: Resource, domains: NetworkDomain, roles: Resource.ResourceRoleType, attributes:FlexAttribute]
 
     //static belongsTo = [org:OrgRoleInstance]
 
@@ -36,6 +37,7 @@ class Device extends ManagedEntity {
         storage nullable:true
         numberOfCpu nullable:true
         roles nullable:true
+        attributes nullable:true
     }
 
 

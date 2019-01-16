@@ -1,6 +1,7 @@
 package lcm.network.app
 
 import com.softwood.domain.Device
+import com.softwood.domain.FlexAttribute
 import com.softwood.domain.MaintenanceAgreement
 import com.softwood.domain.NetworkDomain
 import com.softwood.domain.OrgRoleInstance
@@ -65,6 +66,7 @@ class BootStrap {
         router.deviceStatus = "Operational"
         router.org = acme
         router.addToRoles(Resource.ResourceRoleType.CustomerEdge)
+        router.addToAttributes(new FlexAttribute(type: FlexAttribute.AttributeType.Single, name:"Bandwidth", value: "28Mbits"))
         router.save (failOnError:true)
 
         assert Device.count() == 1
