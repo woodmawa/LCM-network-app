@@ -13,8 +13,10 @@ class Device extends ManagedEntity {
     //simpler option than deviceRoles - not an entity in this case but  a join table
     Collection<Resource.ResourceRoleType> roles = [] // creates device_roles table no versioning */
     Collection<FlexAttribute> attributes = []
+    Collection<Equipment> buildConfiguration
 
     boolean isFreeStanding = false
+    ProductOffering productType  //ref to portfolio offering if exists
     String deviceStatus = "Operational"  //or Ceased or ...
     String licenceType  //e.g. for cisco 903 would be one of  "metro servcices", or "metro Ip services", "metro aggregation services"
     String licence = "none"
@@ -23,7 +25,7 @@ class Device extends ManagedEntity {
     String numberOfCpu
     Software runtimeOS
 
-    static hasMany = [deviceRoles: Resource, domains: NetworkDomain, roles: Resource.ResourceRoleType, attributes:FlexAttribute]
+    static hasMany = [deviceRoles: Resource, domains: NetworkDomain, roles: Resource.ResourceRoleType, attributes:FlexAttribute, buildConfiguration: Equipment]
 
     static belongsTo = [org:OrgRoleInstance]
 
@@ -33,6 +35,7 @@ class Device extends ManagedEntity {
         location nullable:true
         roles nullable:true
         domains nullable:true
+        productType nullable:true
         deviceStatus nullable:true
         licenceType nullable:true
         licence nullable:true
@@ -41,6 +44,7 @@ class Device extends ManagedEntity {
         numberOfCpu nullable:true
         runtimeOS nullable:true
         attributes nullable:true
+        buildConfiguration nullable:true
     }
 
 

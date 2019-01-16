@@ -29,4 +29,8 @@ abstract class PhysicalResource {
         height()
         weight ()
     }
+
+    static mapping = {
+        tablePerHierarchy false  //multiple tables+joins
+    }
 }

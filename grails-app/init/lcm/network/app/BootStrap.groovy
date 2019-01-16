@@ -1,10 +1,12 @@
 package lcm.network.app
 
 import com.softwood.domain.Device
+import com.softwood.domain.Equipment
 import com.softwood.domain.FlexAttribute
 import com.softwood.domain.MaintenanceAgreement
 import com.softwood.domain.NetworkDomain
 import com.softwood.domain.OrgRoleInstance
+import com.softwood.domain.ProductOffering
 import com.softwood.domain.Resource
 import com.softwood.domain.Site
 import com.softwood.domain.Location
@@ -65,7 +67,14 @@ class BootStrap {
         ios.save (failonError:true)
         assert Software.count() ==1
 
+        ProductOffering ethCard = new ProductOffering (name:"8-port 10 Gigabit Ethernet Fiber Module", partNumber: "WS-X6908-10G-2T (with DFC4)")
+        ProductOffering chasis6509 = new ProductOffering (name:"Cisco Catalyst 6509 Enhanced Chassis", partNumber: "WS-C6509-E")
+        ProductOffering sw6509 = new ProductOffering (name:"Cisco Switch/Router 6509-E bundle", model:"6509-E", partNumber: "6509-B)")
+        ProductOffering.saveAll([sw6509,chasis6509, ethCard])
+        assert ProductOffering.count() == 3
+
         Device router = new Device ()
+        router.productType = sw6509
         router.name = "ACME-HO-WAN1"
         router.installedDate = LocalDateTime.now()
         router.isVirtual = false
@@ -86,6 +95,13 @@ class BootStrap {
         assert Device.count() == 1
         assert router.roles[0] == Resource.ResourceRoleType.CustomerEdge
 
+        Equipment chasis = new Equipment (category: Equipment.EquipmentCategory.Chasis, serialNumber:"abc 123 s/n", isEquipmentContainer:true, productOffering:chasis6509)
+        Equipment wanCard = new Equipment (category: Equipment.EquipmentCategory.InterfaceCard, serialNumber:"eth 58 s/n", isEquipmentContainer:false, productOffering:ethCard)
+
+        router.addToBuildConfiguration(chasis)
+        router.addToBuildConfiguration(wanCard)
+        router.save(failOnError:true)
+        assert router.buildConfiguration.size() == 2
     }
 
     def destroy = {

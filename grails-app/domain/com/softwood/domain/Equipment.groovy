@@ -3,6 +3,7 @@ package com.softwood.domain
 class Equipment extends PhysicalResource {
 
     enum EquipmentCategory {
+        Chasis,
         Card,
         PowerSupply,
         Memory,
@@ -19,6 +20,7 @@ class Equipment extends PhysicalResource {
     String serialNumber
     String assetTag
     ProductOffering productOffering
+    Device device
 
     static constraints = {
         isEquipmentContainer nullable: false
@@ -26,6 +28,7 @@ class Equipment extends PhysicalResource {
         assetTag nullable:true
         serialNumber nullable:true
         productOffering nullable:true
+        device nullable:true
     }
 
 
