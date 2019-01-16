@@ -3,7 +3,7 @@ package com.softwood.domain
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class ResourceRoleSpec extends Specification implements DomainUnitTest<ResourceRole> {
+class ResourceSpec extends Specification implements DomainUnitTest<Resource> {
 
     def setup() {
     }
