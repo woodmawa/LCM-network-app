@@ -32,4 +32,8 @@ abstract class Resource {
         name nullable:false
 
     }
+
+    static mapping = {
+        tablePerHierarchy false  //multiple tables+joins
+    }
 }
