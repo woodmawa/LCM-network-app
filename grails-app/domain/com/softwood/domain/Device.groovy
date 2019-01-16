@@ -13,7 +13,8 @@ class Device extends ManagedEntity {
     //simpler option than deviceRoles - not an entity in this case but  a join table
     Collection<Resource.ResourceRoleType> roles = [] // creates device_roles table no versioning */
     Collection<FlexAttribute> attributes = []
-    Collection<Equipment> buildConfiguration
+    Collection<Equipment> buildConfiguration = []
+    Collection<Interface> interfaces = []
 
     boolean isFreeStanding = false
     ProductOffering productType  //ref to portfolio offering if exists
@@ -25,7 +26,7 @@ class Device extends ManagedEntity {
     String numberOfCpu
     Software runtimeOS
 
-    static hasMany = [deviceRoles: Resource, domains: NetworkDomain, roles: Resource.ResourceRoleType, attributes:FlexAttribute, buildConfiguration: Equipment]
+    static hasMany = [deviceRoles: Resource, domains: NetworkDomain, roles: Resource.ResourceRoleType, attributes:FlexAttribute, buildConfiguration: Equipment, interfaces:Interface]
 
     static belongsTo = [org:OrgRoleInstance]
 
@@ -45,6 +46,7 @@ class Device extends ManagedEntity {
         runtimeOS nullable:true
         attributes nullable:true
         buildConfiguration nullable:true
+        interfaces nullable:true
     }
 
 

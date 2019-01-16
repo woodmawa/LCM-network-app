@@ -1,5 +1,7 @@
 package com.softwood.domain
 
+import java.time.LocalDateTime
+
 /**
  * root for resources types logical and physical
  */
@@ -26,6 +28,9 @@ abstract class Resource {
         Gateway
     }
 
+    LocalDateTime dateCreated
+    LocalDateTime lastUpdated
+
     String name
 
     static constraints = {
@@ -35,5 +40,16 @@ abstract class Resource {
 
     static mapping = {
         tablePerHierarchy false  //multiple tables+joins
+    }
+
+    def beforeInsert() {
+        if (dateCreated == null) {
+            println "logical resource : injected date created  "
+            dateCreated = LocalDateTime.now()
+        }
+        if (lastUpdated == null) {
+            println "logical resource : injected last updated  "
+            lastUpdated = LocalDateTime.now()
+        }
     }
 }
