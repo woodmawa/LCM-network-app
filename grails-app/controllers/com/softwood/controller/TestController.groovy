@@ -38,7 +38,7 @@ class TestController {
             respond device}
     }
 
-    def show2 (Device device) {
+    /*def show2 (Device device) {
 
         if(device == null) {
             render status:404
@@ -48,5 +48,5 @@ class TestController {
 
             render json
         }
-    }
+    }*/
 }

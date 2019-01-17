@@ -6,7 +6,7 @@ model {
     Device device
 }
 json jsonapi.render (device, [ jsonApiObject:true, expand: ["site", "location", "domain", "aliasNames", "runtimeOS", "interfaces", "attributes"]])
-/* - custom rendering option 
+/* - custom rendering option
 json {
     id device.id
     name  device.name

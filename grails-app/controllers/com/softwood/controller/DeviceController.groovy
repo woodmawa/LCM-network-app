@@ -19,9 +19,9 @@ class DeviceController extends RestfulController<Device> {
 
     }*/
 
-    def show (Device device) {
+    /*def show (Device device) {
         if(device == null) {
             render status:404
         } else {respond device}
-    }
+    }*/
 }
