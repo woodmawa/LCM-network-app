@@ -9,13 +9,16 @@ class DeviceController extends RestfulController<Device> {
 
     //static scaffold = Device
 
-    DeviceController(Class<Device> device) {
+    DeviceController() {
+
+    }
+    /*DeviceController(Class<Device> device) {
         this(device, false)
     }
 
     DeviceController(Class<Device> device, boolean readOnly) {
         super(device, readOnly)
-    }
+    }*/
 
     def index (Integer max) {
         params.max = Math.min(max ?: 10, 100)
