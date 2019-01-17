@@ -1,0 +1,9 @@
+import com.softwood.domain.Site
+
+model {
+    Site site
+}
+json {
+    id site.id
+    name site.name
+}

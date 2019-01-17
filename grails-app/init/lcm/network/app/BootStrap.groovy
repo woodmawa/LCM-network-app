@@ -19,6 +19,18 @@ class BootStrap {
 
     def init = { servletContext ->
 
+        if (OrgRoleInstance.count() == 0 )
+            initialiseBootstrapDb()
+
+    }
+
+    def destroy = {
+    }
+
+    def initialiseBootstrapDb () {
+
+        println " create database bootstrap records "
+
         //create VF as service provider
         OrgRoleInstance vf = new OrgRoleInstance(role: OrgRoleInstance.OrgRoleType.Service_Provider, name:"Vodafone" )
         vf.save ()//(failOnError:true)
@@ -32,7 +44,8 @@ class BootStrap {
 
         //create Acme as a customer and a domain
         OrgRoleInstance acme = new OrgRoleInstance(role: OrgRoleInstance.OrgRoleType.Customer, name:"Acme" )
-        acme.addToDomains(new NetworkDomain(name:"corporate WAN"))
+        NetworkDomain custDomain
+        acme.addToDomains(custDomain = new NetworkDomain(name:"corporate WAN"))
         acme.save(failOnError:true)
         Site headOffice = new Site (name:"1 Barkley Square", status: "occupied ", org:acme)
         headOffice.save(failOnError:true)
@@ -88,8 +101,14 @@ class BootStrap {
         router.runtimeOS = ios
         router.site = headOffice
         router.location = commsRoom
+
+        router.domain = custDomain
+        //add two roles
         router.addToRoles(Resource.ResourceRoleType.CustomerEdge)
+        router.addToRoles(Resource.ResourceRoleType.Router)
         router.addToAttributes(new FlexAttribute(type: FlexAttribute.AttributeType.Single, name:"Bandwidth", value: "28Mbits"))
+        router.addToAttributes(new FlexAttribute(type: FlexAttribute.AttributeType.Single, name:"DSCP enabled", value: "6 QoS"))
+
         router.save (failOnError:true)
 
 
@@ -107,8 +126,7 @@ class BootStrap {
         router.addToAliasNames(new Alias (name:"My 6509", ipAddress: "10.2.5.1", associatedOrg:acme))
         router.save(failOnError:true)
         assert router.aliasNames.size() == 1
-    }
 
-    def destroy = {
     }
 }
+

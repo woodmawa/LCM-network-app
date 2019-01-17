@@ -1,0 +1,9 @@
+package device
+
+model {
+    Object parent
+}
+json {
+    hal.links (parent)
+    version "1.0"
+}

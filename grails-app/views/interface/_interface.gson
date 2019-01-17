@@ -1,0 +1,12 @@
+import com.softwood.domain.Interface
+
+model {
+    Interface netif
+}
+json {
+    'ip@' netif.ipAddress
+    port netif.port
+    netMask netif.netMask
+    macAddress netif.macAddress
+    status netif.interfaceStatus
+}

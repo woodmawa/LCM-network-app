@@ -1,0 +1,35 @@
+import com.softwood.domain.Device
+
+//basic template
+//inherits template:"/../device/parent"
+model {
+    Device device
+}
+json jsonapi.render (device, [ jsonApiObject:true, expand: ["site", "location", "domain", "aliasNames", "runtimeOS", "interfaces", "attributes"]])
+/*
+json {
+    id device.id
+    name  device.name
+    deviceStatus device.deviceStatus
+    adminStatus device.adminStatus
+    opStatus device.opStatus
+    resourceRoles device.roles
+    site tmpl.'../site/manyToOneSite' (device.site)
+    location tmpl.'../location/manyToOneLocation' (device.location)
+    domain tmpl.'../networkDomain/domain' (device.domain)
+    aliases g.render (template :"../alias/alias", collection:device.aliasNames, var:'alias')
+    interfaces g.render (template :"../interface/interface", collection:device.interfaces, var:'netif')
+    attributes g.render (template:"../flexAttribute/flexAttribute", collection:device.attributes, var:'attribute')
+    freeStanding device.isFreeStanding
+    virtual device.isVirtual
+    managed device.isManaged
+    if (device.numberOfCpu)
+        cpu device.numberOfCpu
+    if (device.memory)
+        memory device.memory
+    if (device.storage)
+        storage device.storage
+    if (device.ownedBy)
+        ownedBy device.ownedBy
+}*/
+//json g.render (device, [expand:['site']])

@@ -1,0 +1,8 @@
+import com.softwood.domain.Device
+
+model {
+    Device device
+}
+//first map entru is named variable passed to template
+//json g.render (template:"device", model:[device:device])
+json jsonapi.render (device, [jsonApiObject:true])

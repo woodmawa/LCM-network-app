@@ -1,0 +1,9 @@
+import com.softwood.domain.FlexAttribute
+
+model {
+    FlexAttribute attribute
+}
+json {
+    name attribute.name
+    value attribute.value
+}

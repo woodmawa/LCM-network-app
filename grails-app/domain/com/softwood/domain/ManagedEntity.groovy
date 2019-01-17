@@ -23,7 +23,6 @@ class ManagedEntity extends RootEntity {
     OperationalState opStatus = OperationalState.Active
     String usage
     String ownedBy
-    String[] aliases = [] //defaults to var binary[255]
 
     LocalDateTime installedDate
     LocalDateTime commissionedDate
@@ -40,7 +39,6 @@ class ManagedEntity extends RootEntity {
         opStatus nullable:true
         usage nullable:true
         ownedBy nullable:true
-        aliases nullable:true
         installedDate nullable:true
         commissionedDate nullable:true
     }

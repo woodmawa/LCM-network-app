@@ -61,7 +61,18 @@ dependencies {
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
     //testCompile group: 'org.spockframework', name: 'spock-core', version: '1.2-groovy-2.5'
 
+    //add Logback
+    compile 'ch.qos.logback:logback-classic:1.2.3'
+    compile 'ch.qos.logback:logback-core:1.2.3'
+    compile 'org.slf4j:slf4j-api:1.7.25'
+
+    //need these to get json api working with LocalDateTime etc
+    compile 'org.grails.plugins:grails-java8:1.2.3'
+    compile group: 'org.hibernate', name: 'hibernate-java8', version: '5.4.0.Final'
+    
     compile "org.grails.plugins:views-json:1.2.10"
+    compile "com.softwood:utils:1.0-SNAPSHOT"  //include my json utils
+
 }
 
 bootRun {

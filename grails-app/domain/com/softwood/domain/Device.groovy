@@ -9,7 +9,7 @@ class Device extends ManagedEntity {
     //OrgRoleInstance org
     Site site
     Location location
-    Collection domains = []
+    NetworkDomain domain //can only be in one domain or zero
     //simpler option than deviceRoles - not an entity in this case but  a join table
     Collection<Resource.ResourceRoleType> roles = [] // creates device_roles table no versioning */
     Collection<FlexAttribute> attributes = []
@@ -28,18 +28,19 @@ class Device extends ManagedEntity {
     String numberOfCpu
     Software runtimeOS
 
-    static hasMany = [deviceRoles: Resource, domains: NetworkDomain, roles: Resource.ResourceRoleType, attributes:FlexAttribute, buildConfiguration: Equipment, interfaces:Interface, aliasNames:Alias]
+    static hasMany = [deviceRoles: Resource, roles: Resource.ResourceRoleType, attributes:FlexAttribute, buildConfiguration: Equipment, interfaces:Interface, aliasNames:Alias]
 
     static belongsTo = [org:OrgRoleInstance]
 
     //configure eager fetch strategies
     static mapping = {
         attributes batchSize: 30
-        domains lazy: false
+        domain eager: true
         interfaces lazy: false
         aliasNames lazy: false
         site eager:true
         location eager:true
+        runtimeOS eager:true
     }
 
 
@@ -48,7 +49,7 @@ class Device extends ManagedEntity {
         site nullable:true
         location nullable:true
         roles nullable:true
-        domains nullable:true
+        domain nullable:true
         productType nullable:true
         deviceStatus nullable:true
         licenceType nullable:true

@@ -1,0 +1,6 @@
+import com.softwood.domain.FlexAttribute
+
+model {
+    Collection<FlexAttribute> attributes = []
+}
+json tmpl.flexAttributes (attributes)

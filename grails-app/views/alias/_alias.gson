@@ -1,0 +1,9 @@
+import com.softwood.domain.Alias
+
+model {
+    Alias alias
+}
+json {
+    aliasName alias.name
+    address   alias.ipAddress ?: "none"
+}

@@ -1,0 +1,12 @@
+import com.softwood.domain.Location
+
+
+model {
+    Location location
+}
+json {
+    id location.id
+    name location.name
+    floor location.name
+    room location.room
+}
