@@ -32,6 +32,17 @@ class Device extends ManagedEntity {
 
     static belongsTo = [org:OrgRoleInstance]
 
+    //configure eager fetch strategies
+    static mapping = {
+        attributes batchSize: 30
+        domains lazy: false
+        interfaces lazy: false
+        aliasNames lazy: false
+        site eager:true
+        location eager:true
+    }
+
+
     static constraints = {
         org nullable:true
         site nullable:true
