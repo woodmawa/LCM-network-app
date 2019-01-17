@@ -41,6 +41,9 @@ class DeviceServiceSpec extends Specification implements ServiceUnitTest<DeviceS
         ProductOffering sw6509 = new ProductOffering (name:"Cisco Switch/Router 6509-E bundle", model:"6509-E", partNumber: "6509-B)")
         ProductOffering.saveAll([sw6509,chasis6509, ethCard])
 
+        OrgRoleInstance ciscoSupplier = new OrgRoleInstance(role: OrgRoleInstance.OrgRoleType.Supplier, name:"Cisco" )
+        ciscoSupplier.save(flush:true)
+
         //create Acme as a customer and a domain
         OrgRoleInstance acme = new OrgRoleInstance(role: OrgRoleInstance.OrgRoleType.Customer, name:"Acme" )
         acme.addToDomains(new NetworkDomain(name:"corporate WAN"))
@@ -91,9 +94,10 @@ class DeviceServiceSpec extends Specification implements ServiceUnitTest<DeviceS
         DeviceService deviceService = new DeviceService()
 
         when:"invoke service "
-            List<Device> results = deviceService.findAllDevice()
+        List<Device> results = deviceService.findAllDevice()
 
         then: "validate result"
-            results.size() == 1
+        results.size() == 1
+        results[0].location.name == "comms room"
     }
 }
