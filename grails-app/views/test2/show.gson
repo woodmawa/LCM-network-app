@@ -1,0 +1,9 @@
+import com.softwood.domain.Device
+
+model {
+    Device device
+}
+json.will {
+    show_gson "hello from gson.gson"
+    devName  device.name
+}

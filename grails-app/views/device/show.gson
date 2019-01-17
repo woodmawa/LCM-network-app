@@ -5,4 +5,7 @@ model {
 }
 //first map entru is named variable passed to template
 //json g.render (template:"device", model:[device:device])
-json jsonapi.render (device, [jsonApiObject:true])
+//json jsonapi.render (device, [jsonApiObject:true])
+json {
+    show_gson "hello from gson.gson"
+}

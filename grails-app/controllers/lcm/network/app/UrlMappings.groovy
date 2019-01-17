@@ -9,11 +9,13 @@ class UrlMappings {
             }
         }
 
-        get "/api/device"(controller:"device", action:"index")
+        //get "/api/device"(controller:"device", action:"index")
         //get "/api/test"(controller:"test", action:"index")
         //get "/api/test/$id"(controller:"test", action:"show")
+        "/api/device"(resources:'device')
+
         "/api/test"(resources:'test')
-        get "/api/test/alt/$id"(controller:"test", action:"show2")
+        get "/api/test2/$id"(controller:"test2", action:"show")
 
 
         //"/api/device"(resource:'device')
