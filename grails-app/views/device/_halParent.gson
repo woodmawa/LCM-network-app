@@ -1,5 +1,8 @@
 package device
 
+/**
+ * inserts hal links and version
+ */
 model {
     Object parent
 }

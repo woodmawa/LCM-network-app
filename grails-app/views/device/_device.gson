@@ -1,7 +1,10 @@
 import com.softwood.domain.Device
 
-//basic template
-//inherits template:"/../device/parent"
+//basic device rendering template
+
+// inherited template rendered first - then test follows
+
+//inherits template:"halParent"  //now works !!
 model {
     Device device
 }

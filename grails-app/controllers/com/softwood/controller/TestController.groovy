@@ -38,15 +38,4 @@ class TestController {
             respond device}
     }
 
-    /*def show2 (Device device) {
-
-        if(device == null) {
-            render status:404
-        } else {
-            def json = jsonGenerator.toTmfJson(device).encodePrettily()
-            println json
-
-            render json
-        }
-    }*/
 }

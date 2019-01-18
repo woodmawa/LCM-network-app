@@ -16,6 +16,7 @@ class UrlMappings {
 
         "/api/test"(resources:'test')
         get "/api/test2/$id"(controller:"test2", action:"show")
+        get "/api/test2/$id"(controller:"test2", action:"thing")
 
 
         //"/api/device"(resource:'device')

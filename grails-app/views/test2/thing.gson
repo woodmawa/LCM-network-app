@@ -1,0 +1,17 @@
+import com.softwood.domain.Device
+
+//model receives the object returned from controller action
+model {
+    Integer devCount
+    String thing
+    Device device
+}
+json.will {
+    //can write debug but its not valid json ! think this looks like a map - first word is taken as key, next as value, or array
+    // println "---hello---"
+    hello "hello from thing.gson view", "some more", "and some more"
+    world  'this world'
+    deviceName device.name
+    numberOfDevices devCount
+    name thing
+}
