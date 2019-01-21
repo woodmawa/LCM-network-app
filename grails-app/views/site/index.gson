@@ -1,0 +1,33 @@
+import com.softwood.domain.Site
+
+//default template - just renders id and name
+model {
+    List<Site> siteList = []
+    Integer siteCount
+}
+/*
+json.ww {
+    id index.id
+    org index.org.name
+    name index.name
+}*/
+
+/*json.indexAction (siteList) {
+    //siteCount siteList.size()
+    //tmpl.site (it)
+    //Site mySite = (Site) it
+    //site mySite.name
+    //tmpl.site (mySite)
+    //g.render (model:[site:siteList], template:"site")
+    //tmpl.txt (siteList)
+    g.render (template:"txt")
+}*/
+//tmpl."/.txt" ()
+//json { txt "hello"}  // works
+//json g.render (template:"txt", model:[sites:siteList])
+//json tmpl.txt (sites:siteList)
+//json tmpl.txt (sites:siteList[0])
+
+siteList.each {
+json tmpl.txt (it)
+}

@@ -1,0 +1,24 @@
+import com.softwood.domain.Site
+
+/*json'_txtTmpl' {
+    text "hello Will"
+}*/
+model {
+    //List<Site> sites
+    //def sites
+    Site site
+}
+/*json."/txtTmpl" {
+    type sites.getClass().name
+    for ( Site site in sites ) {
+        type site.getClass().name
+        site site
+    }
+}*/
+/*json.txtTmpl (sites) {Site sit ->
+    type sit.getClass().name
+    site sit.name
+}*/
+json.txtTempl {
+    site site.name
+}

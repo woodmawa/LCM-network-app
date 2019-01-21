@@ -13,6 +13,8 @@ class UrlMappings {
         //get "/api/test"(controller:"test", action:"index")
         //get "/api/test/$id"(controller:"test", action:"show")
         "/api/device"(resources:'device')
+        "/api/site"(resources:'site')
+        "/api/org"(resources:'OrgRoleInstance')
 
         "/api/test"(resources:'test')
         get "/api/test2/$id"(controller:"test2", action:"show")

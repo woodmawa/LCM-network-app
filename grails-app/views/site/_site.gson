@@ -1,0 +1,11 @@
+import com.softwood.domain.Site
+
+//default template - just renders id and name
+model {
+    Site site
+}
+json.'_siteTmpl' {
+    id site.id
+    org site.org.name
+    name site.name
+}

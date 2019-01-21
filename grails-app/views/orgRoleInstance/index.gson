@@ -1,0 +1,14 @@
+import com.softwood.domain.OrgRoleInstance
+
+model {
+    List<OrgRoleInstance> orgRoleInstanceList
+    Integer orgRoleInstanceCount
+}
+
+/*
+orgRoleInstanceList.each { OrgRoleInstance org ->
+    json tmpl.orgRoleInstance(orgs:org)
+}*/
+
+//alternate approach
+json tmpl.orgRoleInstance (orgs:orgRoleInstanceList)

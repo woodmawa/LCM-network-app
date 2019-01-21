@@ -1,0 +1,10 @@
+import com.softwood.domain.OrgRoleInstance
+
+model {
+    //OrgRoleInstance org
+    List<OrgRoleInstance> orgs
+}
+json (orgs) {OrgRoleInstance org ->
+        id org.id
+        name org.name
+}

@@ -106,9 +106,14 @@ class BootStrap {
         //add two roles
         router.addToRoles(Resource.ResourceRoleType.CustomerEdge)
         router.addToRoles(Resource.ResourceRoleType.Router)
+        //add some simple attributes
         router.addToAttributes(new FlexAttribute(type: FlexAttribute.AttributeType.Single, name:"Bandwidth", value: "28Mbits"))
         router.addToAttributes(new FlexAttribute(type: FlexAttribute.AttributeType.Single, name:"DSCP enabled", value: "6 QoS"))
 
+        router.save (failOnError:true)
+
+        def dataAttMap = new FlexAttribute(type: FlexAttribute.AttributeType.Map, attributeGroup: "standard data map", name:"data", mapValue: [use: "multi domain", quality: "high quality", support : "long term support"])
+        router.addToAttributes(dataAttMap)
         router.save (failOnError:true)
 
 

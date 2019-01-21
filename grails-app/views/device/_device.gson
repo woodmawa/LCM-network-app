@@ -8,7 +8,7 @@ import com.softwood.domain.Device
 model {
     Device device
 }
-json jsonapi.render (device, [ jsonApiObject:true, expand: ["site", "location", "domain", "aliasNames", "runtimeOS", "interfaces", "attributes"]])
+json jsonapi.render (device, [ jsonApiObject:true, expand: ["index", "location", "domain", "aliasNames", "runtimeOS", "interfaces", "attributes"]])
 /* - custom rendering option
 json {
     id device.id
@@ -17,7 +17,7 @@ json {
     adminStatus device.adminStatus
     opStatus device.opStatus
     resourceRoles device.roles
-    site tmpl.'../site/manyToOneSite' (device.site)
+    index tmpl.'../index/manyToOneSite' (device.index)
     location tmpl.'../location/manyToOneLocation' (device.location)
     domain tmpl.'../networkDomain/domain' (device.domain)
     aliases g.render (template :"../alias/alias", collection:device.aliasNames, var:'alias')
@@ -35,4 +35,4 @@ json {
     if (device.ownedBy)
         ownedBy device.ownedBy
 }*/
-//json g.render (device, [expand:['site']])
+//json g.render (device, [expand:['index']])
