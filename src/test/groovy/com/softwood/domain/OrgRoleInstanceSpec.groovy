@@ -1,6 +1,7 @@
 package com.softwood.domain
 
 import grails.testing.gorm.DomainUnitTest
+import org.hibernate.FetchMode
 import spock.lang.Specification
 
 class OrgRoleInstanceSpec extends Specification implements DomainUnitTest<OrgRoleInstance> {
@@ -55,6 +56,9 @@ class OrgRoleInstanceSpec extends Specification implements DomainUnitTest<OrgRol
         given :
 
         def orgs = OrgRoleInstance.list(fetch:[sites:"eager"])
+        println "org b.sites : " + orgs[1].sites
+
+        println "site #2  has org as : " + (Site.list())[1].org
 
         expect :
         Site.count() == 3
@@ -66,12 +70,72 @@ class OrgRoleInstanceSpec extends Specification implements DomainUnitTest<OrgRol
     void "where query"() {
         given :
 
-        def orgs = OrgRoleInstance.where {name =~ "%B%"}.join('sites').list()
+        def orgs = OrgRoleInstance.where {
+            name =~ "%B%" &&
+            sites{}
+        }.list()
 
         expect :
         Site.count() == 3
-        orgs[0].getName() == "B"
+        orgs[0].name == "B"
         orgs[0].sites.size() == 1
 
     }
+
+    void "where query via many side"() {
+        given :
+
+        def orgs = OrgRoleInstance.where {
+            sites{org.id == 2}
+        }.list()
+
+        expect :
+        Site.count() == 3
+        orgs[0].name == "B"
+        orgs[0].sites.size() == 1
+
+    }
+
+
+    void "criteria query " () {
+        given:
+
+        OrgRoleInstance org
+
+        org = OrgRoleInstance.withCriteria (uniqueResult: true) {
+            //eq 'name', "B"
+            and {
+                idEq(2)
+                eq ('name', "B")
+            }
+        }
+
+        def orgs = OrgRoleInstance.withCriteria {
+            eq 'name', "B"
+            //fetchMode 'sites', FetchMode.SELECT
+            sites{}
+        }
+
+        orgs
+
+        expect:
+        org.id == 2
+        org.sites.size() == 1
+
+    }
+
+    /*void "hql query " () {
+        given :
+
+        OrgRoleInstance org
+
+        org = OrgRoleInstance.findAll (
+                "select from OrgRoleInstance o join o.sites s where s.org.id = o.id"
+        )
+
+        expect:
+
+        org[1].sites.size() == 1
+
+    }*/
 }
