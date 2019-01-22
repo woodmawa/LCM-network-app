@@ -1,10 +1,11 @@
 import com.softwood.domain.OrgRoleInstance
 
 model {
-    //OrgRoleInstance org
-    List<OrgRoleInstance> orgs
+    OrgRoleInstance orgRoleInstance
 }
-json (orgs) {OrgRoleInstance org ->
-        id org.id
-        name org.name
-}
+assert orgRoleInstance
+/*json {
+    id orgRoleInstance.id
+    name orgRoleInstance.name
+}*/
+json jsonapi.render (orgRoleInstance, [expand: "sites"])

@@ -1,14 +1,17 @@
 import com.softwood.domain.OrgRoleInstance
 
+//default model name is <domainModel>List
 model {
-    List<OrgRoleInstance> orgRoleInstanceList
+    List<OrgRoleInstance> orgRoleInstanceList = []
     Integer orgRoleInstanceCount
 }
 
-/*
-orgRoleInstanceList.each { OrgRoleInstance org ->
-    json tmpl.orgRoleInstance(orgs:org)
+//invoke template for each instance - doesnt deliver an array
+/*orgRoleInstanceList.each {
+    json tmpl.orgRoleInstance (it)
 }*/
 
-//alternate approach
-json tmpl.orgRoleInstance (orgs:orgRoleInstanceList)
+//this version renders a list but you have to have a name  before the tmpl to be rendered - it cant be "" either
+json (orgRoleInstanceList) {org ->
+    orgRoleInstance tmpl.orgRoleInstance (org)
+}

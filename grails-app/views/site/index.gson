@@ -7,9 +7,9 @@ model {
 }
 /*
 json.ww {
-    id index.id
-    org index.org.name
-    name index.name
+    id indexInvestigation.id
+    org indexInvestigation.org.name
+    name indexInvestigation.name
 }*/
 
 /*json.indexAction (siteList) {

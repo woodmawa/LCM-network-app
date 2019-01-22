@@ -1,0 +1,8 @@
+import com.softwood.domain.OrgRoleInstance
+
+model {
+    OrgRoleInstance orgRoleInstance
+}
+assert orgRoleInstance
+println "org : ${orgRoleInstance.name}"
+json tmpl.orgRoleInstance (orgRoleInstance)

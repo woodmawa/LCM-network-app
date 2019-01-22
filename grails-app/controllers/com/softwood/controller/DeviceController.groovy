@@ -12,7 +12,7 @@ class DeviceController extends RestfulController<Device> {
     }
 
 
-    /*def index (Integer max) {
+    /*def indexInvestigation (Integer max) {
         params.max = Math.min(max ?: 10, 100)
         Collection<Device> results = Device.list(sort:"name")
         respond results, deviceCount: Device.count()
