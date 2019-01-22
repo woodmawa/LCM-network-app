@@ -19,6 +19,7 @@ class OrgRoleInstanceSpec extends Specification implements DomainUnitTest<OrgRol
         }
         OrgRoleInstance.saveAll(orgs)
         assert OrgRoleInstance.count() == 3
+        println "# of sites : " + Site.count()
         assert Site.count() == 3
         assert Site.get(2).org.id == orgs[1].id
     }
@@ -145,7 +146,7 @@ class OrgRoleInstanceSpec extends Specification implements DomainUnitTest<OrgRol
     void "detached criteria with eager fetch " () {
         given:
 
-        def orgs = OrgRoleInstance.createCriteria().list {
+        def orgs = OrgRoleInstance.createCriteria().listDistinct {
             fetchMode 'sites', FetchMode.SELECT
 
             sites {

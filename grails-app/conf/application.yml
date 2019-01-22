@@ -4,6 +4,7 @@ grails:
     codegen:
         defaultPackage: lcm.network.app
     gorm:
+        failOnError: true       //set as default
         reactor:
             # Whether to translate GORM events into Reactor events
             # Disabled by default for performance reasons
