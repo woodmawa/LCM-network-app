@@ -1,6 +1,7 @@
 package com.softwood.domain
 
 import grails.testing.gorm.DomainUnitTest
+import org.hibernate.Criteria
 import org.hibernate.FetchMode
 import spock.lang.Specification
 
@@ -111,6 +112,7 @@ class OrgRoleInstanceSpec extends Specification implements DomainUnitTest<OrgRol
         }
 
         def orgs = OrgRoleInstance.withCriteria {
+            //setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
             eq 'name', "B"
             //fetchMode 'sites', FetchMode.SELECT
             sites{}
@@ -124,18 +126,39 @@ class OrgRoleInstanceSpec extends Specification implements DomainUnitTest<OrgRol
 
     }
 
-    /*void "hql query " () {
+
+
+    //this one works
+    void "where query from the many side "() {
         given :
 
-        OrgRoleInstance org
+        def site = Site.where {
+            org.id == 2
+        }.list()
 
-        org = OrgRoleInstance.findAll (
-                "select from OrgRoleInstance o join o.sites s where s.org.id = o.id"
-        )
+        expect :
+        Site.count() == 3
+        site.org.name == ["B"]
+
+    }
+
+    void "detached criteria with eager fetch " () {
+        given:
+
+        def orgs = OrgRoleInstance.createCriteria().list {
+            fetchMode 'sites', FetchMode.SELECT
+
+            sites {
+                org {
+                    eq 'id', 2
+                }
+            }
+        }
+
+        orgs
 
         expect:
+        orgs.size() == 3
 
-        org[1].sites.size() == 1
-
-    }*/
+    }
 }

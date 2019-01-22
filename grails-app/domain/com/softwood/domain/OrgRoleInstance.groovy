@@ -31,4 +31,9 @@ class OrgRoleInstance {
         sites nullable:true
         mags nullable:true  //optional
     }
+
+    /*  static mapping = {
+        sites lazy:false
+        domains lazy:false
+    }*/
 }
