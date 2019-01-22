@@ -147,8 +147,8 @@ class OrgRoleInstanceSpec extends Specification implements DomainUnitTest<OrgRol
         given:
 
         def orgs = OrgRoleInstance.createCriteria().listDistinct {
-            fetchMode 'sites', FetchMode.SELECT
-
+            //fetchMode 'sites', FetchMode.SELECT
+            join 'sites'
             sites {
                 org {
                     eq 'id', 2
@@ -156,10 +156,13 @@ class OrgRoleInstanceSpec extends Specification implements DomainUnitTest<OrgRol
             }
         }
 
-        orgs
+        def site = orgs.sites[0]
+        site
 
         expect:
-        orgs.size() == 3
+        orgs.size() == 1
+        orgs.site.size() == 1
+        site.name == "B's Head Office"
 
     }
 }
