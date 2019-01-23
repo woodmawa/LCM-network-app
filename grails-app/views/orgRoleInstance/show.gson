@@ -4,5 +4,4 @@ model {
     OrgRoleInstance orgRoleInstance
 }
 assert orgRoleInstance
-println "org : ${orgRoleInstance.name}"
 json tmpl.orgRoleInstance (orgRoleInstance)

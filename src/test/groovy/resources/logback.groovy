@@ -1,3 +1,5 @@
+package resources
+
 import grails.util.BuildSettings
 import grails.util.Environment
 import org.springframework.boot.logging.logback.ColorConverter
@@ -33,13 +35,9 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
             pattern = "%level %logger - %msg%n"
         }
     }
-
-    //remove logger reports on its own startup - https://stackoverflow.com/questions/3257154/how-to-prevent-logback-from-outputting-its-own-status-at-the-start-of-every-log
-    statusListener(NopStatusListener)
-
     logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false)
     //add sql logging
-    logger("org.hibernate.SQL", TRACE, ["STDOUT"], false)
+    logger("org.hibernate.SQL", DEBUG, ["STDOUT"], false)
     logger("org.hibernate.type.descriptor.sql.BasicBinder", TRACE, ["STDOUT"], false)
 }
 root(ERROR, ['STDOUT'])

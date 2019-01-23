@@ -1,11 +1,17 @@
 package com.softwood.domain
 
 import grails.testing.gorm.DomainUnitTest
+import org.grails.orm.hibernate.HibernateDatastore
 import org.hibernate.Criteria
 import org.hibernate.FetchMode
+//import org.hibernate.criterion.CriteriaSpecification
+import org.springframework.transaction.PlatformTransactionManager
+import spock.lang.AutoCleanup
+import spock.lang.Shared
 import spock.lang.Specification
 
 class OrgRoleInstanceSpec extends Specification implements DomainUnitTest<OrgRoleInstance> {
+
 
     def setup() {
         OrgRoleInstance
@@ -17,10 +23,11 @@ class OrgRoleInstanceSpec extends Specification implements DomainUnitTest<OrgRol
             orgs << org
 
         }
+        orgs[2].addToSites (new Site( name: "${orgs[2].name}'s Branch Office", status:"open", org:orgs[2]))
         OrgRoleInstance.saveAll(orgs)
         assert OrgRoleInstance.count() == 3
         println "# of sites : " + Site.count()
-        assert Site.count() == 3
+        assert Site.count() == 4
         assert Site.get(2).org.id == orgs[1].id
     }
 
@@ -63,7 +70,7 @@ class OrgRoleInstanceSpec extends Specification implements DomainUnitTest<OrgRol
         println "site #2  has org as : " + (Site.list())[1].org
 
         expect :
-        Site.count() == 3
+        Site.count() == 4
         orgs.size() == 3
         orgs[1].getName() == "B"
         orgs[1].sites.size() == 1
@@ -78,7 +85,7 @@ class OrgRoleInstanceSpec extends Specification implements DomainUnitTest<OrgRol
         }.list()
 
         expect :
-        Site.count() == 3
+        Site.count() == 4
         orgs[0].name == "B"
         orgs[0].sites.size() == 1
 
@@ -105,25 +112,28 @@ class OrgRoleInstanceSpec extends Specification implements DomainUnitTest<OrgRol
         OrgRoleInstance org
 
         org = OrgRoleInstance.withCriteria (uniqueResult: true) {
+            fetchMode ("sites", FetchMode.SELECT)
+            idEq(3)
             //eq 'name', "B"
-            and {
+            /*and {
                 idEq(2)
                 eq ('name', "B")
-            }
+            }*/
+            sites{}
         }
 
-        def orgs = OrgRoleInstance.withCriteria {
+        /*def orgs = OrgRoleInstance.withCriteria {
             //setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
             eq 'name', "B"
             //fetchMode 'sites', FetchMode.SELECT
             sites{}
-        }
+        }*/
 
         orgs
 
         expect:
-        org.id == 2
-        org.sites.size() == 1
+        org.id == 3
+        org.sites.size() == 2
 
     }
 
@@ -146,6 +156,7 @@ class OrgRoleInstanceSpec extends Specification implements DomainUnitTest<OrgRol
     void "detached criteria with eager fetch " () {
         given:
 
+
         def orgs = OrgRoleInstance.createCriteria().listDistinct {
             //fetchMode 'sites', FetchMode.SELECT
             join 'sites'
@@ -165,4 +176,32 @@ class OrgRoleInstanceSpec extends Specification implements DomainUnitTest<OrgRol
         site.name == "B's Head Office"
 
     }
+
+    void "where query and individual get " () {
+        given :
+
+        def orgs = OrgRoleInstance.where {
+            id == 3
+        }.list (fetch:[sites:"eager"])
+
+        /*def orgs = OrgRoleInstance.where {
+            sites.size() == 2
+        }.list ()*/ /*(fetch:[sites:"eager"])*/
+
+             def org = OrgRoleInstance.get(2)
+            List orgSites = org.sites
+
+            def branch = Site.get(4)
+
+            assert branch.org.is (orgs[0])
+
+            //println orgs[0].sites[1].name  //orgs[0].sites is null !
+
+
+        expect:
+        orgs.size() == 1
+        orgs[0].sites[1].name
+
+    }
+
 }
