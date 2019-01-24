@@ -16,9 +16,8 @@ class OrgRoleInstance {
     Collection<NetworkDomain> domains = []
     Collection<Site> sites = []
     Collection<MaintenanceAgreement> mags       //optional only set if role is service provider
-    //Collection<Device> ci
 
-    //static hasMany = [/*ci:Device,*/ mags : MaintenanceAgreement]
+
      static hasMany = [domains : NetworkDomain, sites: Site, mags:MaintenanceAgreement]
 
     static mappedBy  = [mags: "maintainer"]  //disambiguate column in mags
@@ -36,4 +35,8 @@ class OrgRoleInstance {
         sites lazy:false
         domains lazy:false
     }*/
+
+    String toString () {
+        "Org (name:$name)[id:$id]"
+    }
 }
