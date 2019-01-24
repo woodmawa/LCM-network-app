@@ -15,15 +15,19 @@ class Equipment extends PhysicalResource {
 
     }
 
-    boolean isEquipmentContainer = false
+    boolean equipmentContainer = false
     EquipmentCategory category
     String serialNumber
     String assetTag
     ProductOffering productOffering
     Device device
 
+    boolean isEquipmentContainer() {
+        equipmentContainer
+    }
+
     static constraints = {
-        isEquipmentContainer nullable: false
+        equipmentContainer nullable: false
         category nullable:false
         assetTag nullable:true
         serialNumber nullable:true
@@ -31,5 +35,8 @@ class Equipment extends PhysicalResource {
         device nullable:true
     }
 
+    String toString() {
+        "Equipment (category:$category, name:$name)[id:$id]"
+    }
 
 }

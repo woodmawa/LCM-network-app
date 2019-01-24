@@ -12,6 +12,7 @@ import com.softwood.domain.Resource
 import com.softwood.domain.Site
 import com.softwood.domain.Location
 import com.softwood.domain.Software
+import org.springframework.validation.FieldError
 
 import java.time.LocalDateTime
 
@@ -88,6 +89,7 @@ class BootStrap {
         assert ProductOffering.count() == 3
 
         Device router = new Device ()
+        router.testDevice = true
         router.productType = sw6509
         router.name = "ACME-HO-WAN1"
         router.installedDate = LocalDateTime.now()
@@ -120,8 +122,32 @@ class BootStrap {
         assert Device.count() == 1
         assert router.roles[0] == Resource.ResourceRoleType.CustomerEdge
 
-        Equipment chasis = new Equipment (category: Equipment.EquipmentCategory.Chasis, serialNumber:"abc 123 s/n", isEquipmentContainer:true, productOffering:chasis6509)
-        Equipment wanCard = new Equipment (category: Equipment.EquipmentCategory.InterfaceCard, serialNumber:"eth 58 s/n", isEquipmentContainer:false, productOffering:ethCard)
+        //equipment is BelongsTo [device:Device] - so save them first
+        Equipment chasis = new Equipment ()
+        chasis.name = "chasis#1"
+        chasis.category =  Equipment.EquipmentCategory.Chasis
+        chasis.serialNumber = "abc 123 s/n"
+        chasis.equipmentContainer = true
+        chasis.productOffering = chasis6509
+        chasis.validate()
+        if (chasis.hasErrors()) {
+            println "chasis errors"
+             chasis.errors.fieldErrors.each { FieldError e -> println "field: '${e.field}', rejectedValue:'$e.rejectedValue' "}
+        } else
+            chasis.save()
+        Equipment wanCard = new Equipment () //name:"wan card#1", category: Equipment.EquipmentCategory.InterfaceCard, serialNumber:"eth 58 s/n", equipmentContainer:false, productOffering:ethCard).validate()
+        wanCard.name = "wancard#1"
+        wanCard.category =  Equipment.EquipmentCategory.InterfaceCard
+        wanCard.serialNumber = "abc 123 s/n"
+        wanCard.equipmentContainer = true
+        wanCard.productOffering = ethCard
+        if (wanCard.hasErrors()) {
+            println "wan card errors"
+            wanCard.errors.fieldErrors.each { FieldError e -> println "field: '{$e.field}', rejectedVale:'$e.rejectedValue' "}
+        } else
+            wanCard.save()
+
+        assert Equipment.count() == 2
 
         router.addToBuildConfiguration(chasis)
         router.addToBuildConfiguration(wanCard)

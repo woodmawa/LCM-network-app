@@ -1,5 +1,7 @@
 package com.softwood.domain
 
+import org.hibernate.FetchMode
+
 /**
  * logical construct to represent hardware or software that is performing a recognised role
  * and has name and management identity
@@ -18,7 +20,8 @@ class Device extends ManagedEntity {
     Collection<Alias> aliasNames = []
 
 
-    boolean isFreeStanding = false
+    boolean freeStanding = false
+    boolean testDevice = false
     ProductOffering productType  //ref to portfolio offering if exists
     String deviceStatus = "Operational"  //or Ceased or ...
     String licenceType  //e.g. for cisco 903 would be one of  "metro servcices", or "metro Ip services", "metro aggregation services"
@@ -28,12 +31,20 @@ class Device extends ManagedEntity {
     String numberOfCpu
     Software runtimeOS
 
+    boolean isTestEntity () {
+        testDevice
+    }
+
+    boolean isFreeStanding () {
+        freeStanding
+    }
+
     static hasMany = [deviceRoles: Resource, roles: Resource.ResourceRoleType, attributes:FlexAttribute, buildConfiguration: Equipment, interfaces:Interface, aliasNames:Alias]
 
     static belongsTo = [org:OrgRoleInstance]
 
-    //configure eager fetch strategies
-    static mapping = {
+    //configure eager fetch strategies - may be better as a query
+    /*static mapping = {
         attributes batchSize: 30
         domain eager: true
         interfaces lazy: false
@@ -41,7 +52,7 @@ class Device extends ManagedEntity {
         site eager:true
         location eager:true
         runtimeOS eager:true
-    }
+    }*/
 
 
     static constraints = {
@@ -64,5 +75,23 @@ class Device extends ManagedEntity {
         aliasNames nullable:true
     }
 
+    String toString () {
+        "Device (manHostname:$manHostName, opState:$opStatus)[id:$id]"
+    }
 
+    //Queries
+    static getFullDevice (Serializable id) {
+        Device.withCriteria (uniqueResult:true) {
+            join 'domain'
+            join 'site'
+            join 'location'
+            join 'runtimeOS'
+            fetchMode 'interfaces', FetchMode.SELECT
+            fetchMode 'attributes', FetchMode.SELECT
+            fetchMode 'aliasNames', FetchMode.SELECT
+            fetchMode 'buildConfiguration', FetchMode.SELECT
+
+            idEq (id as Long)
+        }
+    }
 }

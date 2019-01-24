@@ -1,6 +1,6 @@
 package com.softwood.domain
 
-abstract class PhysicalResource {
+abstract class PhysicalResource extends Resource {
 
     enum ResourceUnitOfMeasure {
         Meters,
@@ -13,10 +13,18 @@ abstract class PhysicalResource {
         Ounces
     }
 
+    enum RackUnit {
+        oneU,
+        twoU,
+        threeU,
+        fourU
+    }
+
     ResourceUnitOfMeasure dimUom = ResourceUnitOfMeasure.Millimeters
     float depth
     float width
     float height
+    RackUnit uSize
 
     ResourceUnitOfMeasure weightUom = ResourceUnitOfMeasure.Kilogrammes
     float weight
@@ -28,6 +36,7 @@ abstract class PhysicalResource {
         width ()
         height()
         weight ()
+        uSize nullable:true
     }
 
     static mapping = {

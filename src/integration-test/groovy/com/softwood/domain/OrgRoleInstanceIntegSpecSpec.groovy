@@ -171,4 +171,46 @@ class OrgRoleInstanceIntegSpecSpec extends Specification {
 
     }
 
+    void "query by finderById with multiple eager fetch in map conditions " () {
+
+        given :
+
+
+        when: "we print value from a collection, throws an multiple bag  exception "
+
+        def org = OrgRoleInstance.findById (7L, [fetch:[sites:"eager", domains:"eager"]])
+        println org.domains[0].name
+
+        then:
+        org.hibernate.loader.MultipleBagFetchException ex = thrown()
+
+
+    }
+
+    void "query withCriteria to do  multiple eager fetch in map conditions " () {
+
+        given :
+
+
+        def org = OrgRoleInstance.withCriteria (uniqueResult: true) {
+            fetchMode 'sites', FetchMode.SELECT
+            fetchMode 'domains', FetchMode.SELECT
+            idEq (7L)
+            sites {}
+            domains {}
+
+        }
+
+
+        when: "we print value from a collection "
+
+        println org.domains[0].name
+
+        then:
+        org.domains.size() == 1
+        org.sites.size() == 2
+
+
+    }
+
 }
