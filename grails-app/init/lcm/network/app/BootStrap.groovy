@@ -12,6 +12,7 @@ import com.softwood.domain.Resource
 import com.softwood.domain.Site
 import com.softwood.domain.Location
 import com.softwood.domain.Software
+import grails.util.Environment
 import org.springframework.validation.FieldError
 
 import java.time.LocalDateTime
@@ -20,8 +21,10 @@ class BootStrap {
 
     def init = { servletContext ->
 
-        if (OrgRoleInstance.count() == 0 )
-            initialiseBootstrapDb()
+        if (Environment.current == Environment.DEVELOPMENT || Environment.current == Environment.TEST) {
+            if (OrgRoleInstance.count() == 0)
+                initialiseBootstrapDb()
+        }
 
     }
 
