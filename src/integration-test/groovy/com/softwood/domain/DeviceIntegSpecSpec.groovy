@@ -16,7 +16,7 @@ class DeviceIntegSpecSpec extends Specification {
     def cleanup() {
     }
 
-    void "get full device with eager loading "() {
+    void "get full device query with eager loading "() {
 
         given: "use of static query method using with criteria "
 
