@@ -160,6 +160,10 @@ class OrgRoleInstanceIntegSpecSpec extends Specification {
         println "branch "+ branch.name  //try and access branch
 
         then:
+        /*
+        -- seems to do an eager fetch on sites+domains, even though i didnt ask it to
+         not quite sure why - separate exploration round that i think
+         */
         //LazyInitializationException ex = thrown()
         orgs.size() == 1
         orgs[0].sites.size() == 2
