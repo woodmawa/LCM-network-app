@@ -3,7 +3,7 @@ package com.softwood.domain
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class ProductOfferingSpec extends Specification implements DomainUnitTest<ProductOffering> {
+class EntityRelationshipSpec extends Specification implements DomainUnitTest<EntityRelationship> {
 
     def setup() {
     }

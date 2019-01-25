@@ -22,7 +22,7 @@ class Device extends ManagedEntity {
 
     boolean freeStanding = false
     boolean testDevice = false
-    ProductOffering productType  //ref to portfolio offering if exists
+    Product product  //ref to portfolio offering if exists
     String deviceStatus = "Operational"  //or Ceased or ...
     String licenceType  //e.g. for cisco 903 would be one of  "metro servcices", or "metro Ip services", "metro aggregation services"
     String licence = "none"
@@ -61,7 +61,7 @@ class Device extends ManagedEntity {
         location nullable:true
         roles nullable:true
         domain nullable:true
-        productType nullable:true
+        product nullable:true
         deviceStatus nullable:true
         licenceType nullable:true
         licence nullable:true

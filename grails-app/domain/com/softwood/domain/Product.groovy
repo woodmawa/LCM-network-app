@@ -1,6 +1,6 @@
 package com.softwood.domain
 
-class ProductOffering {
+class Product {
 
     String offerName
     String name

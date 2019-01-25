@@ -13,7 +13,7 @@ class EndOfLife {
     LocalDate endOfNewServiceDate
     LocalDate endOfContractRenewal
     LocalDate lastDateOfSupport
-    ProductOffering product
+    Product product
 
 
     static constraints = {

@@ -4,6 +4,7 @@ class Equipment extends PhysicalResource {
 
     enum EquipmentCategory {
         Chasis,
+        Module, //plugin parts for a chasis network or service
         Card,
         PowerSupply,
         Memory,
@@ -19,7 +20,7 @@ class Equipment extends PhysicalResource {
     EquipmentCategory category
     String serialNumber
     String assetTag
-    ProductOffering productOffering
+    Product product
     Device device
 
     boolean isEquipmentContainer() {
@@ -31,7 +32,7 @@ class Equipment extends PhysicalResource {
         category nullable:false
         assetTag nullable:true
         serialNumber nullable:true
-        productOffering nullable:true
+        product nullable:true
         device nullable:true
     }
 

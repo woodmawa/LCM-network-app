@@ -7,7 +7,7 @@ import com.softwood.domain.Interface
 import com.softwood.domain.Location
 import com.softwood.domain.NetworkDomain
 import com.softwood.domain.OrgRoleInstance
-import com.softwood.domain.ProductOffering
+import com.softwood.domain.Product
 import com.softwood.domain.Resource
 import com.softwood.domain.Site
 import com.softwood.domain.Software
@@ -32,14 +32,14 @@ class DeviceServiceSpec extends Specification implements ServiceUnitTest<DeviceS
         mockDomain Site
         mockDomain Location
         mockDomain Software
-        mockDomain ProductOffering
+        mockDomain Product
         mockDomain OrgRoleInstance
 
 
-        ProductOffering ethCard = new ProductOffering (name:"8-port 10 Gigabit Ethernet Fiber Module", partNumber: "WS-X6908-10G-2T (with DFC4)")
-        ProductOffering chasis6509 = new ProductOffering (name:"Cisco Catalyst 6509 Enhanced Chassis", partNumber: "WS-C6509-E")
-        ProductOffering sw6509 = new ProductOffering (name:"Cisco Switch/Router 6509-E bundle", model:"6509-E", partNumber: "6509-B)")
-        ProductOffering.saveAll([sw6509,chasis6509, ethCard])
+        Product ethCard = new Product (name:"8-port 10 Gigabit Ethernet Fiber Module", partNumber: "WS-X6908-10G-2T (with DFC4)")
+        Product chasis6509 = new Product (name:"Cisco Catalyst 6509 Enhanced Chassis", partNumber: "WS-C6509-E")
+        Product sw6509 = new Product (name:"Cisco Switch/Router 6509-E bundle", model:"6509-E", partNumber: "6509-B)")
+        Product.saveAll([sw6509, chasis6509, ethCard])
 
         OrgRoleInstance ciscoSupplier = new OrgRoleInstance(role: OrgRoleInstance.OrgRoleType.Supplier, name:"Cisco" )
         ciscoSupplier.save(flush:true)
@@ -63,7 +63,7 @@ class DeviceServiceSpec extends Specification implements ServiceUnitTest<DeviceS
 
 
         Device router = new Device ()
-        router.productType = sw6509
+        router.product = sw6509
         router.name = "ACME-HO-WAN1"
         router.installedDate = LocalDateTime.now()
         router.isVirtual = false

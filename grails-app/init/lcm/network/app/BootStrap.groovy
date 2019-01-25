@@ -7,7 +7,7 @@ import com.softwood.domain.FlexAttribute
 import com.softwood.domain.MaintenanceAgreement
 import com.softwood.domain.NetworkDomain
 import com.softwood.domain.OrgRoleInstance
-import com.softwood.domain.ProductOffering
+import com.softwood.domain.Product
 import com.softwood.domain.Resource
 import com.softwood.domain.Site
 import com.softwood.domain.Location
@@ -85,15 +85,15 @@ class BootStrap {
         ios.save (failonError:true)
         assert Software.count() ==1
 
-        ProductOffering ethCard = new ProductOffering (name:"8-port 10 Gigabit Ethernet Fiber Module", partNumber: "WS-X6908-10G-2T (with DFC4)")
-        ProductOffering chasis6509 = new ProductOffering (name:"Cisco Catalyst 6509 Enhanced Chassis", partNumber: "WS-C6509-E")
-        ProductOffering sw6509 = new ProductOffering (name:"Cisco Switch/Router 6509-E bundle", model:"6509-E", partNumber: "6509-B)")
-        ProductOffering.saveAll([sw6509,chasis6509, ethCard])
-        assert ProductOffering.count() == 3
+        Product ethCard = new Product (name:"8-port 10 Gigabit Ethernet Fiber Module", partNumber: "WS-X6908-10G-2T (with DFC4)")
+        Product chasis6509 = new Product (name:"Cisco Catalyst 6509 Enhanced Chassis", partNumber: "WS-C6509-E")
+        Product sw6509 = new Product (name:"Cisco Switch/Router 6509-E bundle", model:"6509-E", partNumber: "6509-B)")
+        Product.saveAll([sw6509, chasis6509, ethCard])
+        assert Product.count() == 3
 
         Device router = new Device ()
         router.testDevice = true
-        router.productType = sw6509
+        router.product = sw6509
         router.name = "ACME-HO-WAN1"
         router.installedDate = LocalDateTime.now()
         router.isVirtual = false
@@ -131,7 +131,7 @@ class BootStrap {
         chasis.category =  Equipment.EquipmentCategory.Chasis
         chasis.serialNumber = "abc 123 s/n"
         chasis.equipmentContainer = true
-        chasis.productOffering = chasis6509
+        chasis.product = chasis6509
         chasis.validate()
         if (chasis.hasErrors()) {
             println "chasis errors"
@@ -143,7 +143,7 @@ class BootStrap {
         wanCard.category =  Equipment.EquipmentCategory.InterfaceCard
         wanCard.serialNumber = "abc 123 s/n"
         wanCard.equipmentContainer = true
-        wanCard.productOffering = ethCard
+        wanCard.product = ethCard
         if (wanCard.hasErrors()) {
             println "wan card errors"
             wanCard.errors.fieldErrors.each { FieldError e -> println "field: '{$e.field}', rejectedVale:'$e.rejectedValue' "}
