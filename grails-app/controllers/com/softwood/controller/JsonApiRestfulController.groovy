@@ -5,9 +5,12 @@ import com.softwood.service.JsonApiProcessorService
 import grails.artefact.Artefact
 import grails.gorm.transactions.ReadOnly
 import grails.rest.RestfulController
+import grails.web.http.HttpHeaders
 import org.apache.catalina.connector.RequestFacade
 import org.springframework.http.HttpRequest
 import org.springframework.web.util.ContentCachingRequestWrapper
+import grails.gorm.transactions.Transactional
+import org.springframework.http.HttpStatus
 
 /**
  * extending base class to process JsonApi body content messages
@@ -72,6 +75,7 @@ class JsonApiRestfulController<T> extends RestfulController<T> {
 
     @Override
     protected  T createResource() {
+
         def instance = resource.newInstance()
         RequestFacade requestFacade = getObjectToBind()
         long bodyLength = cachedRequest.getContentLengthLong()
@@ -98,8 +102,49 @@ class JsonApiRestfulController<T> extends RestfulController<T> {
     }
 
     @Override
-    protected  T updateResource (T resource) {
+    @Transactional
+    def update () {
 
+        if (handleReadOnly())
+            return
+
+        T instance =  queryForResource (params.id)
+        if (instance == null){
+            //wont compile
+            transactionStatus.setRollbackOnly() //- cant resolve
+        }
+
+        RequestFacade requestFacade = getObjectToBind()
+        long bodyLength = cachedRequest.getContentLengthLong()
+        Map params = cachedRequest.getParameterMap()
+
+        //already read stream in getObjectToBind() - used cached copy
+        String jsonBody = new String (cachedRequest.getContentAsByteArray())
+
+        def processed = jsonApiProcessorService.processBody (jsonBody, resource, params)
+
+        bindData instance, processed //save() method will do the instance.validate() call
+
+        instance.validate()
+        if (instance.hasErrors()) {
+            transactionStatus.setRollbackOnly() //- cant resolve
+            respond instance.errors, view:'edit'  //status code 422
+            return
+        }
+
+        updateResource (instance)
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [classMessageArg, instance.id])
+                redirect instance
+            }
+            '*'{
+                response.addHeader(HttpHeaders.LOCATION,
+                        grailsLinkGenerator.link( resource: this.controllerName, action: 'show',id: instance.id, absolute: true,
+                                namespace: hasProperty('namespace') ? this.namespace : null ))
+                respond instance, [status: OK]
+            }
+        }
     }
 
 
