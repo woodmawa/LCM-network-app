@@ -75,7 +75,7 @@ class JsonApiRestfulController<T> extends RestfulController<T> {
         def instance = resource.newInstance()
         RequestFacade requestFacade = getObjectToBind()
         long bodyLength = cachedRequest.getContentLengthLong()
-        Map params = request.getParameterMap()
+        Map params = cachedRequest.getParameterMap()
 
         //already read stream in getObjectToBind() - used cached copy
         String jsonBody = new String (cachedRequest.getContentAsByteArray())
