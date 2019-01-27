@@ -1,15 +1,14 @@
 package com.softwood.controller
 
-import com.softwood.domain.OrgRoleInstance
 import com.softwood.service.JsonApiProcessorService
 import grails.artefact.Artefact
 import grails.gorm.transactions.ReadOnly
+import grails.gorm.transactions.Transactional
 import grails.rest.RestfulController
 import grails.web.http.HttpHeaders
 import org.apache.catalina.connector.RequestFacade
 import org.springframework.http.HttpRequest
 import org.springframework.web.util.ContentCachingRequestWrapper
-import grails.gorm.transactions.Transactional
 import org.springframework.http.HttpStatus
 
 /**
@@ -23,7 +22,7 @@ import org.springframework.http.HttpStatus
 @Artefact("Controller")
 @ReadOnly
 class JsonApiRestfulController<T> extends RestfulController<T> {
-
+    static allowedMethods = [save: "POST", update: ["PUT", "POST"], patch: "PATCH", delete: "DELETE"]
 
     ContentCachingRequestWrapper cachedRequest
 
@@ -33,7 +32,7 @@ class JsonApiRestfulController<T> extends RestfulController<T> {
     }
 
 
-     //inject service
+     //inject grails service here
     JsonApiProcessorService jsonApiProcessorService
 
     //provide version that does a eager fetch on sites
