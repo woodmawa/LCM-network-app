@@ -3,6 +3,8 @@ package com.softwood.service
 import com.softwood.domain.MaintenanceAgreement
 import com.softwood.domain.NetworkDomain
 import com.softwood.domain.Site
+import grails.core.GrailsApplication
+import grails.core.GrailsClass
 import grails.gorm.transactions.Transactional
 import grails.web.databinding.DataBinder
 import grails.web.databinding.DataBindingUtils
@@ -19,6 +21,9 @@ import org.springframework.validation.BindingResult
 
 @Transactional
 class JsonApiProcessorService implements DataBinder{
+
+    //get injected one
+    static GrailsApplication grailsApplication
 
     /**
      * expects to see jsonBody text from a post or patch etc
@@ -45,15 +50,15 @@ class JsonApiProcessorService implements DataBinder{
         //json views  api seems to show the class starting in lower case - change to uppercase as normal for a class
         //json api is not clear about expression for type - appears to lean towards the resource name rather than
         //an actual type in the jvm.
-        String dataType = convertFirstCharToUppercase (bodyDataType)
-        Map attributes = body.data.attributes
-        Map relationships = body.data.relationships
+        //String dataType = convertFirstCharToUppercase (bodyDataType)
+        Map attributes = body.data.'attributes'
+        Map relationships = body.data.'relationships'
+        List included = body.'included'
 
         //wrap in a try block
         //def jsonClassRef = Class.forName(toToBindString) - https://stackoverflow.com/questions/13215403/finding-a-class-reflectively-by-its-simple-name-alone
         //assume users know what they are doing ! - just sanity check simple name
         String resClassSimpleName = resource.getSimpleName()
-        assert dataType == resClassSimpleName  //might to review thia assert but ok for now
 
         // bind the simple attributes first
         bindData(instance, attributes)
@@ -88,49 +93,78 @@ class JsonApiProcessorService implements DataBinder{
             for (item in dataArray) {
                 def jsonType = item['type']
                 //convert first char to uppercase
-                String type = convertFirstCharToUppercase (jsonType)
-                Class<?> domainClass = domainClassLookupByName (type)
-                def id = Long.parseLong (item['id'])
+                def logicalPropertyName = jsonType
+                Class<?> refDomainClass = domainClassLookupByName (logicalPropertyName)
+                def id = Long.parseLong (item['id'] ?: "0")
 
                 //with type and id try and find in existing domain model
-                def refEntity
-                if (domainClass) {
-                    if (item['id'])
-                        refEntity = domainClass.get (id)  //if id present try for lookup by (id)L
-                    else {
-                        //create new ref'd instance
-                        refEntity = domainClass.newInstance()
-                        // todo  find in cludes = pul;l data and recurse
-                        //now find any details from include tag and build in to new object
-                    }
+                def refEntities = []
+                if (refDomainClass) {
+                    refEntities  = findMatchingIncludeDetail (refDomainClass, included, logicalPropertyName, id)
                 }
                 //help cant overwrite foreign key - clone the mag?
-                if (refEntity) {
+                for (refEntity in refEntities) {
                     MetaProperty mprop = target?.metaClass.getMetaProperty("$tag")
-                    if (mprop?.type.isAssignableFrom(Collection))
+                    if (mprop?.type.isAssignableFrom(Collection)) {
+                        //if collection type in domain class instance - invoke addTo method
                         if (instance["$tag"] == null)
                             instance["$tag"] = []
-                    def prop = convertFirstCharToUppercase(tag)
-                    target."addTo$prop" (refEntity)
-                    //if (refEntity.validate())
-                    //refEntity.save (failOnError:true)
+                        def prop = convertFirstCharToUppercase(tag)
+                        target."addTo$prop"(refEntity)
+                    } else {
+                        //else set entity into single ref association
+                        instance["tag"] = refEntity
+                    }
                 }
                 target
             }
         }
         instance.validate()
         if (instance.hasErrors()) {
+            log.debug "jsonApiProcessorService: generated domain object has errors"
             println "jsonApiProcessorService: generated domain object has errors"
         }
         instance
     }
 
-    //pretty dumb to start
-    protected static domainClassLookupByName (String name) {
-        // do something cleverer later : https://stackoverflow.com/questions/1308961/how-do-i-get-a-list-of-packages-and-or-classes-on-the-classpath
-        Map lookups = [MaintenanceAgreement: MaintenanceAgreement, Site: Site, NetworkDomain: NetworkDomain]
+    /**
+     * using type name returned from jsonApi type: {} treat this as match for the
+     * Artefact.logicalPropertyName or Artefact.fullName
+     * *
+     * @param domainClazzName (either full canonical format or lower case propertyName format
+     * @return
+     */
+    protected static domainClassLookupByName (String domainClazzName) {
 
-        lookups["$name"]
+
+        assert grailsApplication
+
+        boolean fullClassNameFormat = false
+
+        String[] parts = domainClazzName.split (".")
+        if (parts.size() > 1)
+            fullClassNameFormat = true
+
+        GrailsClass[] matchedDomainClasses = [], allDomainClasses = []
+        allDomainClasses = grailsApplication.getArtefacts ("Domain")
+
+        matchedDomainClasses = allDomainClasses?.findAll {
+            if (fullClassNameFormat)
+                it.fullName == domainClazzName
+            else
+                it.logicalPropertyName == domainClazzName
+        }
+
+        //todo Assumes only one match - need to decide what to do with multiple matches, at mo returns null
+        if (matchedDomainClasses?.size() == 1)
+            return matchedDomainClasses[0].getClazz()
+        else
+            null
+
+        // do something cleverer later : https://stackoverflow.com/questions/1308961/how-do-i-get-a-list-of-packages-and-or-classes-on-the-classpath
+        //Map lookups = [MaintenanceAgreement: MaintenanceAgreement, Site: Site, NetworkDomain: NetworkDomain]
+
+        //lookups["$name"]
     }
 
     protected convertFirstCharToUppercase (String str) {
@@ -140,4 +174,44 @@ class JsonApiProcessorService implements DataBinder{
             str.substring(0, 1).toUpperCase() + str.substring(1)
     }
 
+    /**
+     * from the json api includes list of entries find the entry that matches on the type name /id
+     * attempts to return a valid instance of domain class referenced by logicalPropertyName
+     *
+     * @param included - Map of included records for json item
+     * @param logicalPropertyName - lower case class type name from 'type : <string>' entry
+     * @param id - id of record if exists or 0L if not
+     * @return matchedInstance - array of matched dataBound instances of domain class relationship entries  class
+     */
+    protected def findMatchingIncludeDetail (Class<?> refDomainClass, List included, String logicalPropertyName, Long id) {
+
+        def refInstance
+        def matchedInstances = []
+
+        def includedEntryAttributes = []
+        def includedEntryRelationships = [:]
+        def entries = included.findAll {
+            it
+            it?.'type' == logicalPropertyName && Long.parseLong(it?.'id' ?: "0") == id
+        }
+        for (entry in  entries) {
+            includedEntryAttributes = entries[0].'attributes'
+            includedEntryRelationships = entries[0].'relationships'
+
+            if (id == 0)
+                refInstance = refDomainClass?.newInstance()
+            else
+                refInstance = refDomainClass.get (id) //do lookup via db
+
+            //bind attributes from jsonAPi
+            if (refInstance)
+                bindData (refInstance, includedEntryAttributes)
+
+            matchedInstances << refInstance
+
+        }
+
+        //todo need to figure out what to do with relationships - some recursion
+        matchedInstances
+    }
 }

@@ -3,7 +3,7 @@ package com.softwood.controller
 import com.softwood.domain.Site
 import grails.rest.RestfulController
 
-class SiteController extends RestfulController<Site> {
+class SiteController extends JsonApiRestfulController<Site> {
     static responseFormats = ['json', 'xml']
 
     SiteController() {
