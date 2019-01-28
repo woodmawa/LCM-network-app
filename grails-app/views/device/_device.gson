@@ -8,7 +8,18 @@ import com.softwood.domain.Device
 model {
     Device device
 }
-json jsonapi.render (device, [ jsonApiObject:true, expand: ["location", "domain", "aliasNames", "runtimeOS", "interfaces", "attributes"]])
+
+def expandAttribs = []
+if (device.location) expandAttribs << "site"
+if (device.location) expandAttribs << "location"
+if (device.domain) expandAttribs << "domain"
+if (device.aliasNames) expandAttribs << "aliasNames"
+if (device.runtimeOS) expandAttribs << "runtimeOS"
+if (device.interfaces) expandAttribs << "interfaces"
+if (device.attributes) expandAttribs << "attributes"
+
+json jsonapi.render (device, [ jsonApiObject:true, expand: expandAttribs])
+
 /* - custom rendering option
 json {
     id device.id

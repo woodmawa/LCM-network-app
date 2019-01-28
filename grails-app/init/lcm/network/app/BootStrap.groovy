@@ -37,8 +37,10 @@ class BootStrap {
 
         //create VF as service provider
         OrgRoleInstance vf = new OrgRoleInstance(role: OrgRoleInstance.OrgRoleType.Service_Provider, name:"Vodafone" )
-        Site vfheadOffice = new Site (name:"Vodafone House, Newbury", status: "occupied ")
+        Site vfheadOffice = new Site (name:"Vodafone House, Newbury", status: "occupied ", siteType: Site.SiteRoleType.Headoffice)
+        Site vfPeSite = new Site (name:"Canary wharf, Docklands", status: "occupied ", siteType: Site.SiteRoleType.ProviderEdgePopSite)
         vf.addToSites(vfheadOffice)
+        vf.addToSites (vfPeSite)
 
         vf.save ()//(failOnError:true)
 
@@ -59,9 +61,11 @@ class BootStrap {
         acme.addToSites(new Site (name:"10 South Close", status:"closed"))
         acme.save ()
 
-        Location commsRoom
+        Location commsRoom, peLocation
         headOffice.addToLocations(commsRoom = new Location(name:"comms room", site:headOffice))
         headOffice.save (failOnError:true)
+        vfPeSite.addToLocations(peLocation = new Location(name:"exchange room #6" /*cascade save: ,site:vfPeSite)*/))
+        vfPeSite.save (failOnError:true)
 
         MaintenanceAgreement mag = new MaintenanceAgreement()
         mag.level = "Gold"
@@ -85,14 +89,18 @@ class BootStrap {
 
         //build master software instance 'singleton'
         Software ios = new Software (name: "IOS 13.4", version: "13.4", type: Software.SoftwareType.InternetworkOperatingSystem, supplier :ciscoSupplier )
+        Software peIos = new Software (name: "IOS XR", version: "3.4", type: Software.SoftwareType.InternetworkOperatingSystem, supplier :ciscoSupplier )
         ios.save (failonError:true)
-        assert Software.count() ==1
+        peIos.save (failonError:true)
+
+        assert Software.count() ==2
 
         Product ethCard = new Product (name:"8-port 10 Gigabit Ethernet Fiber Module", partNumber: "WS-X6908-10G-2T (with DFC4)")
         Product chasis6509 = new Product (name:"Cisco Catalyst 6509 Enhanced Chassis", partNumber: "WS-C6509-E")
         Product sw6509 = new Product (name:"Cisco Switch/Router 6509-E bundle", model:"6509-E", partNumber: "6509-B)")
-        Product.saveAll([sw6509, chasis6509, ethCard])
-        assert Product.count() == 3
+        Product asr = new Product (name:"Cisco ASR 9001 router", model:"ASR-9001", partNumber:"ASR-9000-F")
+        Product.saveAll([sw6509, chasis6509, ethCard, asr])
+        assert Product.count() == 4
 
         Device router = new Device ()
         router.testDevice = true
@@ -163,6 +171,33 @@ class BootStrap {
         router.addToAliasNames(new Alias (name:"My 6509", ipAddress: "10.2.5.1", associatedOrg:acme))
         router.save(failOnError:true)
         assert router.aliasNames.size() == 1
+
+        // add a VF PE router
+        Device PeRouter = new Device ()
+        PeRouter.testDevice = false
+        PeRouter.product = asr
+        PeRouter.name = "VF-PE-Docklands"
+        PeRouter.installedDate = LocalDateTime.now()
+        PeRouter.isVirtual = false
+        PeRouter.manHostName = "VF-PE-Docklands-1"
+        PeRouter.manIpAddress = "192.28.10.2"
+        PeRouter.ownedBy = "Vodafone Owned"
+        PeRouter.usage = "PE ASR wan router"
+        PeRouter.deviceStatus = "Operational"
+        PeRouter.org = vf
+        PeRouter.runtimeOS = peIos
+        PeRouter.site = vfPeSite
+        PeRouter.location = peLocation
+
+        //add two roles
+        PeRouter.addToRoles(Resource.ResourceRoleType.ProviderEdge)
+        PeRouter.addToRoles(Resource.ResourceRoleType.Router)
+        //add some simple attributes
+        PeRouter.addToAttributes(new FlexAttribute(type: FlexAttribute.AttributeType.Single, name:"Bandwidth", value: "10Gbit"))
+        PeRouter.addToAttributes(new FlexAttribute(type: FlexAttribute.AttributeType.Single, name:"DSCP enabled", value: "6 QoS"))
+        PeRouter.addToAttributes(new FlexAttribute(type: FlexAttribute.AttributeType.Single, name:"BGP enabled", value: "false"))
+
+        PeRouter.save (failOnError:true)
 
     }
 }

@@ -2,7 +2,20 @@ package com.softwood.domain
 
 class Site {
 
+    enum SiteRoleType {
+        Datacentre,
+        Branch,
+        Headoffice,
+        Client,
+        ProviderEdgePopSite,
+        AggregationPopSite,
+        LocalExchange,
+        Undefined
+
+    }
+
     String name
+    SiteRoleType siteType = SiteRoleType.Undefined
     OrgRoleInstance org
     String status
     Collection<Location> locations
@@ -15,6 +28,7 @@ class Site {
     static constraints = {
         org nullable: false
         name nullable: false
+        siteType nullable:false
         status nullable: true
         locations nullable: true
     }

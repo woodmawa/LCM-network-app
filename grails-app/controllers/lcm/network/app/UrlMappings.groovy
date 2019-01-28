@@ -13,7 +13,9 @@ class UrlMappings {
         //get "/api/test"(controller:"test", action:"indexInvestigation")
         //get "/api/test/$id"(controller:"test", action:"show")
         "/api/devices"(resources:'device')
-        "/api/sites"(resources:'site')
+        "/api/sites"(resources:'site') {
+            "/devices" (resources:'device')
+        }
         "/api/orgs"(resources:'OrgRoleInstance') {
             "/sites" (resources:"site")
         }

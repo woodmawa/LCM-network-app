@@ -8,4 +8,4 @@ assert orgRoleInstance
     id orgRoleInstance.id
     name orgRoleInstance.name
 }*/
-json jsonapi.render (orgRoleInstance, [expand: "sites"])
+json jsonapi.render (orgRoleInstance, [jsonApiObject:true, expand: "sites"])

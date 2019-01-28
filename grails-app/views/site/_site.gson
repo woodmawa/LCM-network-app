@@ -5,7 +5,7 @@ model {
     Site site
 }
 
-json jsonapi.render (site, [expand: "locations"])
+json jsonapi.render (site, [jsonApiObject:true, expand: "locations"])
 
 
 /*

@@ -8,7 +8,7 @@ import org.hibernate.FetchMode
  */
 class Device extends ManagedEntity {
 
-    //OrgRoleInstance org
+    OrgRoleInstance org
     Site site
     Location location
     NetworkDomain domain //can only be in one domain or zero
@@ -80,7 +80,7 @@ class Device extends ManagedEntity {
     }
 
     //Queries
-    static getFullDevice (Serializable id) {
+    static Device getFullDeviceById (Serializable id) {
         Device.withCriteria (uniqueResult:true) {
             join 'domain'
             join 'site'
@@ -92,6 +92,22 @@ class Device extends ManagedEntity {
             fetchMode 'buildConfiguration', FetchMode.SELECT
 
             idEq (id as Long)
+        }
+    }
+
+    //Queries
+    static List<Device> getFullDeviceBySite (Serializable sid) {
+        Device.withCriteria (uniqueResult:true) {
+            join 'domain'
+            join 'site'
+            join 'location'
+            join 'runtimeOS'
+            fetchMode 'interfaces', FetchMode.SELECT
+            fetchMode 'attributes', FetchMode.SELECT
+            fetchMode 'aliasNames', FetchMode.SELECT
+            fetchMode 'buildConfiguration', FetchMode.SELECT
+
+            site {idEq (sid as Long)}
         }
     }
 }

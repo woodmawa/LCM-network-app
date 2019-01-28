@@ -7,7 +7,7 @@ model {
 }
 /* renders site : {tmpl render}, once for each site */
 json (siteList) {
-    site jsonapi.render (it, [associations:false])
+    site jsonapi.render (it, [jsonApiObject:true, associations:false])
 }
 
 //for each entry in site list  - render site using default _site templ

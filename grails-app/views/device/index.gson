@@ -1,7 +1,7 @@
 import com.softwood.domain.Device
 
 model {
-    List<Device> deviceList
+    List<Device> deviceList = []
 }
 
 //for index list,  exclude associations, render as an array
