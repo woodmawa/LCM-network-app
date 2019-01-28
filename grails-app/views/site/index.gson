@@ -5,14 +5,20 @@ model {
     List<Site> siteList = []
     Integer siteCount
 }
-/*
-json.ww {
-    id indexInvestigation.id
-    org indexInvestigation.org.name
-    name indexInvestigation.name
+/* renders site : {tmpl render}, once for each site */
+json (siteList) {
+    site jsonapi.render (it, [associations:false])
+}
+
+//for each entry in site list  - render site using default _site templ
+/*siteList.each {
+    json tmpl.site (it)
 }*/
 
-/*json.indexAction (siteList) {
+
+/*
+explorations:
+    json.indexAction (siteList) {
     //siteCount siteList.size()
     //tmpl.site (it)
     //Site mySite = (Site) it
@@ -28,6 +34,6 @@ json.ww {
 //json tmpl.txt (sites:siteList)
 //json tmpl.txt (sites:siteList[0])
 
-siteList.each {
-json tmpl.txt (it)
-}
+//siteList.each {
+//json tmpl.txt (it)
+//}

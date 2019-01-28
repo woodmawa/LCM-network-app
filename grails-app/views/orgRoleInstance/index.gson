@@ -12,6 +12,7 @@ model {
 }*/
 
 //this version renders a list but you have to have a name  before the tmpl to be rendered - it cant be "" either
-json (orgRoleInstanceList) {org ->
-    orgRoleInstance tmpl.orgRoleInstance (org)
+//for index list,  exclude associations, render as an array
+json (orgRoleInstanceList) {
+    organisation jsonapi.render (it, [associations:false])
 }

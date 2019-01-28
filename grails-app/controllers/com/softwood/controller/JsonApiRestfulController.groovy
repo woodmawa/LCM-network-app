@@ -11,6 +11,10 @@ import org.springframework.http.HttpRequest
 import org.springframework.web.util.ContentCachingRequestWrapper
 import org.springframework.http.HttpStatus
 
+import java.util.Map.Entry
+
+import static org.springframework.http.HttpStatus.*
+
 /**
  * extending base class to process JsonApi body content messages
  *
@@ -38,8 +42,37 @@ class JsonApiRestfulController<T> extends RestfulController<T> {
     //provide version that does a eager fetch on sites
     @Override
     protected List<T> listAllResources (Map params) {
-        //params.putAll([sort: 'id', fetch : [sites:'join']])
-        resource.list (params )
+        cachedRequest = new ContentCachingRequestWrapper(request)
+
+        T[] result = resource.list(params)
+
+        result
+
+
+        /*
+        no easy way tot detect whether this is child rest uri, and if so what the parents
+        property that needs to be filtered for in criteria
+
+        pushed this knowledge back to developer who is extending JsonApiRestfulController as
+        they know what the filter property name is
+
+        Map domainClassIdRefsMap = params.findAll { it.getKey().endsWith ("Id") }
+
+        def parentInstance
+        Long parentId
+        for (domainClassIdRef in domainClassIdRefsMap.keySet()) {
+            parentId = Long.parseLong(params[domainClassIdRef])
+            String domainClassName = domainClassIdRef - "Id"
+            Class<?> domainClass = jsonApiProcessorService.domainClassLookupByName (domainClassName)
+        }
+
+        T[] res = resource.createCriteria (){
+            org { idEq parentId}
+
+        }.list (params)
+
+        res */
+
     }
 
 
@@ -110,7 +143,7 @@ class JsonApiRestfulController<T> extends RestfulController<T> {
         T instance =  queryForResource (params.id)
         if (instance == null){
             //wont compile
-            transactionStatus.setRollbackOnly() //- cant resolve
+            transactionStatus.setRollbackOnly() //- cant resolve  should work for @Transactional methods
         }
 
         RequestFacade requestFacade = getObjectToBind()
@@ -126,7 +159,7 @@ class JsonApiRestfulController<T> extends RestfulController<T> {
 
         instance.validate()
         if (instance.hasErrors()) {
-            transactionStatus.setRollbackOnly() //- cant resolve
+            transactionStatus.setRollbackOnly() //- cant resolve, but shows in debugger - must be injected on tx methods
             respond instance.errors, view:'edit'  //status code 422
             return
         }

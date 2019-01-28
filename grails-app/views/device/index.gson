@@ -1,0 +1,10 @@
+import com.softwood.domain.Device
+
+model {
+    List<Device> deviceList
+}
+
+//for index list,  exclude associations, render as an array
+json (deviceList) {
+    device jsonapi.render (it, [associations:false])
+}

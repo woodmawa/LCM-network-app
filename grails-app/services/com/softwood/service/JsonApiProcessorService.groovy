@@ -134,7 +134,7 @@ class JsonApiProcessorService implements DataBinder{
      * @param domainClazzName (either full canonical format or lower case propertyName format
      * @return
      */
-    protected static domainClassLookupByName (String domainClazzName) {
+    public static domainClassLookupByName (String domainClazzName) {
 
 
         assert grailsApplication
@@ -144,6 +144,10 @@ class JsonApiProcessorService implements DataBinder{
         String[] parts = domainClazzName.split (".")
         if (parts.size() > 1)
             fullClassNameFormat = true
+        else {
+            //ensure class is in logicalproperty expected format
+            domainClazzName = domainClazzName[0].toLowerCase() + domainClazzName.substring(1)
+        }
 
         GrailsClass[] matchedDomainClasses = [], allDomainClasses = []
         allDomainClasses = grailsApplication.getArtefacts ("Domain")

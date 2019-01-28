@@ -37,6 +37,9 @@ class BootStrap {
 
         //create VF as service provider
         OrgRoleInstance vf = new OrgRoleInstance(role: OrgRoleInstance.OrgRoleType.Service_Provider, name:"Vodafone" )
+        Site vfheadOffice = new Site (name:"Vodafone House, Newbury", status: "occupied ")
+        vf.addToSites(vfheadOffice)
+
         vf.save ()//(failOnError:true)
 
         //create cisco as a maintainer

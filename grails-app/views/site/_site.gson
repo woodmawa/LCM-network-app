@@ -4,8 +4,17 @@ import com.softwood.domain.Site
 model {
     Site site
 }
+
+json jsonapi.render (site, [expand: "locations"])
+
+
+/*
+
+exploration only
 json.'_siteTmpl' {
+
     id site.id
     org site.org.name
     name site.name
 }
+*/
