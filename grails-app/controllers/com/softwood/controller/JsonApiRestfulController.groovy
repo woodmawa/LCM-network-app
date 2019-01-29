@@ -50,7 +50,7 @@ class JsonApiRestfulController<T> extends RestfulController<T> {
 
 
         /*
-        no easy way tot detect whether this is child rest uri, and if so what the parents
+        no easy way to detect whether this is child rest uri, and if so what the parents
         property that needs to be filtered for in criteria
 
         pushed this knowledge back to developer who is extending JsonApiRestfulController as
@@ -133,6 +133,7 @@ class JsonApiRestfulController<T> extends RestfulController<T> {
         instance
     }
 
+    //patch will call this on way through
     @Override
     @Transactional
     def update () {

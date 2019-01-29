@@ -12,6 +12,7 @@ class Device extends ManagedEntity {
     Site site
     Location location
     NetworkDomain domain //can only be in one domain or zero
+    ProviderNetwork vfNetwork  //can be part of one CSP network domain
     //simpler option than deviceRoles - not an entity in this case but  a join table
     Collection<Resource.ResourceRoleType> roles = [] // creates device_roles table no versioning */
     Collection<FlexAttribute> attributes = []
@@ -41,7 +42,7 @@ class Device extends ManagedEntity {
 
     static hasMany = [deviceRoles: Resource, roles: Resource.ResourceRoleType, attributes:FlexAttribute, buildConfiguration: Equipment, interfaces:Interface, aliasNames:Alias]
 
-    static belongsTo = [org:OrgRoleInstance]
+    static belongsTo = [org:OrgRoleInstance]  //dont at providerNetwork as belongs to as we dont want cascade delete
 
     //configure eager fetch strategies - may be better as a query
     /*static mapping = {
@@ -60,7 +61,25 @@ class Device extends ManagedEntity {
         site nullable:true
         location nullable:true
         roles nullable:true
-        domain nullable:true
+        domain nullable:true  , validator : {NetworkDomain domain, Device dev ->
+            //assumes org has been set
+            if (domain == null)
+                return true
+            if (dev.org == null)
+                log.debug "org was null, trying to validate domain is in orgs.domains list - so org must be set first"
+            NetworkDomain[] validDomains = dev?.org?.domains ?: []
+            boolean test = validDomains.contains(domain)
+            test
+        }
+        vfNetwork nullable:true , validator : {ProviderNetwork vfNetwork, Device dev ->
+            if (vfNetwork == null)  return true
+            OrgRoleInstance vf = OrgRoleInstance.findByNameAndRole ("Vodafone", OrgRoleInstance.OrgRoleType.ServiceProvider)
+            ProviderNetwork[] networks = vf?.providerNetworks ?: []
+            boolean test = networks.contains (vfNetwork)
+            if (test == false)
+                log.debug "Vodafone provider does not yet have any ProviderNetworks to validate to, please create and save any provider networks before assigning to device, then save "
+            test
+        }//ensure its in vf's list of provider networks }*/
         product nullable:true
         deviceStatus nullable:true
         licenceType nullable:true
@@ -83,9 +102,11 @@ class Device extends ManagedEntity {
     static Device getFullDeviceById (Serializable id) {
         Device.withCriteria (uniqueResult:true) {
             join 'domain'
+            join 'providerNetwork'
             join 'site'
             join 'location'
             join 'runtimeOS'
+            fetchMode 'product', FetchMode.SELECT
             fetchMode 'interfaces', FetchMode.SELECT
             fetchMode 'attributes', FetchMode.SELECT
             fetchMode 'aliasNames', FetchMode.SELECT
@@ -99,9 +120,11 @@ class Device extends ManagedEntity {
     static List<Device> getFullDeviceBySite (Serializable sid) {
         Device.withCriteria (uniqueResult:true) {
             join 'domain'
+            join 'providerNetwork'
             join 'site'
             join 'location'
             join 'runtimeOS'
+            fetchMode 'product', FetchMode.SELECT
             fetchMode 'interfaces', FetchMode.SELECT
             fetchMode 'attributes', FetchMode.SELECT
             fetchMode 'aliasNames', FetchMode.SELECT

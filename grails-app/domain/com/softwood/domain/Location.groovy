@@ -6,6 +6,7 @@ class Location {
     String name
     String floor
     String room
+    String geoCode
 
     static belongsTo = [site:Site]
 
@@ -14,6 +15,7 @@ class Location {
         name nullable:false
         floor nullable:true
         room nullable:true
+        geoCode nullable:true
 
     }
 }

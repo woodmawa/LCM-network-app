@@ -2,7 +2,7 @@ package com.softwood.domain
 
 abstract class PhysicalResource extends Resource {
 
-    enum ResourceUnitOfMeasure {
+    static enum ResourceUnitOfMeasure {
         Meters,
         Centimeters,
         Millimeters,
@@ -13,31 +13,19 @@ abstract class PhysicalResource extends Resource {
         Ounces
     }
 
-    enum RackUnit {
+    static enum RackUnit {
+        notApplicable,
         oneU,
         twoU,
         threeU,
         fourU
     }
 
-    ResourceUnitOfMeasure dimUom = ResourceUnitOfMeasure.Millimeters
-    float depth
-    float width
-    float height
-    RackUnit uSize
-
-    ResourceUnitOfMeasure weightUom = ResourceUnitOfMeasure.Kilogrammes
-    float weight
+    String dimensions // in case you need to build manually with product link
 
     static constraints = {
-        dimUom nullable:false
-        weightUom nullable:false
-        depth ()
-        width ()
-        height()
-        weight ()
-        uSize nullable:true
-    }
+        dimensions nullable:true
+   }
 
     static mapping = {
         tablePerHierarchy false  //multiple tables+joins

@@ -9,6 +9,7 @@ import com.softwood.domain.MaintenanceAgreement
 import com.softwood.domain.NetworkDomain
 import com.softwood.domain.OrgRoleInstance
 import com.softwood.domain.Product
+import com.softwood.domain.ProviderNetwork
 import com.softwood.domain.Resource
 import com.softwood.domain.Site
 import com.softwood.domain.Location
@@ -37,18 +38,38 @@ class BootStrap {
         println " create database bootstrap records "
 
         //create VF as service provider
-        OrgRoleInstance vf = new OrgRoleInstance(role: OrgRoleInstance.OrgRoleType.Service_Provider, name:"Vodafone" )
-        Site vfheadOffice = new Site (name:"Vodafone House, Newbury", status: "occupied ", siteType: Site.SiteRoleType.Headoffice)
+        OrgRoleInstance vf = new OrgRoleInstance(role: OrgRoleInstance.OrgRoleType.ServiceProvider, name:"Vodafone" )
+
+        Site vfheadOffice = new Site (name:"Vodafone House", status: "occupied ", siteType: Site.SiteRoleType.Headoffice)
+        GeographicAddress vfHoAddress = new GeographicAddress ()
+        vfHoAddress.line1 = "The Connection"
+        vfHoAddress.townOrCity = "Newbury"
+        vfHoAddress.countyOrState = "Berkshire"
+        vfHoAddress.country = "UK"
+        vfHoAddress.postalCode = "RG14 2FN"
+        vfheadOffice.address = vfHoAddress
+
         Site vfPeSite = new Site (name:"Canary wharf, Docklands", status: "occupied ", siteType: Site.SiteRoleType.ProviderEdgePopSite)
         vfPeSite.address = new GeographicAddress (line1:"Docklands", district:"Canary Wharf", townOrCity:"London", country:"UK")
+
+        ProviderNetwork redstream = new ProviderNetwork(name:"Redstram Network", serviceProvider: vf)
+        ProviderNetwork cellnetwork = new ProviderNetwork(name:"Cell Base Station Network",  serviceProvider: vf)
+        vf.addToProviderNetworks(redstream)
+        vf.addToProviderNetworks(cellnetwork)
         vf.addToSites(vfheadOffice)
         vf.addToSites (vfPeSite)
 
-        vf.save ()//(failOnError:true)
+        vf.save (failOnError:true)
+        assert vf.providerNetworks.size() == 2
+        assert ProviderNetwork.count() == 2
 
         //create cisco as a maintainer
         OrgRoleInstance maintainer = new OrgRoleInstance(role: OrgRoleInstance.OrgRoleType.Maintainer, name:"Cisco" )
         maintainer.save(flush:true)
+
+        //create cisco as a manufacturer
+        OrgRoleInstance manufacturedByCisco = new OrgRoleInstance(role: OrgRoleInstance.OrgRoleType.Manufacturer, name:"Cisco" )
+        manufacturedByCisco.save(flush:true)
 
         OrgRoleInstance ciscoSupplier = new OrgRoleInstance(role: OrgRoleInstance.OrgRoleType.Supplier, name:"Cisco" )
         ciscoSupplier.save(flush:true)
@@ -60,14 +81,17 @@ class BootStrap {
         acme.save(failOnError:true)
         Site headOffice = new Site (name:"1 Barkley Square", status: "occupied ", org:acme)
         headOffice.save(failOnError:true)
-        acme.addToSites(new Site (name:"10 South Close", status:"closed"))
+        Site branch = new Site (name:"10 South Close", status:"open", org:acme)
+        acme.addToSites(branch)
         acme.save ()
 
-        Location commsRoom, peLocation
+        Location commsRoom, peLocation, ceLocation
         headOffice.addToLocations(commsRoom = new Location(name:"comms room", site:headOffice))
         headOffice.save (failOnError:true)
         vfPeSite.addToLocations(peLocation = new Location(name:"exchange room #6" /*cascade save: ,site:vfPeSite)*/))
         vfPeSite.save (failOnError:true)
+        branch.addToLocations (ceLocation = new Location(name:"home office"))
+        branch.save (failOnError:true)
 
         MaintenanceAgreement mag = new MaintenanceAgreement()
         mag.level = "Gold"
@@ -97,11 +121,11 @@ class BootStrap {
 
         assert Software.count() ==2
 
-        Product ethCard = new Product (name:"8-port 10 Gigabit Ethernet Fiber Module", partNumber: "WS-X6908-10G-2T (with DFC4)")
-        Product chasis6509 = new Product (name:"Cisco Catalyst 6509 Enhanced Chassis", partNumber: "WS-C6509-E")
-        Product sw6509 = new Product (name:"Cisco Switch/Router 6509-E bundle", model:"6509-E", partNumber: "6509-B)")
-        Product asr = new Product (name:"Cisco ASR 9001 router", model:"ASR-9001", partNumber:"ASR-9000-F")
-        Product.saveAll([sw6509, chasis6509, ethCard, asr])
+        Product ethCard = new Product (name:"8-port 10 Gigabit Ethernet Fiber Module", partNumber: "WS-X6908-10G-2T (with DFC4)", manufacturer: manufacturedByCisco)
+        Product chasis6509 = new Product (name:"Cisco Catalyst 6509 Enhanced Chassis", partNumber: "WS-C6509-E", equipmentContainer:true, manufacturer: manufacturedByCisco)
+        Product sw6509 = new Product (name:"Cisco Switch/Router 6509-E bundle", model:"6509-E", partNumber: "6509-B)", manufacturer: manufacturedByCisco)
+        Product asr = new Product (name:"Cisco ASR 9001 router", model:"ASR-9001", partNumber:"ASR-9000-F", manufacturer: manufacturedByCisco)
+        Product.saveAll([ethCard, chasis6509, sw6509, asr])
         assert Product.count() == 4
 
         Device router = new Device ()
@@ -163,7 +187,10 @@ class BootStrap {
         } else
             wanCard.save()
 
+        chasis.addToChildren(wanCard)
+        chasis.save (failOnError:true)
         assert Equipment.count() == 2
+        assert wanCard.parent == chasis
 
         router.addToBuildConfiguration(chasis)
         router.addToBuildConfiguration(wanCard)
@@ -200,6 +227,10 @@ class BootStrap {
         PeRouter.addToAttributes(new FlexAttribute(type: FlexAttribute.AttributeType.Single, name:"BGP enabled", value: "false"))
 
         PeRouter.save (failOnError:true)
+
+        redstream.addToDevices( PeRouter)
+        redstream.save (failOnError:true)
+
 
     }
 }

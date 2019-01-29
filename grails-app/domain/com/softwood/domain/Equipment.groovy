@@ -2,7 +2,7 @@ package com.softwood.domain
 
 class Equipment extends PhysicalResource {
 
-    enum EquipmentCategory {
+    static enum EquipmentCategory {
         Chasis,
         Module, //plugin parts for a chasis network or service
         Card,
@@ -17,11 +17,18 @@ class Equipment extends PhysicalResource {
     }
 
     boolean equipmentContainer = false
+    Collection<Equipment> children
+    Equipment parent
     EquipmentCategory category
     String serialNumber
     String assetTag
-    Product product
+    RackUnit numberOfU
+    Product product   // optional - can build equipment even if no product to link to
     Device device
+    Location location  //unidirectional one to many FK - i.e. have to query for equipment as some location
+
+    static hasMany = [children: Equipment]
+    static belongsTo = [parent:Equipment]
 
     boolean isEquipmentContainer() {
         equipmentContainer
@@ -29,11 +36,16 @@ class Equipment extends PhysicalResource {
 
     static constraints = {
         equipmentContainer nullable: false
+        children nullable:true
+        parent nullable:true
         category nullable:false
         assetTag nullable:true
+        numberOfU nullable:true
         serialNumber nullable:true
+        dimensions nullable:true
         product nullable:true
         device nullable:true
+        location nullable:true
     }
 
     String toString() {

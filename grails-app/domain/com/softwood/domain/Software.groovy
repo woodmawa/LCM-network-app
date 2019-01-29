@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 class Software {
 
-    enum SoftwareType {
+    static enum SoftwareType {
         OperatingSystem,
         InternetworkOperatingSystem,
         Application,

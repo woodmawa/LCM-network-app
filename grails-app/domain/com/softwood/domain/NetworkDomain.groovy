@@ -10,5 +10,6 @@ class NetworkDomain {
     static constraints = {
         customer nullable:false
         name nullable:true
+        customer validator :{customer -> customer?.role == OrgRoleInstance.OrgRoleType.Customer}
     }
 }

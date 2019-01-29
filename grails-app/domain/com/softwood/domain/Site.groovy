@@ -2,7 +2,7 @@ package com.softwood.domain
 
 class Site {
 
-    enum SiteRoleType {
+    static enum SiteRoleType {
         Datacentre,
         Branch,
         Headoffice,
@@ -62,6 +62,7 @@ class GeographicAddress {
     String district
     String townOrCity
     String countyOrState
+    String postalCode
     String country = "UK"   //default
     String region
 
@@ -80,6 +81,7 @@ class GeographicAddress {
         district nullable:true
         townOrCity nullable:false
         countyOrState nullable: true
+        postalCode nullable:true
         country nullable:false
         region nullable: true
     }

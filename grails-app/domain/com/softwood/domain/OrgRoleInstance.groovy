@@ -2,10 +2,10 @@ package com.softwood.domain
 
 class OrgRoleInstance {
 
-    enum OrgRoleType {
+    static enum OrgRoleType {
         Supplier,
         Customer,
-        Service_Provider,
+        ServiceProvider,
         Manufacturer,
         Maintainer,
         Indeterminate
@@ -14,19 +14,21 @@ class OrgRoleInstance {
     String name
     OrgRoleType role
     Collection<NetworkDomain> domains = []
+    Collection<ProviderNetwork> providerNetworks = []
     Collection<Site> sites = []
     Collection<MaintenanceAgreement> mags       //optional only set if role is service provider
 
 
-     static hasMany = [domains : NetworkDomain, sites: Site, mags:MaintenanceAgreement]
+     static hasMany = [domains : NetworkDomain, sites: Site, mags:MaintenanceAgreement, providerNetworks:ProviderNetwork]
 
-    static mappedBy  = [mags: "maintainer"]  //disambiguate column in mags
+    static mappedBy  = [mags: "maintainer", providerNetworks: "serviceProvider"]  //disambiguate column in ProviderNetwork
 
 
     static constraints = {
         name nullable:false
         role  nullable:true
         domains nullable:true
+        providerNetworks nullable:true
         sites nullable:true
         mags nullable:true  //optional
     }
