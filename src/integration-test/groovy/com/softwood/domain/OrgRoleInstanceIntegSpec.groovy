@@ -9,7 +9,7 @@ import spock.lang.Specification
 
 @Integration
 @Rollback
-class OrgRoleInstanceIntegSpecSpec extends Specification {
+class OrgRoleInstanceIntegSpec extends Specification {
 
     //operates on separate transaction thats not rolled back
     @Shared

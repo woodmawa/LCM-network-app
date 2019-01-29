@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 
 @Integration (applicationClass = Application.class)  //appClass - overcomes problem with gorm not loading when running test
 @Rollback
-class DeviceIntegSpecSpec extends Specification {
+class DeviceIntegSpec extends Specification {
 
     def setup() {
         //rely on bootstrap data
