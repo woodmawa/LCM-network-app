@@ -16,16 +16,18 @@ class UrlMappings {
         "/api/sites"(resources:'site') {
             "/devices" (resources:'device')
         }
-        "/api/orgs"(resources:'OrgRoleInstance') {
+        "/api/orgs"(resources:'orgRoleInstance') {
             "/sites" (resources:"site")
         }
+        "/api/products"(resources:'product') {
+            "/equipment" (resources:"equipment")
+        }
 
-        "/api/test"(resources:'test')
+        /*"/api/test"(resources:'test')
         get "/api/test2/$id"(controller:"test2", action:"show")
-        get "/api/test2/$id"(controller:"test2", action:"thing")
+        get "/api/test2/$id"(controller:"test2", action:"thing")*/
 
 
-        //"/api/device"(resource:'device')
 
         "/"(view:"/index")
         "500"(view:'/error')

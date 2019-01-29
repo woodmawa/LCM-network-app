@@ -125,8 +125,9 @@ class BootStrap {
         Product chasis6509 = new Product (name:"Cisco Catalyst 6509 Enhanced Chassis", partNumber: "WS-C6509-E", equipmentContainer:true, manufacturer: manufacturedByCisco)
         Product sw6509 = new Product (name:"Cisco Switch/Router 6509-E bundle", model:"6509-E", partNumber: "6509-B)", manufacturer: manufacturedByCisco)
         Product asr = new Product (name:"Cisco ASR 9001 router", model:"ASR-9001", partNumber:"ASR-9000-F", manufacturer: manufacturedByCisco)
-        Product.saveAll([ethCard, chasis6509, sw6509, asr])
-        assert Product.count() == 4
+        Product psu = new Product (name:"Cisco 6509 Power Supply Unit", model:"PSU 123", partNumber:"PSU-ab-UK", manufacturer: manufacturedByCisco)
+        Product.saveAll([ethCard, chasis6509, sw6509, asr, psu])
+        assert Product.count() == 5
 
         Device router = new Device ()
         router.testDevice = true
@@ -179,23 +180,54 @@ class BootStrap {
         wanCard.name = "wancard#1"
         wanCard.category =  Equipment.EquipmentCategory.InterfaceCard
         wanCard.serialNumber = "abc 123 s/n"
-        wanCard.equipmentContainer = true
+        wanCard.equipmentContainer = false
         wanCard.product = ethCard
+        wanCard.validate()
         if (wanCard.hasErrors()) {
             println "wan card errors"
             wanCard.errors.fieldErrors.each { FieldError e -> println "field: '{$e.field}', rejectedVale:'$e.rejectedValue' "}
         } else
             wanCard.save()
+        Equipment wanCard2 = new Equipment () //name:"wan card#1", category: Equipment.EquipmentCategory.InterfaceCard, serialNumber:"eth 58 s/n", equipmentContainer:false, productOffering:ethCard).validate()
+        wanCard2.name = "wancard#2"
+        wanCard2.category =  Equipment.EquipmentCategory.InterfaceCard
+        wanCard2.serialNumber = "abc 789 s/n"
+        wanCard2.equipmentContainer = false
+        wanCard2.product = ethCard
+        wanCard2.validate()
+        if (wanCard2.hasErrors()) {
+            println "wan card errors"
+            wanCard2.errors.fieldErrors.each { FieldError e -> println "field: '{$e.field}', rejectedVale:'$e.rejectedValue' "}
+        } else
+            wanCard2.save()
+
+        Equipment psuFor6509 = new Equipment ()
+        psuFor6509.name = "psu#1"
+        psuFor6509.category = Equipment.EquipmentCategory.PowerSupply
+        psuFor6509.serialNumber = "psu 5-7 s/n"
+        psuFor6509.equipmentContainer = false
+        psuFor6509.product = psu
+        psuFor6509.validate()
+        if (psuFor6509.hasErrors()) {
+            println "6509 psu errors"
+            psuFor6509.errors.fieldErrors.each { FieldError e -> println "field: '{$e.field}', rejectedVale:'$e.rejectedValue' "}
+        } else
+            psuFor6509.save()
 
         chasis.addToChildren(wanCard)
+        chasis.addToChildren(wanCard2)
+        chasis.addToChildren(psuFor6509)
         chasis.save (failOnError:true)
-        assert Equipment.count() == 2
+        assert Equipment.count() == 4
         assert wanCard.parent == chasis
+        assert psuFor6509.parent == chasis
 
         router.addToBuildConfiguration(chasis)
         router.addToBuildConfiguration(wanCard)
+        router.addToBuildConfiguration(wanCard2)
+        router.addToBuildConfiguration(psuFor6509)
         router.save(failOnError:true)
-        assert router.buildConfiguration.size() == 2
+        assert router.buildConfiguration.size() == 4
 
         router.addToAliasNames(new Alias (name:"My 6509", ipAddress: "10.2.5.1", associatedOrg:acme))
         router.save(failOnError:true)

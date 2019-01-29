@@ -1,0 +1,11 @@
+import com.softwood.domain.Device
+import com.softwood.domain.Product
+
+model {
+    List<Product> productList = []
+}
+
+//for index list,  exclude associations, render as an array
+json  {
+    product jsonapi.render (productList, [jsonApiObject:true, associations:false])
+}

@@ -1,0 +1,12 @@
+
+import com.softwood.domain.Equipment
+
+
+//this gets invoked by default show method on controller
+//inherits template:"parent"
+model {
+    Equipment equipment
+}
+
+assert equipment
+json tmpl.product (equipment)

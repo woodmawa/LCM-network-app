@@ -6,5 +6,5 @@ model {
 
 //for index list,  exclude associations, render as an array
 json (deviceList) {
-    device jsonapi.render (it, [associations:false])
+    device jsonapi.render (it, [jsonApiObject:true, associations:false])
 }

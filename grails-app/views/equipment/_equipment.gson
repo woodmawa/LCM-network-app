@@ -1,0 +1,15 @@
+import com.softwood.domain.Device
+import com.softwood.domain.Equipment
+import com.softwood.domain.Product
+
+//basic device product template
+model {
+    Equipment equipment
+}
+
+def expandAttribs = []
+if (equipment.children) expandAttribs << "children"
+if (equipment.children) expandAttribs << "location"
+
+json jsonapi.render (equipment, [ jsonApiObject:true, expand: expandAttribs])
+
