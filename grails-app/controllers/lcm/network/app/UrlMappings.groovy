@@ -12,7 +12,9 @@ class UrlMappings {
         //get "/api/device"(controller:"device", action:"indexInvestigation")
         //get "/api/test"(controller:"test", action:"indexInvestigation")
         //get "/api/test/$id"(controller:"test", action:"show")
-        "/api/devices"(resources:'device')
+        "/api/devices"(resources:'device') {
+            "/equipment" (resources:"equipment")
+        }
         "/api/sites"(resources:'site') {
             "/devices" (resources:'device')
         }

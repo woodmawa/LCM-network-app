@@ -32,23 +32,40 @@ class EquipmentController extends JsonApiRestfulController<Equipment> {
         Map parentDomainClassIdRefsMap = params.findAll { it.getKey().endsWith ("Id") }
         def parentInstance
         Long parentId
+        String domainClassName
         for (domainClassIdRef in parentDomainClassIdRefsMap.keySet()) {
             parentId = Long.parseLong(params[domainClassIdRef])
-            String domainClassName = domainClassIdRef - "Id" //.substring(0, -2)
+            domainClassName = domainClassIdRef - "Id" //.substring(0, -2)
             Class<?> domainClass = jsonApiProcessorService.domainClassLookupByName (domainClassName)
         }
 
         /*here we are using knowledge that we cant detect readily at run time, that the the equipment entity
          * has a property  called product .  We use this to build the criteria search using this
-         * property and checking for match with parentId
+         * property and checkin
+         * g for match with parentId
          */
-        Equipment[] res = resource.createCriteria ().list (params) {
-            if (parentId ) {
-                product { idEq parentId }
-            }
 
+        Equipment[] resultList
+        switch (domainClassName) {
+            case "product" :
+                resultList = resource.createCriteria ().list (params) {
+                    if (parentId) {
+                        product { idEq parentId }
+                    }
+                }
+                    break
+            case "device" :
+                resultList = resource.createCriteria ().list (params) {
+                    if (parentId) {
+                        device { idEq parentId }
+                    }
+                }
+                break
+
+            default:
+                resultList = []
         }
 
-        res
+        resultList
     }
 }

@@ -6,7 +6,7 @@ model {
     List<Equipment> equipmentList = []
 }
 
-assert equipmentList
+//assert equipmentList
 //for index list,  exclude associations, render as an array
 json {
     equipment jsonapi.render (equipmentList, [jsonApiObject:true, associations:false])
