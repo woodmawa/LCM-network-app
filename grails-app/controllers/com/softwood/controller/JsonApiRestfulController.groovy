@@ -23,8 +23,8 @@ import static org.springframework.http.HttpStatus.*
  *
  * @param <T>  provided by extending controller subclasses
  */
-@Artefact("Controller")
-@ReadOnly
+//@Artefact("Controller")
+//@ReadOnly
 class JsonApiRestfulController<T> extends RestfulController<T> {
     static allowedMethods = [save: "POST", update: ["PUT", "POST"], patch: "PATCH", delete: "DELETE"]
 
