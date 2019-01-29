@@ -4,8 +4,10 @@ import com.softwood.domain.Site
 model {
     Site site
 }
-
-json jsonapi.render (site, [jsonApiObject:true, expand: "locations"])
+def expandAttributes =[]
+if (site.address) expandAttributes << "address"
+if (site.locations) expandAttributes << "locations"
+json jsonapi.render (site, [jsonApiObject:true, expand: expandAttributes])
 
 
 /*

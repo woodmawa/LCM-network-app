@@ -4,6 +4,7 @@ import com.softwood.domain.Alias
 import com.softwood.domain.Device
 import com.softwood.domain.Equipment
 import com.softwood.domain.FlexAttribute
+import com.softwood.domain.GeographicAddress
 import com.softwood.domain.MaintenanceAgreement
 import com.softwood.domain.NetworkDomain
 import com.softwood.domain.OrgRoleInstance
@@ -39,6 +40,7 @@ class BootStrap {
         OrgRoleInstance vf = new OrgRoleInstance(role: OrgRoleInstance.OrgRoleType.Service_Provider, name:"Vodafone" )
         Site vfheadOffice = new Site (name:"Vodafone House, Newbury", status: "occupied ", siteType: Site.SiteRoleType.Headoffice)
         Site vfPeSite = new Site (name:"Canary wharf, Docklands", status: "occupied ", siteType: Site.SiteRoleType.ProviderEdgePopSite)
+        vfPeSite.address = new GeographicAddress (line1:"Docklands", district:"Canary Wharf", townOrCity:"London", country:"UK")
         vf.addToSites(vfheadOffice)
         vf.addToSites (vfPeSite)
 
