@@ -16,7 +16,7 @@ import java.util.Map.Entry
 import static org.springframework.http.HttpStatus.*
 
 /**
- * extending base class to process JsonApi body content messages
+ * extending base class RestfulController to process JsonApi body content messages
  *
  * request body can only be read once
  *
@@ -25,7 +25,7 @@ import static org.springframework.http.HttpStatus.*
  */
 @Artefact("Controller")
 @ReadOnly
-class JsonApiRestfulController<T> extends RestfulController<T> {
+abstract class JsonApiRestfulController<T> extends RestfulController<T> {
     static allowedMethods = [save: "POST", update: ["PUT", "POST"], patch: "PATCH", delete: "DELETE"]
 
     ContentCachingRequestWrapper cachedRequest

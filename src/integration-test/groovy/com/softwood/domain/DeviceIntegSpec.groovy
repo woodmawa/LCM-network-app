@@ -22,14 +22,14 @@ class DeviceIntegSpec extends Specification {
 
         given: "use of static query method using with criteria "
 
-        Device d = Device.getFullDevicebyId(1)
+        Device d = Device.getFullDeviceById(1)
 
         expect:
         d.domain.is (NetworkDomain.get(1))  //eager loaded belongsTo fk assoc
         d.attributes.size() == 3            //fetchMode.select to get attributes loaded
         d.aliasNames[0].name == "My 6509"
         d.isTestDevice()
-        d.buildConfiguration.size() == 2 //has two parts a chasis (equip container ) and a card
+        d.buildConfiguration.size() == 4 //has 4 parts, a chasis (equip container ) and two cards and psu
         d.buildConfiguration[0].isEquipmentContainer()
         d.buildConfiguration[0].category == Equipment.EquipmentCategory.Chasis
         d.buildConfiguration[1].category == Equipment.EquipmentCategory.InterfaceCard
@@ -39,7 +39,7 @@ class DeviceIntegSpec extends Specification {
 
         given:
 
-        Device pe = Device.getFullDeviceById(2)
+        Device pe = Device.getFullDeviceById(2L)
 
         assert pe
 

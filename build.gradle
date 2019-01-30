@@ -71,7 +71,7 @@ dependencies {
     compile group: 'org.hibernate', name: 'hibernate-java8', version: '5.4.0.Final'
     
     compile "org.grails.plugins:views-json:1.2.10"
-    compile "com.softwood:utils:1.0-SNAPSHOT"  //include my json utils
+    //compile "com.softwood:utils:1.0-SNAPSHOT"  //include my json utils
 
 }
 
