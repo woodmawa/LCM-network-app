@@ -70,8 +70,12 @@ class DeviceIntegSpec extends Specification {
         rel.owningRole = "i need this PE "
         rel.referencedRole = "i am supporting "
 
-        ce.addToEntityReferences(rel)
-        pe.addToEntityReferencedBy(rel)
+        //ce.addToEntityReferences(rel)
+        //pe.addToEntityReferencedBy(rel)
+        ce.entityReferences << rel
+        rel.references = ce
+        //pe.entityReferencedBy << rel
+        rel.referencedBy = pe
        rel.save(failOnError:true)
 
         assert ce.entityReferences.size() == 1
@@ -82,6 +86,9 @@ class DeviceIntegSpec extends Specification {
 
         then:
 
+        rel.id > 0
+        rel.references == ce
+        rel.referencedBy == pe
         ce.owner.name == "Acme"
         ce.name == "ACME-HO-WAN1"
         EntityRelationship.count() == 1

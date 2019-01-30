@@ -24,11 +24,10 @@ abstract class RootEntity {
 
     static hasMany = [entityReferences: EntityRelationship, entityReferencedBy: EntityRelationship]
 
-    /* doesnt appear to be required - mucks up the test
     static mappedBy = [
-        entityReferences : "references",
-        entityReferencedBy : "referencedBy"
-    ]*/
+        entityReferences : "references",        //map entityReferences to EntityRelationship.references
+        entityReferencedBy : "referencedBy"     //map entityReferencedBy to EntityRelationship.referencedBy
+    ]
 
     static mapping = {
         tablePerHierarchy false  //multiple tables+joins
