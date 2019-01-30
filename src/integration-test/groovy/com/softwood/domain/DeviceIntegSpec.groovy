@@ -55,22 +55,47 @@ class DeviceIntegSpec extends Specification {
         ce.ownedBy = "Customer Owned"
         ce.usage = "HO wan router"
         ce.deviceStatus = "Operational"
-        ce.org = OrgRoleInstance.get(4) //set to acme
+        ce.owner = OrgRoleInstance.findByNameIlike("Acme") //set to acme
         ce.runtimeOS = Software.get(1)
-        ce.site = Site.get(4)
-        ce.location = Location.get(1)
+        ce.site = Site.get(4)  //10 south close belonging to acme
+        ce.location = Location.get(1)  //home office
 
         //add two roles
         ce.addToRoles(Resource.ResourceRoleType.CustomerEdge)
         ce.addToRoles(Resource.ResourceRoleType.Router)
         ce.save(failOnError:true)
 
+        EntityRelationship <Device, Device> rel = new EntityRelationship()
+        rel.name = "i need a PE"
+        rel.owningRole = "i need this PE "
+        rel.referencedRole = "i am supporting "
+
+        ce.addToEntityReferences(rel)
+        pe.addToEntityReferencedBy(rel)
+       rel.save(failOnError:true)
+
+        assert ce.entityReferences.size() == 1
+        assert ce.entityReferencedBy.size() == 0
+
+        assert pe.entityReferences.size() == 0
+        assert pe.entityReferencedBy.size() == 1
+
         then:
 
-        true
-        //ce.org.name == "ACME"
+        ce.owner.name == "Acme"
+        ce.name == "ACME-HO-WAN1"
+        EntityRelationship.count() == 1
+        ce.entityReferences.size () == 1
+        ce.entityReferencedBy.size () == 0
+        ce.entityReferences[0].name == "i need a PE"
 
+        pe.entityReferences.size () == 0
+        pe.entityReferencedBy.size () == 1
+
+        Map result = EntityRelationship.getReferencedEntitiesFrom(ce)
+        result.size() == 1
+        result["i need a PE"] == pe
 
     }
 
-    }
+}

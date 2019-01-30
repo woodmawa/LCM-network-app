@@ -13,12 +13,10 @@ class EntityRelationship<M extends RootEntity, N extends RootEntity> {
     String owningRole
     String referencedRole
 
-    M references
-    N referencedBy
+    M references  //fk to owning entity
+    N referencedBy  //fk to other end
 
-    //static belongsTo = [references: RootEntity]
-
-    static mappedBy = [references: "none", referencedBy: "none"]
+    static mappedBy = [references: "none", referencedBy: "none"]  //seems to need this here - but not in RootEntity
 
     static constraints = {
         relationshipType unique:true, nullable:true
@@ -27,5 +25,30 @@ class EntityRelationship<M extends RootEntity, N extends RootEntity> {
         references nullable:true
         referencedRole nullable:true
         referencedBy nullable:true
+    }
+
+    static EntityRelationship createRelationship(String name, M from, N to) {
+        if (from == null || to == null)
+            return null
+
+        EntityRelationship rel = new EntityRelationship()
+        rel.name = name
+        rel.owningRole = from.name
+        rel.referencedRole = to.name
+        from.addToEntityReferences (from)
+        to.addToEntityReferencedBy (to)
+        rel.save(failOnError: true)
+        rel
+
+    }
+
+    static Map<String, N> getReferencedEntitiesFrom (M from) {
+        if (from == null)
+            return []
+
+        if (!from.isAttached())
+            from.attach() //reattach to session
+
+        from.entityReferences.collect {[it.name ?: "<unknown>": it]}
     }
 }

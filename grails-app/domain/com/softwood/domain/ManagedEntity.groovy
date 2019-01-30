@@ -27,9 +27,6 @@ class ManagedEntity extends RootEntity {
     LocalDateTime installedDate
     LocalDateTime commissionedDate
 
-    //belongs to which org role
-    static belongsTo = [org:OrgRoleInstance]
-
     static constraints = {
         isManaged()
         isVirtual()

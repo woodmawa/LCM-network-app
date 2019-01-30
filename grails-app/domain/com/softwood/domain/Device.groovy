@@ -8,7 +8,8 @@ import org.hibernate.FetchMode
  */
 class Device extends ManagedEntity {
 
-    OrgRoleInstance org
+    OrgRoleInstance owner
+    OrgRoleInstance managedBy
     Site site
     Location location
     NetworkDomain domain //can only be in one domain or zero
@@ -42,7 +43,7 @@ class Device extends ManagedEntity {
 
     static hasMany = [deviceRoles: Resource, roles: Resource.ResourceRoleType, attributes:FlexAttribute, buildConfiguration: Equipment, interfaces:Interface, aliasNames:Alias]
 
-    static belongsTo = [org:OrgRoleInstance]  //dont at providerNetwork as belongs to as we dont want cascade delete
+    static belongsTo = [owner:OrgRoleInstance]  //dont at providerNetwork as belongs to as we dont want cascade delete
 
     //configure eager fetch strategies - may be better as a query
     /*static mapping = {
@@ -57,7 +58,9 @@ class Device extends ManagedEntity {
 
 
     static constraints = {
-        org nullable:true
+        owner nullable:true
+        managedBy nullable:true
+
         site nullable:true
         location nullable:true
         roles nullable:true
@@ -65,9 +68,9 @@ class Device extends ManagedEntity {
             //assumes org has been set
             if (domain == null)
                 return true
-            if (dev.org == null)
-                log.debug "org was null, trying to validate domain is in orgs.domains list - so org must be set first"
-            NetworkDomain[] validDomains = dev?.org?.domains ?: []
+            if (dev.owner == null)
+                log.debug "owner was null, trying to validate domain is in owner.domains list - so owner must be set first"
+            NetworkDomain[] validDomains = dev?.owner.domains ?: []
             boolean test = validDomains.contains(domain)
             test
         }
@@ -101,6 +104,8 @@ class Device extends ManagedEntity {
     //Queries
     static Device getFullDeviceById (Serializable id) {
         Device.withCriteria (uniqueResult:true) {
+            join 'owner'
+            join 'managedBy'
             join 'domain'
             join 'providerNetwork'
             join 'site'
@@ -119,6 +124,7 @@ class Device extends ManagedEntity {
     //Queries
     static List<Device> getFullDeviceBySite ( Long sid) {
         Device.withCriteria (uniqueResult:true) {
+            join 'managedBy'
             join 'domain'
             join 'providerNetwork'
             join 'site'

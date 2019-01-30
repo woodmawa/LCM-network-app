@@ -19,15 +19,16 @@ abstract class RootEntity {
     LocalDateTime dateCreated
     LocalDateTime lastUpdated
 
-    Collection<? extends EntityRelationship> entityReferences
-    Collection<? extends EntityRelationship> entityReferencedBy
+    Collection<? extends EntityRelationship> entityReferences = []
+    Collection<? extends EntityRelationship> entityReferencedBy = []
 
     static hasMany = [entityReferences: EntityRelationship, entityReferencedBy: EntityRelationship]
 
+    /* doesnt appear to be required - mucks up the test
     static mappedBy = [
         entityReferences : "references",
         entityReferencedBy : "referencedBy"
-    ]
+    ]*/
 
     static mapping = {
         tablePerHierarchy false  //multiple tables+joins

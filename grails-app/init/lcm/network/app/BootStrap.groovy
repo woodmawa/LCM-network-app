@@ -140,7 +140,7 @@ class BootStrap {
         router.ownedBy = "Customer Owned"
         router.usage = "HO wan router"
         router.deviceStatus = "Operational"
-        router.org = acme
+        router.owner = acme
         router.runtimeOS = ios
         router.site = headOffice
         router.location = commsRoom
@@ -235,6 +235,8 @@ class BootStrap {
 
         // add a VF PE router
         Device PeRouter = new Device ()
+        PeRouter.owner = vf
+        PeRouter.managedBy = vf
         PeRouter.testDevice = false
         PeRouter.product = asr
         PeRouter.name = "VF-PE-Docklands"
@@ -245,7 +247,6 @@ class BootStrap {
         PeRouter.ownedBy = "Vodafone Owned"
         PeRouter.usage = "PE ASR wan router"
         PeRouter.deviceStatus = "Operational"
-        PeRouter.org = vf
         PeRouter.runtimeOS = peIos
         PeRouter.site = vfPeSite
         PeRouter.location = peLocation

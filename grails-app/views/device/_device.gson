@@ -10,6 +10,8 @@ model {
 }
 
 def expandAttribs = []
+if (device.owner) expandAttribs << "owner"
+if (device.managedBy) expandAttribs << "managedBy"
 if (device.location) expandAttribs << "site"
 if (device.location) expandAttribs << "location"
 if (device.domain) expandAttribs << "domain"
