@@ -49,6 +49,16 @@ class EntityRelationship<M extends RootEntity, N extends RootEntity> {
         if (!from.isAttached())
             from.attach() //reattach to session
 
-        from.entityReferences.collect {[it.name ?: "<unknown>": it]}
+        from.entityReferences.collect {[it.name ?: "<unknown>": it.referencedBy]}
+    }
+
+    static Map<String, M> getReferencingEntitiesTo (N to) {
+        if (to == null)
+            return []
+
+        if (!to.isAttached())
+            to.attach() //reattach to session
+
+        to.entityReferencedBy.collect {[it.name ?: "<unknown>": it.references]}
     }
 }
