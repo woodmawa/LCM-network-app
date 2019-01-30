@@ -45,8 +45,8 @@ class DeviceIntegSpec extends Specification {
 
         when : "build a ce and relate the CE and PE  "
 
-        /*Device ce = new Device()
-        ce.testDevice = false
+        Device ce = new Device()
+        ce.testDevice = true
         ce.name = "ACME-HO-WAN1"
         ce.installedDate = LocalDateTime.now()
         ce.isVirtual = false
@@ -55,7 +55,7 @@ class DeviceIntegSpec extends Specification {
         ce.ownedBy = "Customer Owned"
         ce.usage = "HO wan router"
         ce.deviceStatus = "Operational"
-        ce.org = OrgRoleInstance.get(4) //acme
+        ce.org = OrgRoleInstance.get(4) //set to acme
         ce.runtimeOS = Software.get(1)
         ce.site = Site.get(4)
         ce.location = Location.get(1)
@@ -63,7 +63,7 @@ class DeviceIntegSpec extends Specification {
         //add two roles
         ce.addToRoles(Resource.ResourceRoleType.CustomerEdge)
         ce.addToRoles(Resource.ResourceRoleType.Router)
-        ce.save(failOnError:true)*/
+        ce.save(failOnError:true)
 
         then:
 

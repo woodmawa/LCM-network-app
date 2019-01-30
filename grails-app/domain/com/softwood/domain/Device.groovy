@@ -99,7 +99,7 @@ class Device extends ManagedEntity {
     }
 
     //Queries
-    static Device getFullDeviceById (/*Serializable*/ Long id) {
+    static Device getFullDeviceById (Serializable id) {
         Device.withCriteria (uniqueResult:true) {
             join 'domain'
             join 'providerNetwork'
@@ -117,7 +117,7 @@ class Device extends ManagedEntity {
     }
 
     //Queries
-    static List<Device> getFullDeviceBySite (/*Serializable*/ Long sid) {
+    static List<Device> getFullDeviceBySite ( Long sid) {
         Device.withCriteria (uniqueResult:true) {
             join 'domain'
             join 'providerNetwork'

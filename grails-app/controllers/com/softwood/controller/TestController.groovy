@@ -1,19 +1,20 @@
 package com.softwood.controller
 
+
 import com.softwood.domain.Device
-import com.softwood.utils.JsonEncodingStyle
-import com.softwood.utils.JsonUtils
+//import com.softwood.utils.JsonEncodingStyle
+//import com.softwood.utils.JsonUtils
 
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 class TestController {
-    JsonUtils jsonGenerator
+    // jsonGenerator
 
     static responseFormats = ['json', 'xml']
 
     TestController () {
-        JsonUtils.Options options = new JsonUtils.Options()
+        /*JsonUtils.Options options = new JsonUtils.Options()
         options.setExpandLevels (2)
         options.registerTypeEncodingConverter(LocalDateTime) {it.toString()}
         options.registerTypeEncodingConverter(LocalDate) {it.toString()}
@@ -21,7 +22,7 @@ class TestController {
         options.summaryClassFormEnabled(false)
         options.setJsonEncodingStyle(JsonEncodingStyle.tmf)
 
-        jsonGenerator = options.build()
+        jsonGenerator = options.build()*/
     }
 
     def index(Integer max) {
