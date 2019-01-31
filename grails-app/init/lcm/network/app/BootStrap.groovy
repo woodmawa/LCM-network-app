@@ -6,6 +6,7 @@ import com.softwood.domain.Equipment
 import com.softwood.domain.FlexAttribute
 import com.softwood.domain.GeographicAddress
 import com.softwood.domain.MaintenanceAgreement
+import com.softwood.domain.ManagedEntity
 import com.softwood.domain.NetworkDomain
 import com.softwood.domain.OrgRoleInstance
 import com.softwood.domain.Product
@@ -138,7 +139,8 @@ class BootStrap {
         router.manHostName = "VF-ACME-HO-WAN1"
         router.manIpAddress = "192.57.3.28"
         router.ownedBy = "Customer Owned"
-        router.usage = "HO wan router"
+        router.usage << ManagedEntity.UsageType.Wan
+        router.usage << ManagedEntity.UsageType.Lan
         router.deviceStatus = "Operational"
         router.owner = acme
         router.runtimeOS = ios
@@ -245,7 +247,8 @@ class BootStrap {
         PeRouter.manHostName = "VF-PE-Docklands-1"
         PeRouter.manIpAddress = "192.28.10.2"
         PeRouter.ownedBy = "Vodafone Owned"
-        PeRouter.usage = "PE ASR wan router"
+        PeRouter.usage << ManagedEntity.UsageType.Data
+        PeRouter.usage << ManagedEntity.UsageType.Wan
         PeRouter.deviceStatus = "Operational"
         PeRouter.runtimeOS = peIos
         PeRouter.site = vfPeSite

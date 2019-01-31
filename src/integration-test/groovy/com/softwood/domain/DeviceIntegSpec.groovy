@@ -119,7 +119,8 @@ class DeviceIntegSpec extends Specification {
         pe.manHostName = "TEST PE"
         pe.manIpAddress = "192.60.3.90"
         pe.ownedBy = "Service Provider Owned"
-        pe.usage = "PE router"
+        pe.usage << ManagedEntity.UsageType.Wan
+        pe.usage << ManagedEntity.UsageType.Data
         pe.deviceStatus = "Operational"
         pe.owner = OrgRoleInstance.findByNameIlike("Vodafone") //set to vf
         pe.runtimeOS = Software.get(2)
@@ -141,7 +142,9 @@ class DeviceIntegSpec extends Specification {
         ce.manHostName = "VF-ACME-HO-WAN1"
         ce.manIpAddress = "192.57.3.28"
         ce.ownedBy = "Customer Owned"
-        ce.usage = "HO wan router"
+        ce.usage = ManagedEntity.UsageType.Wan
+        ce.usage = ManagedEntity.UsageType.Lan
+        ce.usage = ManagedEntity.UsageType.Security
         ce.deviceStatus = "Operational"
         ce.owner = OrgRoleInstance.findByNameIlike("Acme") //set to acme
         ce.runtimeOS = Software.get(1)
