@@ -35,7 +35,7 @@ class DeviceIntegSpec extends Specification {
         d.buildConfiguration[1].category == Equipment.EquipmentCategory.InterfaceCard
     }
 
-    void "build relationship between two CI "() {
+    void "build relationship between PE from DB and manual built CE "() {
 
         given:
 
@@ -65,24 +65,32 @@ class DeviceIntegSpec extends Specification {
         ce.addToRoles(Resource.ResourceRoleType.Router)
         ce.save(failOnError:true)
 
-        EntityRelationship <Device, Device> rel = new EntityRelationship()
+        EntityRelationship /*<Device, Device>*/ rel = new EntityRelationship<Device, Device>()
         rel.name = "i need a PE"
         rel.owningRole = "i need this PE "
         rel.referencedRole = "i am supporting "
 
-        //ce.addToEntityReferences(rel)
-        //pe.addToEntityReferencedBy(rel)
+        ce.addToEntityReferences(rel)       //save of ce cascades here
+        //rel.referencedBy = pe
+        pe.addToEntityReferencedBy(rel)
+        rel.save(failOnError:true)           //cascade? to referencedBy?
+        rel
+
+        /*// this worked
         ce.entityReferences << rel
         rel.references = ce
         //pe.entityReferencedBy << rel
-        rel.referencedBy = pe
-       rel.save(failOnError:true)
+         rel.referencedBy = pe
+         rel.save(failOnError:true)
+*/
+
 
         assert ce.entityReferences.size() == 1
         assert ce.entityReferencedBy.size() == 0
 
         assert pe.entityReferences.size() == 0
         assert pe.entityReferencedBy.size() == 1
+        assert EntityRelationship.count() == 1
 
         then:
 
@@ -105,4 +113,133 @@ class DeviceIntegSpec extends Specification {
 
     }
 
+    //passes
+    void "build relationship between manual PE device  and manual CE Device build  "() {
+
+        given:
+
+        Device pe = new Device()
+        pe.testDevice = true
+        pe.name = "Test PE"
+        pe.installedDate = LocalDateTime.now()
+        pe.isVirtual = false
+        pe.manHostName = "TEST PE"
+        pe.manIpAddress = "192.60.3.90"
+        pe.ownedBy = "Service Provider Owned"
+        pe.usage = "PE router"
+        pe.deviceStatus = "Operational"
+        pe.owner = OrgRoleInstance.findByNameIlike("Vodafone") //set to vf
+        pe.runtimeOS = Software.get(2)
+        pe.site = Site.get(2)  //10 south close belonging to acme
+        pe.location = Location.get(2)  //home office
+
+        //add two roles
+        pe.addToRoles(Resource.ResourceRoleType.ProviderEdge)
+        pe.addToRoles(Resource.ResourceRoleType.Router)
+        pe.save(failOnError:true)
+
+        pe.save (failOnError:true)
+
+        Device ce = new Device()
+        ce.testDevice = true
+        ce.name = "ACME-HO-WAN1"
+        ce.installedDate = LocalDateTime.now()
+        ce.isVirtual = false
+        ce.manHostName = "VF-ACME-HO-WAN1"
+        ce.manIpAddress = "192.57.3.28"
+        ce.ownedBy = "Customer Owned"
+        ce.usage = "HO wan router"
+        ce.deviceStatus = "Operational"
+        ce.owner = OrgRoleInstance.findByNameIlike("Acme") //set to acme
+        ce.runtimeOS = Software.get(1)
+        ce.site = Site.get(4)  //10 south close belonging to acme
+        ce.location = Location.get(1)  //home office
+
+        //add two roles
+        ce.addToRoles(Resource.ResourceRoleType.CustomerEdge)
+        ce.addToRoles(Resource.ResourceRoleType.Router)
+        ce.save(failOnError:true)
+
+        ce.save (failOnError:true)
+
+
+        when : "build a ce and relate the CE and PE  "
+
+        EntityRelationship rel = new EntityRelationship<Device, Device>()
+        rel.name = "i need a PE"
+        rel.owningRole = "i need this PE"
+        rel.referencedRole = "i am supporting"
+
+        ce.addToEntityReferences(rel)       //save of ce cascades here
+        pe.addToEntityReferencedBy(rel)
+        rel.save(failOnError:true)           //cascade? to referencedBy?
+        rel
+
+
+
+
+        assert ce.entityReferences.size() == 1
+        assert ce.entityReferencedBy.size() == 0
+
+        assert pe.entityReferences.size() == 0
+        assert pe.entityReferencedBy.size() == 1
+        assert EntityRelationship.count() == 1
+
+        then:
+
+        rel.id > 0
+        rel.references == ce
+        rel.referencedBy == pe
+        EntityRelationship.count() == 1
+        ce.entityReferences.size () == 1
+        ce.entityReferencedBy.size () == 0
+        pe.entityReferences.size () == 0
+        pe.entityReferencedBy.size () == 1
+
+    }
+
+    //fails
+    void "build relationship between PE and CE from db  "() {
+
+        given:
+
+        Device ce = Device.findByManHostNameLike("VF-ACME-HO-WAN1")
+        Device pe = Device.getFullDeviceById(2L)
+
+
+        when:
+
+        assert ce.isAttached()
+        assert pe.isAttached()
+
+        EntityRelationship rel = new EntityRelationship<Device, Device>()
+        rel.name = "i need a PE"
+        rel.owningRole = "i need this PE"
+        rel.referencedRole = "i am supporting"
+
+        ce.addToEntityReferences(rel)       //save of ce cascades here
+        pe.addToEntityReferencedBy(rel)
+        rel.save(failOnError:true)           //cascade? to referencedBy?
+        rel
+
+
+        assert ce.entityReferences.size() == 1
+        assert ce.entityReferencedBy.size() == 0
+
+        assert pe.entityReferences.size() == 0
+        assert pe.entityReferencedBy.size() == 1
+        assert EntityRelationship.count() == 1
+
+
+        then:
+        rel.id > 0
+        rel.references == ce
+        rel.referencedBy == pe
+        EntityRelationship.count() == 1
+        ce.entityReferences.size () == 1
+        ce.entityReferencedBy.size () == 0
+        pe.entityReferences.size () == 0
+        pe.entityReferencedBy.size () == 1
+
+    }
 }

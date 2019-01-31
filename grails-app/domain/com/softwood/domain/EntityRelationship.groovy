@@ -6,17 +6,19 @@ package com.softwood.domain
  *
  *
  */
-class EntityRelationship<M extends RootEntity, N extends RootEntity> {
+class EntityRelationship<E extends RootEntity, F extends RootEntity> {
 
     String relationshipType
     String name
     String owningRole
     String referencedRole
 
-    M references  //fk to owning entity
-    N referencedBy  //fk to other end
+    E references  //fk to owning entity
+    F referencedBy  //fk to other end
 
-    static mappedBy = [references: "none", referencedBy: "none"]  //seems to need this here - but not in RootEntity
+    static belongsTo = [references:RootEntity, referencedBy:RootEntity]       //setup cascade save action ?
+
+    //static mappedBy = [references: "none", referencedBy: "none"]  //seems to need this here - but not in RootEntity
 
     static constraints = {
         relationshipType unique:true, nullable:true
@@ -27,7 +29,7 @@ class EntityRelationship<M extends RootEntity, N extends RootEntity> {
         referencedBy nullable:true
     }
 
-    static EntityRelationship createRelationship(String name, M from, N to) {
+    static EntityRelationship createRelationship(String name, E from, F to) {
         if (from == null || to == null)
             return null
 
@@ -42,7 +44,7 @@ class EntityRelationship<M extends RootEntity, N extends RootEntity> {
 
     }
 
-    static Map<String, N> getReferencedEntitiesFrom (M from) {
+    static Map<String, F> getReferencedEntitiesFrom (E from) {
         if (from == null)
             return []
 
@@ -55,7 +57,7 @@ class EntityRelationship<M extends RootEntity, N extends RootEntity> {
         results
     }
 
-    static Map<String, M> getReferencingEntitiesTo (N to) {
+    static Map<String, E> getReferencingEntitiesTo (F to) {
         if (to == null)
             return []
 
