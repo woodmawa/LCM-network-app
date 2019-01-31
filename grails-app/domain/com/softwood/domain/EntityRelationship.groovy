@@ -10,63 +10,64 @@ class EntityRelationship<E extends RootEntity, F extends RootEntity> {
 
     String relationshipType
     String name
-    String owningRole
-    String referencedRole
+    String fromRole
+    String toRole
 
-    E references  //fk to owning entity
-    F referencedBy  //fk to other end
+    E linkedFrom  //fk to owning entity
+    F linkedTo  //fk to other end
 
-    static belongsTo = [references:RootEntity, referencedBy:RootEntity]       //setup cascade save action ?
+    static belongsTo = [linkedFrom:RootEntity, linkedTo:RootEntity]       //setup cascade save action ?
 
-    //static mappedBy = [references: "none", referencedBy: "none"]  //seems to need this here - but not in RootEntity
+    //static mappedBy = [linkedFrom: "none", linkedTo: "none"]  //seems to need this here - but not in RootEntity
 
     static constraints = {
         relationshipType unique:true, nullable:true
         name nullable:true
-        owningRole nullable:true
-        references nullable:true
-        referencedRole nullable:true
-        referencedBy nullable:true
+        fromRole nullable:true
+        linkedFrom nullable:true
+        fromRole nullable:true
+        linkedTo nullable:true
     }
 
     static EntityRelationship createRelationship(String name, E from, F to) {
         if (from == null || to == null)
             return null
 
+        //overcome defect - evaluate  collection before use in entities
+        assert from.linkedTo
+        assert to.linkedFrom
         EntityRelationship rel = new EntityRelationship()
         rel.name = name
-        rel.owningRole = from.name
-        rel.referencedRole = to.name
-        from.addToEntityReferences (from)
-        to.addToEntityReferencedBy (to)
+        from.addToLinkedTo (rel)
+        to.addToLinkedFrom (rel)
         rel.save(failOnError: true)
         rel
 
     }
 
-    static Map<String, F> getReferencedEntitiesFrom (E from) {
-        if (from == null)
+    static Map<String, F> getEntitiesLinkedFromThis (E owningEntity) {
+        if (owningEntity == null)
             return []
 
-        if (!from.isAttached())
-            from.attach() //reattach to session
+        if (!owningEntity.isAttached())
+            owningEntity.attach() //reattach to session
 
         Map results = [:]
 
-        from.entityReferences.each {relationship -> results.putAll ( (relationship.name ?: "<unknown>") : relationship.referencedBy) }
+        owningEntity.linkedTo.each { relationship -> results.putAll ( (relationship.name ?: "<unknown>") : relationship.linkedTo) }
         results
     }
 
-    static Map<String, E> getReferencingEntitiesTo (F to) {
-        if (to == null)
+    static Map<String, E> getEntitiesLinkedToThis(F remoteEntity) {
+        if (remoteEntity == null)
             return []
 
-        if (!to.isAttached())
-            to.attach() //reattach to session
+        if (!remoteEntity.isAttached())
+            remoteEntity.attach() //reattach to session
 
         Map results = [:]
 
-        to.entityReferencedBy.each {relationship -> results.putAll ( (relationship.name ?: "<unknown>") : relationship.references) }
+        remoteEntity.linkedFrom.each { relationship -> results.putAll ( (relationship.name ?: "<unknown>") : relationship.linkedFrom) }
         results
     }
 }

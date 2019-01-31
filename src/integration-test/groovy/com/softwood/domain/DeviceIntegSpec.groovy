@@ -67,40 +67,40 @@ class DeviceIntegSpec extends Specification {
 
         EntityRelationship /*<Device, Device>*/ rel = new EntityRelationship<Device, Device>()
         rel.name = "i need a PE"
-        rel.owningRole = "i need this PE "
-        rel.referencedRole = "i am supporting "
+        rel.toRole = "i need this PE "
+        rel.toRole = "i am supporting "
 
         //work around for defect - have to evaluate the record from DB - before you use it
         //see https://stackoverflow.com/questions/54466290/grails-v3-3-9-gorm-defect-integration-and-dev-one-to-many-with-mappedby-upd
-        assert pe.entityReferencedBy.size() == 0
+        assert pe.linkedFrom.size() == 0
 
-        ce.addToEntityReferences(rel)       //save of ce cascades here
-        pe.addToEntityReferencedBy(rel)
-        rel.save(failOnError:true)           //cascade? to referencedBy?
+        ce.addToLinkedTo(rel)       //save of ce cascades here
+        pe.addToLinkedFrom(rel)
+        rel.save(failOnError:true)           //cascade? to linkedTo?
 
-        assert ce.entityReferences.size() == 1
-        assert ce.entityReferencedBy.size() == 0
+        assert ce.linkedTo.size() == 1
+        assert ce.linkedFrom.size() == 0
 
-        assert pe.entityReferences.size() == 0
-        assert pe.entityReferencedBy.size() == 1
+        assert pe.linkedTo.size() == 0
+        assert pe.linkedFrom.size() == 1
         assert EntityRelationship.count() == 1
 
         then:
 
         rel.id > 0
-        rel.references == ce
-        rel.referencedBy == pe
+        rel.linkedFrom == ce
+        rel.linkedTo == pe
         ce.owner.name == "Acme"
         ce.name == "ACME-HO-WAN1"
         EntityRelationship.count() == 1
-        ce.entityReferences.size () == 1
-        ce.entityReferencedBy.size () == 0
-        ce.entityReferences[0].name == "i need a PE"
+        ce.linkedTo.size () == 1
+        ce.linkedFrom.size () == 0
+        ce.linkedTo[0].name == "i need a PE"
 
-        pe.entityReferences.size () == 0
-        pe.entityReferencedBy.size () == 1
+        pe.linkedTo.size () == 0
+        pe.linkedFrom.size () == 1
 
-        Map result = EntityRelationship.getReferencedEntitiesFrom(ce)
+        Map result = EntityRelationship.getEntitiesLinkedFromThis(ce)
         result.size() == 1
         result["i need a PE"] == pe
 
@@ -160,34 +160,34 @@ class DeviceIntegSpec extends Specification {
 
         EntityRelationship rel = new EntityRelationship<Device, Device>()
         rel.name = "i need a PE"
-        rel.owningRole = "i need this PE"
-        rel.referencedRole = "i am supporting"
+        rel.toRole = "i need this PE"
+        rel.toRole = "i am supporting"
 
-        ce.addToEntityReferences(rel)       //save of ce cascades here
-        pe.addToEntityReferencedBy(rel)
-        rel.save(failOnError:true)           //cascade? to referencedBy?
+        ce.addToLinkedTo(rel)       //save of ce cascades here
+        pe.addToLinkedFrom(rel)
+        rel.save(failOnError:true)           //cascade? to linkedTo?
         rel
 
 
 
 
-        assert ce.entityReferences.size() == 1
-        assert ce.entityReferencedBy.size() == 0
+        assert ce.linkedTo.size() == 1
+        assert ce.linkedFrom.size() == 0
 
-        assert pe.entityReferences.size() == 0
-        assert pe.entityReferencedBy.size() == 1
+        assert pe.linkedTo.size() == 0
+        assert pe.linkedFrom.size() == 1
         assert EntityRelationship.count() == 1
 
         then:
 
         rel.id > 0
-        rel.references == ce
-        rel.referencedBy == pe
+        rel.linkedFrom == ce
+        rel.linkedTo == pe
         EntityRelationship.count() == 1
-        ce.entityReferences.size () == 1
-        ce.entityReferencedBy.size () == 0
-        pe.entityReferences.size () == 0
-        pe.entityReferencedBy.size () == 1
+        ce.linkedTo.size () == 1
+        ce.linkedFrom.size () == 0
+        pe.linkedTo.size () == 0
+        pe.linkedFrom.size () == 1
 
     }
 
@@ -207,32 +207,32 @@ class DeviceIntegSpec extends Specification {
 
         EntityRelationship rel = new EntityRelationship<Device, Device>()
         rel.name = "i need a PE"
-        rel.owningRole = "i need this PE"
-        rel.referencedRole = "i am supporting"
+        rel.toRole = "i need this PE"
+        rel.toRole = "i am supporting"
 
-        ce.addToEntityReferences(rel)       //save of ce cascades here
-        pe.addToEntityReferencedBy(rel)
-        rel.save(failOnError:true)           //cascade? to referencedBy?
+        ce.addToLinkedTo(rel)       //save of ce cascades here
+        pe.addToLinkedFrom(rel)
+        rel.save(failOnError:true)           //cascade? to linkedTo?
         rel
 
 
-        assert ce.entityReferences.size() == 1
-        assert ce.entityReferencedBy.size() == 0
+        assert ce.linkedTo.size() == 1
+        assert ce.linkedFrom.size() == 0
 
-        assert pe.entityReferences.size() == 0
-        assert pe.entityReferencedBy.size() == 1
+        assert pe.linkedTo.size() == 0
+        assert pe.linkedFrom.size() == 1
         assert EntityRelationship.count() == 1
 
 
         then:
         rel.id > 0
-        rel.references == ce
-        rel.referencedBy == pe
+        rel.linkedFrom == ce
+        rel.linkedTo == pe
         EntityRelationship.count() == 1
-        ce.entityReferences.size () == 1
-        ce.entityReferencedBy.size () == 0
-        pe.entityReferences.size () == 0
-        pe.entityReferencedBy.size () == 1
+        ce.linkedTo.size () == 1
+        ce.linkedFrom.size () == 0
+        pe.linkedTo.size () == 0
+        pe.linkedFrom.size () == 1
 
     }
 }

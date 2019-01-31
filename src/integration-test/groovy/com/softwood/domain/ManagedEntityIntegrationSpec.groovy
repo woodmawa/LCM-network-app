@@ -33,34 +33,34 @@ class ManagedEntityIntegrationSpec extends Specification {
 
         EntityRelationship rel = new EntityRelationship<ManagedEntity, ManagedEntity>()
         rel.name = "i need a PE"
-        rel.owningRole = "i need this PE"
-        rel.referencedRole = "i am supporting"
+        rel.toRole = "i need this PE"
+        rel.toRole = "i am supporting"
 
-        ce.addToEntityReferences(rel)       //save of ce cascades here
-        pe.addToEntityReferencedBy(rel)
-        rel.save(failOnError:true)           //cascade? to referencedBy?
+        ce.addToLinkedTo(rel)       //save of ce cascades here
+        pe.addToLinkedFrom(rel)
+        rel.save(failOnError:true)           //cascade? to linkedTo?
         rel
 
 
 
 
-        assert ce.entityReferences.size() == 1
-        assert ce.entityReferencedBy.size() == 0
+        assert ce.linkedTo.size() == 1
+        assert ce.linkedFrom.size() == 0
 
-        assert pe.entityReferences.size() == 0
-        assert pe.entityReferencedBy.size() == 1
+        assert pe.linkedTo.size() == 0
+        assert pe.linkedFrom.size() == 1
         assert EntityRelationship.count() == 1
 
         then:
 
         rel.id > 0
-        rel.references == ce
-        rel.referencedBy == pe
+        rel.linkedFrom == ce
+        rel.linkedTo == pe
         EntityRelationship.count() == 1
-        ce.entityReferences.size () == 1
-        ce.entityReferencedBy.size () == 0
-        pe.entityReferences.size () == 0
-        pe.entityReferencedBy.size () == 1
+        ce.linkedTo.size () == 1
+        ce.linkedFrom.size () == 0
+        pe.linkedTo.size () == 0
+        pe.linkedFrom.size () == 1
 
     }
 

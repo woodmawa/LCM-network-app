@@ -1,6 +1,6 @@
 package com.softwood.domain
 
-import java.time.LocalDate
+
 import java.time.LocalDateTime
 
 /**
@@ -19,14 +19,14 @@ abstract class RootEntity {
     LocalDateTime dateCreated
     LocalDateTime lastUpdated
 
-    Collection<? extends EntityRelationship> entityReferences = []
-    Collection<? extends EntityRelationship> entityReferencedBy = []
+    Collection<? extends EntityRelationship> linkedTo = []
+    Collection<? extends EntityRelationship> linkedFrom = []
 
-    static hasMany = [entityReferences: EntityRelationship, entityReferencedBy: EntityRelationship]
+    static hasMany = [linkedTo: EntityRelationship, linkedFrom: EntityRelationship]
 
     static mappedBy = [
-        entityReferences : "references",        //map entityReferences to EntityRelationship.references
-        entityReferencedBy : "referencedBy"     //map entityReferencedBy to EntityRelationship.referencedBy
+            linkedTo  : 'linkedFrom',  //map toRole to EntityRelationship.linkfrom
+            linkedFrom: 'linkedTo'     //map toRole to EntityRelationship.linkedTo
     ]
 
     static mapping = {
@@ -34,8 +34,8 @@ abstract class RootEntity {
     }
 
     static constraints = {
-        entityReferences nullable:true
-        entityReferencedBy nullable:true
+        linkedTo nullable:true
+        linkedFrom nullable:true
     }
 
     def beforeInsert() {
