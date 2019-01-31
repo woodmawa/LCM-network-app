@@ -38,7 +38,7 @@ class ManagedEntityIntegrationSpec extends Specification {
 
         ce.addToLinkedTo(rel)       //save of ce cascades here
         pe.addToLinkedFrom(rel)
-        rel.save(failOnError:true)           //cascade? to linkedTo?
+        rel.save(flush:true, failOnError:true)           //cascade? to linkedTo?
         rel
 
 
