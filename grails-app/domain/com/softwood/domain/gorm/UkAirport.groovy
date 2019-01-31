@@ -1,6 +1,6 @@
 package com.softwood.domain.gorm
 
-class UkAirport extends Airport<Flight> {
+class UkAirport extends Airport {
 
     String shortCode = "dont know"
 

@@ -1,10 +1,10 @@
 package com.softwood.domain.gorm
 
-abstract class Airport<F extends Flight> {
+abstract class Airport{
 
     String name
-    Collection<F> outboundFlights = []
-    Collection<F> inboundFlights = []
+    Collection<? extends Flight> outboundFlights = []
+    Collection<? extends Flight>  inboundFlights = []
 
     static hasMany = [outboundFlights:Flight, inboundFlights:Flight]
 

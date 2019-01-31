@@ -70,20 +70,13 @@ class DeviceIntegSpec extends Specification {
         rel.owningRole = "i need this PE "
         rel.referencedRole = "i am supporting "
 
+        //work around for defect - have to evaluate the record from DB - before you use it
+        //see https://stackoverflow.com/questions/54466290/grails-v3-3-9-gorm-defect-integration-and-dev-one-to-many-with-mappedby-upd
+        assert pe.entityReferencedBy.size() == 0
+
         ce.addToEntityReferences(rel)       //save of ce cascades here
-        //rel.referencedBy = pe
         pe.addToEntityReferencedBy(rel)
         rel.save(failOnError:true)           //cascade? to referencedBy?
-        rel
-
-        /*// this worked
-        ce.entityReferences << rel
-        rel.references = ce
-        //pe.entityReferencedBy << rel
-         rel.referencedBy = pe
-         rel.save(failOnError:true)
-*/
-
 
         assert ce.entityReferences.size() == 1
         assert ce.entityReferencedBy.size() == 0
