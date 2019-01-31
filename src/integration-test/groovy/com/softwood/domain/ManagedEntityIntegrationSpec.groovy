@@ -64,50 +64,5 @@ class ManagedEntityIntegrationSpec extends Specification {
 
     }
 
-    void "build relationship between ManagedEntity and TestEntity "() {
 
-        given:
-
-        ManagedEntity pe = new ManagedEntity (name:"PE#1")
-
-        TestEntity ce = new TestEntity (name:"Test - CE#1")
-
-        pe.save (failOnError:true)
-        ce.save (failOnError:true)
-
-
-        when : "build a ce and relate the CE and PE  "
-
-        EntityRelationship rel = new EntityRelationship<TestEntity, ManagedEntity>()
-        rel.name = "i need a PE"
-        rel.owningRole = "i need this PE"
-        rel.referencedRole = "i am supporting"
-
-        ce.addToEntityReferences(rel)       //save of ce cascades here
-        pe.addToEntityReferencedBy(rel)
-        rel.save(failOnError:true)           //cascade? to referencedBy?
-        rel
-
-
-
-
-        assert ce.entityReferences.size() == 1
-        assert ce.entityReferencedBy.size() == 0
-
-        assert pe.entityReferences.size() == 0
-        assert pe.entityReferencedBy.size() == 1
-        assert EntityRelationship.count() == 1
-
-        then:
-
-        rel.id > 0
-        rel.references == ce
-        rel.referencedBy == pe
-        EntityRelationship.count() == 1
-        ce.entityReferences.size () == 1
-        ce.entityReferencedBy.size () == 0
-        pe.entityReferences.size () == 0
-        pe.entityReferencedBy.size () == 1
-
-    }
 }
