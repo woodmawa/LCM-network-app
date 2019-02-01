@@ -1,13 +1,15 @@
 package com.softwood.domain.customUserTypes
 
-import org.hibernate.HibernateException
+/*import org.hibernate.HibernateException
 import org.hibernate.engine.spi.SessionImplementor
 import org.hibernate.type.BigDecimalType
 
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.SQLException
+*
 
+/*  - wont compile with latest
 class IpAddressUserType implements org.hibernate.usertype.UserType {
     @Override
     int[] sqlTypes() {
@@ -76,3 +78,4 @@ class IpAddressUserType implements org.hibernate.usertype.UserType {
         return original
     }
 }
+*/

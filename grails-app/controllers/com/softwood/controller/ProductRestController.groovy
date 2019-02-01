@@ -2,10 +2,10 @@ package com.softwood.controller
 
 import com.softwood.domain.Product
 
-class ProductController extends JsonApiRestfulController<Product> {
+class ProductRestController extends JsonApiRestfulController<Product> {
     static responseFormats = ['json', 'xml']
 
-    ProductController() {
+    ProductRestController() {
         super (Product)
     }
 }

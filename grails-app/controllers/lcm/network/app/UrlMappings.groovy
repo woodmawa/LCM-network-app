@@ -3,26 +3,35 @@ package lcm.network.app
 class UrlMappings {
 
     static mappings = {
-        "/$controller/$action?/$id?(.$format)?"{
+        "/$controller/$action?/$id?(.$format)?" {
             constraints {
                 // apply constraints here
             }
         }
 
+        /*"/ui/sites/$action?/$id?" (controller:"siteUI") {
+            constraints {
+                // apply constraints here
+            }
+        }*/
+
         //get "/api/device"(controller:"device", action:"indexInvestigation")
         //get "/api/test"(controller:"test", action:"indexInvestigation")
         //get "/api/test/$id"(controller:"test", action:"show")
-        "/api/devices"(resources:'device') {
-            "/equipment" (resources:"equipment")
+        /**
+         * declare Rest endpoints
+         */
+        "/api/devices"(resources:'deviceRest') {
+            "/equipment" (resources:"equipmentRest")
         }
-        "/api/sites"(resources:'site') {
-            "/devices" (resources:'device')
+        "/api/sites"(resources:'siteRest') {
+            "/devices" (resources:'deviceRest')
         }
-        "/api/orgs"(resources:'orgRoleInstance') {
-            "/sites" (resources:"site")
+        "/api/orgs"(resources:'orgRoleInstanceRest') {
+            "/sites" (resources:"siteRest")
         }
-        "/api/products"(resources:'product') {
-            "/equipment" (resources:"equipment")
+        "/api/products"(resources:'productRest') {
+            "/equipment" (resources:"equipmentRest")
         }
 
         /*"/api/test"(resources:'test')

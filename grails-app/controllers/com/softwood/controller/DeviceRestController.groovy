@@ -1,15 +1,13 @@
 package com.softwood.controller
 
 import com.softwood.domain.Device
-import com.softwood.domain.Site
-import grails.rest.RestfulController
 import org.springframework.web.util.ContentCachingRequestWrapper
 
 //@Transactional(readOnly = true)
-class DeviceController extends JsonApiRestfulController<Device> {
+class DeviceRestController extends JsonApiRestfulController<Device> {
     static responseFormats = ['json', 'xml']
 
-    DeviceController() {
+    DeviceRestController() {
         super (Device)
     }
 

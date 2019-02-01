@@ -1,13 +1,14 @@
 package com.softwood.controller
 
-import com.softwood.domain.Site
-import com.softwood.service.SiteService
+import com.softwood.controller.ui.MaintenanceAgreementController
+import com.softwood.domain.MaintenanceAgreement
+import com.softwood.service.MaintenanceAgreementService
 import grails.testing.gorm.DomainUnitTest
 import grails.testing.web.controllers.ControllerUnitTest
 import grails.validation.ValidationException
 import spock.lang.*
 
-class SiteControllerSpec extends Specification implements ControllerUnitTest<com.softwood.domain.SiteUIController>, DomainUnitTest<Site> {
+class MaintenanceAgreementControllerSpec extends Specification implements ControllerUnitTest<MaintenanceAgreementController>, DomainUnitTest<MaintenanceAgreement> {
 
     def populateValidParams(params) {
         assert params != null
@@ -19,7 +20,7 @@ class SiteControllerSpec extends Specification implements ControllerUnitTest<com
 
     void "Test the index action returns the correct model"() {
         given:
-        controller.siteService = Mock(SiteService) {
+        controller.maintenanceAgreementService = Mock(MaintenanceAgreementService) {
             1 * list(_) >> []
             1 * count() >> 0
         }
@@ -28,8 +29,8 @@ class SiteControllerSpec extends Specification implements ControllerUnitTest<com
         controller.index()
 
         then:"The model is correct"
-        !model.siteList
-        model.siteCount == 0
+        !model.maintenanceAgreementList
+        model.maintenanceAgreementCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -37,7 +38,7 @@ class SiteControllerSpec extends Specification implements ControllerUnitTest<com
         controller.create()
 
         then:"The model is correctly created"
-        model.site!= null
+        model.maintenanceAgreement!= null
     }
 
     void "Test the save action with a null instance"() {
@@ -47,14 +48,14 @@ class SiteControllerSpec extends Specification implements ControllerUnitTest<com
         controller.save(null)
 
         then:"A 404 error is returned"
-        response.redirectedUrl == '/site/index'
+        response.redirectedUrl == '/maintenanceAgreement/index'
         flash.message != null
     }
 
     void "Test the save action correctly persists"() {
         given:
-        controller.siteService = Mock(SiteService) {
-            1 * save(_ as Site)
+        controller.maintenanceAgreementService = Mock(MaintenanceAgreementService) {
+            1 * save(_ as MaintenanceAgreement)
         }
 
         when:"The save action is executed with a valid instance"
@@ -62,38 +63,38 @@ class SiteControllerSpec extends Specification implements ControllerUnitTest<com
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'POST'
         populateValidParams(params)
-        def site = new Site(params)
-        site.id = 1
+        def maintenanceAgreement = new MaintenanceAgreement(params)
+        maintenanceAgreement.id = 1
 
-        controller.save(site)
+        controller.save(maintenanceAgreement)
 
         then:"A redirect is issued to the show action"
-        response.redirectedUrl == '/site/show/1'
+        response.redirectedUrl == '/maintenanceAgreement/show/1'
         controller.flash.message != null
     }
 
     void "Test the save action with an invalid instance"() {
         given:
-        controller.siteService = Mock(SiteService) {
-            1 * save(_ as Site) >> { Site site ->
-                throw new ValidationException("Invalid instance", site.errors)
+        controller.maintenanceAgreementService = Mock(MaintenanceAgreementService) {
+            1 * save(_ as MaintenanceAgreement) >> { MaintenanceAgreement maintenanceAgreement ->
+                throw new ValidationException("Invalid instance", maintenanceAgreement.errors)
             }
         }
 
         when:"The save action is executed with an invalid instance"
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'POST'
-        def site = new Site()
-        controller.save(site)
+        def maintenanceAgreement = new MaintenanceAgreement()
+        controller.save(maintenanceAgreement)
 
         then:"The create view is rendered again with the correct model"
-        model.site != null
+        model.maintenanceAgreement != null
         view == 'create'
     }
 
     void "Test the show action with a null id"() {
         given:
-        controller.siteService = Mock(SiteService) {
+        controller.maintenanceAgreementService = Mock(MaintenanceAgreementService) {
             1 * get(null) >> null
         }
 
@@ -106,20 +107,20 @@ class SiteControllerSpec extends Specification implements ControllerUnitTest<com
 
     void "Test the show action with a valid id"() {
         given:
-        controller.siteService = Mock(SiteService) {
-            1 * get(2) >> new Site()
+        controller.maintenanceAgreementService = Mock(MaintenanceAgreementService) {
+            1 * get(2) >> new MaintenanceAgreement()
         }
 
         when:"A domain instance is passed to the show action"
         controller.show(2)
 
         then:"A model is populated containing the domain instance"
-        model.site instanceof Site
+        model.maintenanceAgreement instanceof MaintenanceAgreement
     }
 
     void "Test the edit action with a null id"() {
         given:
-        controller.siteService = Mock(SiteService) {
+        controller.maintenanceAgreementService = Mock(MaintenanceAgreementService) {
             1 * get(null) >> null
         }
 
@@ -132,15 +133,15 @@ class SiteControllerSpec extends Specification implements ControllerUnitTest<com
 
     void "Test the edit action with a valid id"() {
         given:
-        controller.siteService = Mock(SiteService) {
-            1 * get(2) >> new Site()
+        controller.maintenanceAgreementService = Mock(MaintenanceAgreementService) {
+            1 * get(2) >> new MaintenanceAgreement()
         }
 
         when:"A domain instance is passed to the show action"
         controller.edit(2)
 
         then:"A model is populated containing the domain instance"
-        model.site instanceof Site
+        model.maintenanceAgreement instanceof MaintenanceAgreement
     }
 
 
@@ -151,14 +152,14 @@ class SiteControllerSpec extends Specification implements ControllerUnitTest<com
         controller.update(null)
 
         then:"A 404 error is returned"
-        response.redirectedUrl == '/site/index'
+        response.redirectedUrl == '/maintenanceAgreement/index'
         flash.message != null
     }
 
     void "Test the update action correctly persists"() {
         given:
-        controller.siteService = Mock(SiteService) {
-            1 * save(_ as Site)
+        controller.maintenanceAgreementService = Mock(MaintenanceAgreementService) {
+            1 * save(_ as MaintenanceAgreement)
         }
 
         when:"The save action is executed with a valid instance"
@@ -166,31 +167,31 @@ class SiteControllerSpec extends Specification implements ControllerUnitTest<com
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'PUT'
         populateValidParams(params)
-        def site = new Site(params)
-        site.id = 1
+        def maintenanceAgreement = new MaintenanceAgreement(params)
+        maintenanceAgreement.id = 1
 
-        controller.update(site)
+        controller.update(maintenanceAgreement)
 
         then:"A redirect is issued to the show action"
-        response.redirectedUrl == '/site/show/1'
+        response.redirectedUrl == '/maintenanceAgreement/show/1'
         controller.flash.message != null
     }
 
     void "Test the update action with an invalid instance"() {
         given:
-        controller.siteService = Mock(SiteService) {
-            1 * save(_ as Site) >> { Site site ->
-                throw new ValidationException("Invalid instance", site.errors)
+        controller.maintenanceAgreementService = Mock(MaintenanceAgreementService) {
+            1 * save(_ as MaintenanceAgreement) >> { MaintenanceAgreement maintenanceAgreement ->
+                throw new ValidationException("Invalid instance", maintenanceAgreement.errors)
             }
         }
 
         when:"The save action is executed with an invalid instance"
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'PUT'
-        controller.update(new Site())
+        controller.update(new MaintenanceAgreement())
 
         then:"The edit view is rendered again with the correct model"
-        model.site != null
+        model.maintenanceAgreement != null
         view == 'edit'
     }
 
@@ -201,13 +202,13 @@ class SiteControllerSpec extends Specification implements ControllerUnitTest<com
         controller.delete(null)
 
         then:"A 404 is returned"
-        response.redirectedUrl == '/site/index'
+        response.redirectedUrl == '/maintenanceAgreement/index'
         flash.message != null
     }
 
     void "Test the delete action with an instance"() {
         given:
-        controller.siteService = Mock(SiteService) {
+        controller.maintenanceAgreementService = Mock(MaintenanceAgreementService) {
             1 * delete(2)
         }
 
@@ -217,7 +218,7 @@ class SiteControllerSpec extends Specification implements ControllerUnitTest<com
         controller.delete(2)
 
         then:"The user is redirected to index"
-        response.redirectedUrl == '/site/index'
+        response.redirectedUrl == '/maintenanceAgreement/index'
         flash.message != null
     }
 }

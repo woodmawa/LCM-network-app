@@ -1,9 +1,10 @@
 package com.softwood.controller
 
+
 import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 
-class EquipmentControllerSpec extends Specification implements ControllerUnitTest<EquipmentController> {
+class EquipmentRestControllerSpec extends Specification implements ControllerUnitTest<EquipmentRestController> {
 
     def setup() {
     }

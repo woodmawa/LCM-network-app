@@ -3,7 +3,7 @@ package com.softwood.domain
 class MaintenanceAgreement extends Agreement {
 
     String level
-    Map category = [:]  //p1 to p5 and sla details 
+    Map<String, String> category = [:]  //p1 to p5 and sla details
 
     //static belongsTo = [serviceProvider : OrgRoleInstance, maintainer: OrgRoleInstance]
 
@@ -15,6 +15,6 @@ class MaintenanceAgreement extends Agreement {
         //serviceProvider nullable:true
         maintainer nullable:false   //ref to maintainer party
 
-        category nullable:false
+        category nullable:true  //problem no field editor for this in scaffolding !
     }
 }

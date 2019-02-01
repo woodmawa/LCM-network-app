@@ -1,4 +1,4 @@
-package com.softwood.controller
+package com.softwood.controller.ui
 
 
 import com.softwood.domain.Device

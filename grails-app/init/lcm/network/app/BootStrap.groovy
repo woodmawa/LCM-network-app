@@ -99,6 +99,7 @@ class BootStrap {
         mag.category.putAll(p1:"24x7")
         mag.maintainer = maintainer
         mag.contractReference = "my cisco support contract"
+        mag.contractSignedDate = LocalDateTime.now()
         mag.status = "Active"
         //mag.save ()
         vf.addToMags(mag)
@@ -108,6 +109,7 @@ class BootStrap {
         mag.category.putAll(p1:"24x5")
         mag.maintainer = maintainer
         mag.contractReference = "my cisco support contract"
+        mag.contractSignedDate = LocalDateTime.now()
         mag.status = "Active"
         mag.save (failOnError:true)
 

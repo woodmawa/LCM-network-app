@@ -1,8 +1,0 @@
-import com.softwood.domain.NetworkDomain
-
-model {
-    NetworkDomain domain
-}
-json {
-    name domain.name
-}

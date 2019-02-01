@@ -1,13 +1,12 @@
 package com.softwood.controller
 
 import com.softwood.domain.Equipment
-import com.softwood.domain.Site
 import org.springframework.web.util.ContentCachingRequestWrapper
 
-class EquipmentController extends JsonApiRestfulController<Equipment> {
+class EquipmentRestController extends JsonApiRestfulController<Equipment> {
     static responseFormats = ['json', 'xml']
 
-    EquipmentController() {
+    EquipmentRestController() {
         super (Equipment)
     }
 

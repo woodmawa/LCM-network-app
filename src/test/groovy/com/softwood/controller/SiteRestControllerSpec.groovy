@@ -1,9 +1,10 @@
 package com.softwood.controller
 
+
 import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 
-class OrgRoleInstanceControllerSpec extends Specification implements ControllerUnitTest<OrgRoleInstanceController> {
+class SiteRestControllerSpec extends Specification implements ControllerUnitTest<SiteRestController> {
 
     def setup() {
     }
