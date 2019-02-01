@@ -19,4 +19,6 @@ abstract class Agreement {
         status nullable:false
         contractSignedDate nullable:true
     }
+
+
 }

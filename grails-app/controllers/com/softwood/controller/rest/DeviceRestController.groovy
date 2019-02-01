@@ -1,4 +1,5 @@
-package com.softwood.controller
+package com.softwood.controller.rest
+
 
 import com.softwood.domain.Device
 import org.springframework.web.util.ContentCachingRequestWrapper

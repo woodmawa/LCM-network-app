@@ -18,4 +18,12 @@ class Location {
         geoCode nullable:true
 
     }
+
+    String toString() {
+        "Location (name:$name, floor:$floor, room:$room)[id:$id]"
+    }
+
+    String displayName() {
+        "Location (name:$name)[id:$id]"
+    }
 }

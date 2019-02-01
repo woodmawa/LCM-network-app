@@ -39,6 +39,10 @@ class OrgRoleInstance {
     }*/
 
     String toString () {
-        "Org (name:$name, in role:'${role}'})[id:$id]"
+        "Org (name:$name, in role:${role}})[id:$id]"
+    }
+
+    String displayName () {
+        "Org (name:$name, in role:${role})[id:$id]"
     }
 }

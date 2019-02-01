@@ -1,5 +1,6 @@
-package com.softwood.controller
+package com.softwood.controller.rest
 
+import com.softwood.controller.rest.JsonApiRestfulController
 import com.softwood.domain.Site
 import org.springframework.web.util.ContentCachingRequestWrapper
 

@@ -1,4 +1,4 @@
-package com.softwood.controller
+package com.softwood.controller.rest
 
 import com.softwood.domain.Product
 

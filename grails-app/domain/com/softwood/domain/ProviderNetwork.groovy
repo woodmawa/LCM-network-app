@@ -18,4 +18,9 @@ class ProviderNetwork {
     }
 
     static mappedBy = []
+
+    String toString () {
+        "CPS.Network (name:$name)[id:$id]"
+    }
+
 }

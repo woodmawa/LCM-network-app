@@ -17,4 +17,8 @@ class MaintenanceAgreement extends Agreement {
 
         category nullable:true  //problem no field editor for this in scaffolding !
     }
+
+    String toString () {
+        "Mag (ref:$contractReference, status:$status)[id:$id]"
+    }
 }

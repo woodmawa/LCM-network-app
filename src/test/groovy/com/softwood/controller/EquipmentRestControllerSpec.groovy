@@ -1,6 +1,6 @@
 package com.softwood.controller
 
-
+import com.softwood.controller.rest.EquipmentRestController
 import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 
