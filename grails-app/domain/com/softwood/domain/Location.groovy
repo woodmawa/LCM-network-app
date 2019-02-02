@@ -20,7 +20,7 @@ class Location {
     }
 
     String toString() {
-        "Location (name:$name, floor:$floor, room:$room)[id:$id]"
+        "Location (name:$name)[id:$id]"
     }
 
     String displayName() {
