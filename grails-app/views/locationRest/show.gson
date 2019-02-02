@@ -1,0 +1,8 @@
+import com.softwood.domain.Location
+
+
+model {
+    Location location
+}
+assert location
+json tmpl.site (location)

@@ -1,0 +1,13 @@
+import com.softwood.domain.Location
+import com.softwood.domain.Site
+
+//default template - just renders id and name
+model {
+    List<Location> locationList = []
+    Integer siteCount
+}
+/* renders location : {tmpl render}, once for each site */
+json (locationList) {
+    location jsonapi.render (it, [jsonApiObject:true, associations:false])
+}
+

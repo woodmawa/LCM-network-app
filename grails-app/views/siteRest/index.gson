@@ -10,7 +10,7 @@ json (siteList) {
     site jsonapi.render (it, [jsonApiObject:true, associations:false])
 }
 
-//for each entry in site list  - render site using default _site templ
+//for each entry in site list  - render site using default _location templ
 /*siteList.each {
     json tmpl.site (it)
 }*/

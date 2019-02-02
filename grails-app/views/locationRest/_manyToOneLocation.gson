@@ -1,3 +1,5 @@
+package locationRest
+
 import com.softwood.domain.Location
 
 

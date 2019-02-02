@@ -1,0 +1,10 @@
+import com.softwood.domain.Location
+
+//default template - just renders id and name
+model {
+    Location location
+}
+
+json jsonapi.render (location, [jsonApiObject:true])
+
+
