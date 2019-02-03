@@ -11,6 +11,11 @@ class MaintenanceAgreementController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    //test rendfering of the date Time
+    def ldt (Long id) {
+        respond maintenanceAgreementService.get(id)  // put  this to view
+    }
+
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond maintenanceAgreementService.list(params), model:[maintenanceAgreementCount: maintenanceAgreementService.count()]
