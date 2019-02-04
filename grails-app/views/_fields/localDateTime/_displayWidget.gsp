@@ -1,4 +1,8 @@
 <%@ page import="java.time.LocalDateTime; java.time.format.DateTimeFormatter" %>
+<g:set var="localDateTimePattern" value="${message(code: 'default.localDateTime.format',default: 'yyyy-MM-dd HH:mm')}"/>
+${value?.format(DateTimeFormatter.ofPattern(localDateTimePattern, request.getLocale()))}
+
+<%--
 <%
     def attrs = [name: propertyName, value: value, type:propertyType, con:controllerName]
 
@@ -20,16 +24,16 @@
     java.time.LocalDateTime ldt = attrs.value
     String format = attrs.format ?: "dd-MM-yyyy HH.mm"
 
-    formattedDateTime = ldt.format (formatter)
+    formattedDateTime = ldt?.format (formatter)
 
-    def res = g.textField (name:"xxx",  value: "$formattedDateTime") ?: " g.textField -> gave null"
-    out << "hello william $res (from ${this.maintenanceAgreement.contractSignedDate })"
-    def output =  g.textField (name:"xxx",  value: "$formattedDateTime")
-    assert jdt
-    //def jdtOutput = jdt.displayDateTime(ldt:"${this.maintenanceAgreement.contractSignedDate }",  format:"dd-MM-yyyy HH.mm") ?: "got null"
-    out << jdtOutput
+    //def resultStr = g.textField (name:"localDateTime",  value: "$formattedDateTime"  )
+
+
+    //just return the basic formatted value as String to display
+    out << formattedDateTime ?: "<null>"
     /*out << output
     out << "$formattedDateTime : "
     out << "params " + this.params + " DomainName: " + entName  + " inst.bean: " + bean + " propertyName: " + property  + " value: " + beanProp + " "
     out << "used _displayWidget:localDateTime "*/
 %>
+--%>

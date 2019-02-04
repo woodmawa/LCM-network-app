@@ -29,7 +29,7 @@
             <g:form resource="${this.maintenanceAgreement}" method="PUT">
                 <g:hiddenField name="version" value="${this.maintenanceAgreement?.version}" />
                 <fieldset class="form">
-                    <f:all bean="maintenanceAgreement"/>
+                    <f:all bean="maintenanceAgreement" />
                 </fieldset>
                 <fieldset class="buttons">
                     <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
