@@ -36,5 +36,10 @@
                 </fieldset>
             </g:form>
         </div>
+        <g:javascript >
+            $(function () {
+                $('#datetimepicker1').datetimepicker();
+            });
+        </g:javascript>
     </body>
 </html>

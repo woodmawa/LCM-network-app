@@ -1,39 +1,36 @@
 <!DOCTYPE html>
-<%-- render a localdate time --%>
-
 <html>
 <head>
-    <meta name="layout" content="main" />
-    <g:set var="entityName" value="${message(code: 'maintenanceAgreement.label', default: 'MaintenanceAgreement')}" />
-    <title><g:message code="default.show.label" args="[entityName]" /></title>
+    <title>Bootstrap datepicket demo</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script type='text/javascript' src='//code.jquery.com/jquery-3.3.1.js'></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker3.min.css">
+    <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    <script type='text/javascript'>
+        $(function(){
+            //$('.input-group.date').datepicker({
+            $('#datepicker').datepicker({
+
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true
+            });
+        });
+
+    </script>
 </head>
 <body>
-<a href="#show-maintenanceAgreement" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-<div class="nav" role="navigation">
-    <ul>
-        <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-        <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-        <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-    </ul>
-</div>
-<div id="show-maintenanceAgreement" class="content scaffold-show" role="main">
-    <h1><g:message code="default.show.label" args="[entityName]" /></h1>
-    <g:if test="${flash.message}">
-        <div class="message" role="status">${flash.message}</div>
-    </g:if>
-
-    <%--
-    <f:display bean="maintenanceAgreement" />
-    <g:form resource="${this.maintenanceAgreement}" method="DELETE">
-        <fieldset class="buttons">
-            <g:link class="edit" action="edit" resource="${this.maintenanceAgreement}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-            <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-        </fieldset>
-    </g:form> --%>
-    <% out << "hello" %>
-    <jdt:test />
-    <jdt:displayDateTime ldt="${this.maintenanceAgreement.contractSignedDate }" format="dd-MM-yyyy HH.mm" />
-
+<div class="container">
+    <h1>Bootstrap datepicker</h1>
+    <div class="input-group date" id="datepicker">
+        <input type="text" class="form-control" value="${java.time.LocalDateTime.now().toString()}">
+        <span class="input-group-addon">
+            <i class="glyphicon glyphicon-calendar"></i>
+        </span>
+    </div>
 </div>
 </body>
 </html>
+

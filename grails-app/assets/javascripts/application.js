@@ -6,6 +6,7 @@
 // to create separate JavaScript files as needed.
 //
 //= require jquery-3.3.1.min
+//= require jquery-ui-1.12.min.js
 //= require bootstrap
 //= require popper.min
 //= require_self

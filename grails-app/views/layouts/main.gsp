@@ -11,7 +11,28 @@
 
     <asset:stylesheet src="application.css"/>
 
+    <%-- <script type='text/javascript' src='//code.jquery.com/jquery-1.12.1.js'></script> --%>
+    <script type='text/javascript' src='//code.jquery.com/jquery-3.3.1.js'></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker3.min.css">
+    <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    <script type='text/javascript'>
+        $(function(){
+            $('#datepicker').datepicker({
+
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true
+            });
+        });
+
+    </script>
+
+
     <g:layoutHead/>
+
+    <%-- header assets --%>
+
 </head>
 
 <body>
@@ -29,6 +50,7 @@
     </div>
 
 </nav>
+
 
 <g:layoutBody/>
 
@@ -67,6 +89,7 @@
 </div>
 
 <asset:javascript src="application.js"/>
+
 
 </body>
 </html>
