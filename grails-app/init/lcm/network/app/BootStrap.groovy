@@ -1,6 +1,7 @@
 package lcm.network.app
 
 import com.softwood.domain.Alias
+import com.softwood.domain.CustomerFacingService
 import com.softwood.domain.Device
 import com.softwood.domain.Equipment
 import com.softwood.domain.FlexAttribute
@@ -12,6 +13,7 @@ import com.softwood.domain.OrgRoleInstance
 import com.softwood.domain.Product
 import com.softwood.domain.ProviderNetwork
 import com.softwood.domain.Resource
+import com.softwood.domain.ServiceLevelAgreement
 import com.softwood.domain.Site
 import com.softwood.domain.Location
 import com.softwood.domain.Software
@@ -84,7 +86,22 @@ class BootStrap {
         headOffice.save(failOnError:true)
         Site branch = new Site (name:"10 South Close", status:"open", org:acme)
         acme.addToSites(branch)
-        acme.save ()
+        ServiceLevelAgreement sla = new ServiceLevelAgreement (name:"primarySLA",
+                level: ServiceLevelAgreement.ServiceLevelAgreementType.Platinum,
+                contractReference:"project transform", status:"InLife", contractSignedDate: LocalDateTime.now())
+        acme.addToSlags(sla)
+        acme.save (saveOnError:true)
+
+        CustomerFacingService cfs = new CustomerFacingService (name: "branch MPLS Connection", customer:acme, bandwidth:"10Mbit/s", sla:sla)
+        cfs.owningSite = branch
+        cfs.remoteSite = headOffice
+        cfs.category = CustomerFacingService.CfsCategory.ConnectionService
+        cfs.transportType = CustomerFacingService.CfsTransportType.MPLS
+        cfs.connectionType = CustomerFacingService.CfsConnectionType.PointToCloud
+        cfs.loopBackIpAddress = "10.2.4.2"
+        cfs.serviceProviderCircuitName = "vf mpls o:23678"
+        assert cfs.validate()
+        cfs.save()
 
         Location commsRoom, peLocation, ceLocation
         headOffice.addToLocations(commsRoom = new Location(name:"comms room", site:headOffice))

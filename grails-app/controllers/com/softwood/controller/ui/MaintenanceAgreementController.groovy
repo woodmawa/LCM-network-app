@@ -16,6 +16,10 @@ class MaintenanceAgreementController {
         respond maintenanceAgreementService.get(id)  // put  this to view
     }
 
+    def bsf (Long id) {
+        respond maintenanceAgreementService.get(id)  // put  this to bsf view
+    }
+
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond maintenanceAgreementService.list(params), model:[maintenanceAgreementCount: maintenanceAgreementService.count()]

@@ -16,10 +16,11 @@ class OrgRoleInstance {
     Collection<NetworkDomain> domains = []
     Collection<ProviderNetwork> providerNetworks = []
     Collection<Site> sites = []
-    Collection<MaintenanceAgreement> mags       //optional only set if role is service provider
+    Collection<MaintenanceAgreement> mags   = []    //optional only set if role is service provider
+    Collection<ServiceLevelAgreement> slags = []
+    Collection<CustomerFacingService> services = []
 
-
-     static hasMany = [domains : NetworkDomain, sites: Site, mags:MaintenanceAgreement, providerNetworks:ProviderNetwork]
+     static hasMany = [domains : NetworkDomain, sites: Site, mags:MaintenanceAgreement, slags:ServiceLevelAgreement, providerNetworks:ProviderNetwork, services:CustomerFacingService]
 
     static mappedBy  = [mags: "maintainer", providerNetworks: "serviceProvider"]  //disambiguate column in ProviderNetwork
 
@@ -31,6 +32,7 @@ class OrgRoleInstance {
         providerNetworks nullable:true
         sites nullable:true
         mags nullable:true  //optional
+        services nullable:true
     }
 
     /*  static mapping = {

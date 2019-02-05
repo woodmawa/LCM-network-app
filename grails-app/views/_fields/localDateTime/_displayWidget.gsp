@@ -1,6 +1,6 @@
-<%@ page import="java.time.LocalDateTime; java.time.format.DateTimeFormatter" %>
-<g:set var="localDateTimePattern" value="${message(code: 'default.localDateTime.format',default: 'yyyy-MM-dd HH:mm')}"/>
-${value?.format(DateTimeFormatter.ofPattern(localDateTimePattern, request.getLocale()))}
+<%@ page import="java.time.LocalDate; java.time.format.DateTimeFormatter" %>
+<g:set var="localDatePattern" value="${message(code: 'default.localDateTime.format', default: 'yyyy-MM-dd')}"/>
+${value?.format(DateTimeFormatter.ofPattern(localDatePattern, request.getLocale()))}
 
 <%--
 <%
