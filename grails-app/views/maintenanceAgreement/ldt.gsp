@@ -4,17 +4,8 @@
 <head>
 
     <meta name="layout" content="main" />
-    <title>Bootstrap datepicket demo</title>
+    <title>Bootstrap try out</title>
 
-
-    <%--<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet"> --%>
-    <%--<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script> --%>
-
-    <%--
-    <script type='text/javascript' src='//code.jquery.com/jquery-3.3.1.js'></script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker3.min.css">
-    <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
 --%>
 </head>
 <body>
@@ -34,17 +25,24 @@
             <i class="glyphicon glyphicon-calendar"></i>
         </span>
     </div>
-    <%--<script type='text/javascript'>
-        $(function(){
-            //$('.input-group.date').datepicker({
-            $('#datepicker2').datepicker({
-                calendarWeeks: true,
-                todayHighlight: true,
-                autoclose: true
-            });
-        });
 
-    </script> --%>
+</div>
+
+<div class="container-fluid fieldcontain col-sm-6" >
+    <div class="form-group form-inline">
+        <!-- Default dropright button -->
+        <div class="btn-group dropright">
+            <button type="button" id="dropdownMunuButton" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                hi
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <!-- Dropdown menu links -->
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
