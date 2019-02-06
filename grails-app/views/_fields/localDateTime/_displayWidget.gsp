@@ -1,39 +1,26 @@
 <%@ page import="java.time.LocalDate; java.time.format.DateTimeFormatter" %>
 <g:set var="localDatePattern" value="${message(code: 'default.localDateTime.format', default: 'yyyy-MM-dd')}"/>
-${value?.format(DateTimeFormatter.ofPattern(localDatePattern, request.getLocale()))}
-
-<%--
-<%
-    def attrs = [name: propertyName, value: value, type:propertyType, con:controllerName]
-
-    java.time.format.DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")
-    String formattedDateTime //= attrs.value.format(formatter)
-
-    Map pagemap = this.pageScope.getVariables()
-
-    String entName = pagemap.entityName
-    def bean = pagemap.bean
-    def property = pagemap.property
-    def beanProp = bean."$property"
-
-    def theme = pagemap.theme
-    def collection = pagemap.collection
-    def label = pagemap.label
-    def domainClass = pagemap.domainClass
-
-    java.time.LocalDateTime ldt = attrs.value
-    String format = attrs.format ?: "dd-MM-yyyy HH.mm"
-
-    formattedDateTime = ldt?.format (formatter)
-
-    //def resultStr = g.textField (name:"localDateTime",  value: "$formattedDateTime"  )
-
-
-    //just return the basic formatted value as String to display
-    out << formattedDateTime ?: "<null>"
-    /*out << output
-    out << "$formattedDateTime : "
-    out << "params " + this.params + " DomainName: " + entName  + " inst.bean: " + bean + " propertyName: " + property  + " value: " + beanProp + " "
-    out << "used _displayWidget:localDateTime "*/
-%>
---%>
+<g:if test="${actionName == 'index'}">
+    ${value?.format(DateTimeFormatter.ofPattern(localDatePattern, request.getLocale()))}
+</g:if>
+<g:elseif test="${actionName == 'list'}">
+    ${value?.format(DateTimeFormatter.ofPattern(localDatePattern, request.getLocale()))}
+</g:elseif>
+<g:else>
+    <div class="container fieldcontain col-sm-6" >
+        <%--<div class="container"> -->
+            <%--<div class="row"> --%>
+                <%--<div class='col-sm-6'> --%>
+                    <div class="form-group form-inline">
+                        <div class="input-group text"  >
+                            <input type='text' readonly class="form-control" value="${value?.format(DateTimeFormatter.ofPattern(localDatePattern, request.getLocale())) }"/>
+                            <span class="input-group-addon">
+                                <i class="glyphicon glyphicon-hand-left"></i>
+                            </span>
+                        </div>
+                    </div>
+                <%--</div>--%>
+            <%--</div> --%>
+        <%--</div> --%>
+    </div>
+</g:else>

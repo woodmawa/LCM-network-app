@@ -28,7 +28,7 @@ class CustomerFacingService extends RootEntity {
         Unknown
     }
 
-    String serviceProviderCircuitName
+    String serviceProviderServiceName
     String bandwidth
     String loopBackIpAddress
     CfsCategory category = CfsCategory.ConnectionService
@@ -44,7 +44,7 @@ class CustomerFacingService extends RootEntity {
 
 
     static constraints = {
-        serviceProviderCircuitName nullable:true
+        serviceProviderServiceName nullable:true
         bandwidth nullbale:true
         loopBackIpAddress nullable:true
         category nullable:true
@@ -80,6 +80,11 @@ class CustomerFacingService extends RootEntity {
 
     boolean isAggregated (){
         aggregated
+    }
+
+    String toString () {
+        String bandwidth = bandwidth ? ", bw:${bandwidth}" : ''
+        "CFS (name:$name$bandwidth)[id:$id]"
     }
 
 }

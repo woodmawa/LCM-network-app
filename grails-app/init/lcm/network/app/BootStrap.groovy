@@ -99,7 +99,7 @@ class BootStrap {
         cfs.transportType = CustomerFacingService.CfsTransportType.MPLS
         cfs.connectionType = CustomerFacingService.CfsConnectionType.PointToCloud
         cfs.loopBackIpAddress = "10.2.4.2"
-        cfs.serviceProviderCircuitName = "vf mpls o:23678"
+        cfs.serviceProviderServiceName = "vf mpls o:23678"
         assert cfs.validate()
         cfs.save()
 

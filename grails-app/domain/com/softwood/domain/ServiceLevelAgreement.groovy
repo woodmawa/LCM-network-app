@@ -11,8 +11,8 @@ class ServiceLevelAgreement extends Agreement {
     }
 
     String name
-    String level = ServiceLevelAgreementType.Bronze
-    Map<String, String> category = [:]  //p1 to p5 and sla details
+    String type = ServiceLevelAgreementType.Bronze
+    Map<String, String> targets = [:]  //p1 to p5 and sla details
     OrgRoleInstance customer
     Collection<CustomerFacingService> services = []
 
@@ -26,11 +26,11 @@ class ServiceLevelAgreement extends Agreement {
 
     static constraints = {
         name nullable:false
-        level nullable:false
+        type nullable:false
         customer nullable:false
         services nullable:true  //might need extra login in controller/service when adding a cfs
 
-        category nullable:true  //problem no field editor for this in scaffolding !
+        targets nullable:true  //problem no field editor for this in scaffolding !
     }
 
     String toString () {
