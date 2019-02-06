@@ -44,9 +44,9 @@
 </nav>
 
 
-<g:layoutBody/>
+<g:layoutBody class="container-fluid"/>
 
-<div class="footer row" role="contentinfo">
+<div class="footer row" role="contentinfo" class="container-fluid">
     <!--
     <div class="col">
         <a href="http://guides.grails.org" target="_blank">

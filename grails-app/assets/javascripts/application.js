@@ -6,4 +6,5 @@
 // to create separate JavaScript files as needed.
 //= require LCM-app
 //= require popper.min
+//= require bootstrap
 //= require_self
