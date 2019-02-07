@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils
 import org.grails.datastore.mapping.model.MappingContext
 import org.springframework.beans.factory.annotation.Autowired
 
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 class BootstrapFormsTagLib {
@@ -14,6 +15,48 @@ class BootstrapFormsTagLib {
     @Autowired(required = false)
     Collection<MappingContext> mappingContexts
 
+    /**
+     * called from -fields/maps/_displayWidget.gsp
+     */
+    def displayMap = { attrs, body ->
+
+        def context = attrs.context  //parent calling context
+        Map ctxmap = context.binding.variables
+        def property = ctxmap.property
+        def bean = ctxmap.bean
+        def domainClassName = ctxmap.get("entityName")  //name of domain class
+
+        if (!ctxmap.value)
+            ctxmap.value = bean[property] != null ? bean[property] : '<i class="fas fa-minus" style="color: red;"></i>'
+
+        ctxmap.put ('beanInst', bean)
+        def propertyClassifier = propertyClassToType(ctxmap)
+
+        StringBuilder mapString = new StringBuilder("[")
+
+        Map mapValue = ctxmap.value
+        Set entries = mapValue.entrySet()
+
+        def i= 0
+        def len = entries.size()
+        for (entry in entries) {
+            mapString << "${entry.key}:${entry.value.toString()}"
+            if (len == 1) {
+                    mapString << "]"
+                    break
+            }
+            if (i >= 2) {
+                    mapString << ", ...]"
+                    break
+            } else {
+                    mapString << ", "
+            }
+        }
+
+
+        out << mapString
+
+    }
 
     def showField = { attrs, body ->
         def property = attrs.property
@@ -103,32 +146,41 @@ class BootstrapFormsTagLib {
             return attrs
         }
 
-        switch (beanProperty.getClass()) {
+        Class<?> propClazzType = beanProperty.getClass()
+        switch (propClazzType) {
+            case Map:
+                attrs.propertyClassifier  = 'map'
+                break
             case (java.lang.String):
-                attrs.type = 'text'
+            case (GString):
+                attrs.propertyClassifier = 'text'
                 break
-            case (java.lang.Integer):
+            case Number:
+                attrs.propertyClassifier = 'number'
+                break
+            /*case (java.lang.Float):
                 attrs.type = 'number'
-                break
-            case (java.lang.Float):
-                attrs.type = 'number'
-                break
+                break */
             case (java.util.Date):
-                if (attrs.property in ['dateCreated', 'lastUpdated']) attrs.type = 'datetime'
-                else attrs.type = 'date'
+                if (attrs.property in ['dateCreated', 'lastUpdated'] || StringUtils.containsIgnoreCase (attrs.property, "DateTime")) attrs.propertyClassifier = 'datetime'
+                else attrs.propertyClassifier = 'date'
                 break
             case (LocalDateTime):
-                if (attrs.property in ['dateCreated', 'lastUpdated'] || StringUtils.containsIgnoreCase (attrs.property, "DateTime") ) attrs.type = 'datetime'
-                else attrs.type = 'date'
+                if (attrs.property in ['dateCreated', 'lastUpdated'] || StringUtils.containsIgnoreCase (attrs.property, "DateTime") ) attrs.propertyClassifier = 'localdatetime'
+                else attrs.propertyClassifier = 'date'
+                break
+            case (LocalDate):
+                if (attrs.property in ['dateCreated', 'lastUpdated'] || StringUtils.containsIgnoreCase (attrs.property, "DateTime") ) attrs.propertyClassifier = 'localdate'
+                else attrs.propertyClassifier = 'date'
                 break
             case (java.lang.Boolean):
-                attrs.type = 'select'
+                attrs.propertyClassifier = 'select'
                 if (attrs.prefix == null) attrs.prefix = 'default.yesno'
                 attrs.from = [true, false]
                 attrs.noSelection = ['': message(code: 'default.noSelection')]
                 break
             default:
-                attrs.type = 'text'
+                attrs.propertyClassifier = 'text'
         }
         return attrs
     }

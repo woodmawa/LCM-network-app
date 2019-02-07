@@ -1,3 +1,8 @@
 .required-override input[type="text"]:focus {
     border-color: red;
 }
+
+<!-- style override -->
+.input-append .btn.dropdown-toggle {
+    float: none;
+}
