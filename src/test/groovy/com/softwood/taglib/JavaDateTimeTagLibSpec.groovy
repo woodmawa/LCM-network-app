@@ -27,7 +27,8 @@ class JavaDateTimeTagLibSpec extends Specification implements TagLibUnitTest<Jav
         //JavaDateTimeTagLib tag = new JavaDateTimeTagLib()
         //String result = tag.testCall(new HashMap(), null) //= applyTemp - format="dd-MM-yyyy HH:mm"
         //def result = applyTemplate('<jdt:displayDateTime ldt="$now"  />', [now:LocalDateTime.now()])
-        String result = applyTemplate('<jdt:testCall p1="p1-string" p2="$now"  />' , [now:LocalDateTime.now()])
+        //hah have to wrap the vra in braces to ge the actual value passed to the taglib
+        String result = applyTemplate('<jdt:testCall p1="p1-string" p2="${now}"  />' , [now:LocalDateTime.now()])
 
         when :
         println "$result "
