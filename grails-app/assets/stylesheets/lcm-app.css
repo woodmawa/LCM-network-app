@@ -7,16 +7,15 @@
     float: none;
 }
 
+/* this works and colours the headers */
 .table-condensed thead tr th{
-    font-size: 0.8em;
-    padding: 10px 20px 5px 0 !important;
+    background-color: lightblue ;
+    font-size: 0.8em !important;
     height: 15px;
 }
 
-.thead thead-blue  thead {
+/* this doesnt do a thing on any <thead class="thead-blue" - no idea why  */
+.thead-blue thead tr th{
     background-color: cornflowerblue !important;
 }
 
-.table-hover>thead>tr.no-hover:hover {
-    background-color: cornflowerblue;
-}
