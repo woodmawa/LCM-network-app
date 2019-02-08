@@ -15,6 +15,14 @@ $(function(){
     });
 });
 
+$(function(){
+    $('#datetimepicker1').datetimepicker({
+        calendarWeeks: true,
+        todayHighlight: true,
+        autoclose: true
+    });
+});
+
 function sayHelloWilliam() {
         $.ajax (
             document.write ("hello william")

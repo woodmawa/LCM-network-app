@@ -388,12 +388,14 @@ input:invalid:focus, select:invalid:focus, textarea:invalid:focus {
 
 /* TABLES */
 
+
 table {
     border-top: 1px solid #DFDFDF;
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 1em;
 }
+
 
 tr {
     border: 0;
@@ -417,7 +419,7 @@ td, th {
 th {
     background-color: #efefef;
     background-image: -moz-linear-gradient(top, #ffffff, #eaeaea);
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff), color-stop(1, #eaeaea));
+    /*background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff), color-stop(1, #eaeaea));*/
     filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#ffffff', EndColorStr = '#eaeaea');
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#eaeaea')";
     color: #666666;
@@ -426,9 +428,11 @@ th {
     padding: 0.2em 0.6em;
 }
 
+
 thead th {
     white-space: nowrap;
 }
+
 
 th a {
     display: block;
@@ -468,6 +472,7 @@ th.desc a {
 th:hover, tr:hover {
     background: #f5f5f5;
 }
+
 
 /* PAGINATION */
 
