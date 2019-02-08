@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <asset:stylesheet src="lcm-app.css"/>
 
     <%--<meta name="layout" content="main" />--%>
     <title>Bootstrap try out</title>
