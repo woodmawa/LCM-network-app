@@ -3,7 +3,6 @@
 <head>
 
     <%--<meta name="layout" content="main" />--%>
-    <meta name="layout" content="main" />
     <title>Bootstrap try out</title>
 
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
@@ -66,6 +65,31 @@
     </div>
 </div>
 
+<p>now table with thead-blue</p>
+<div class="row">
+    <div class="col-xs-4">
+
+        <table class="table table-bordered table-condensed">
+            <caption> Map table</caption> <!-- appears at bottom -->
+            <thead class="thead-blue">
+            <tr >
+                <th>tag</th>
+                <th>value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>hello</td>
+                <td>there</td>
+            </tr>
+            <tr>
+                <td>Peter</td>
+                <td>Parker</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
 </body>
