@@ -3,9 +3,9 @@
 <head>
 
     <%--<meta name="layout" content="main" />--%>
+    <meta name="layout" content="main" />
     <title>Bootstrap try out</title>
 
-    <%-- <script type='text/javascript' src='//code.jquery.com/jquery-1.12.1.js'></script>--%>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
