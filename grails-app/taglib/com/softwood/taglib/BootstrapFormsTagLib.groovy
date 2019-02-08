@@ -17,24 +17,29 @@ class BootstrapFormsTagLib {
 
     /**
      * called from -fields/maps/_displayWidget.gsp
+     * inputs:
+     * value - map variable to render
+     * context - parent tags calling page context for key variables etc
+     * bean - domain instance being rendered (should alos be in context
+     * property - name of domain map property to be calculate the display format for
      */
     def displayMap = { attrs, body ->
 
+        Map mapValue = attrs.value
+        def bean = attrs.bean ?: ctxmap?.bean
+        def property = attrs.property ?: ctxmap?.property
         def context = attrs.context  //parent calling context
-        Map ctxmap = context.binding.variables
-        def property = ctxmap.property
-        def bean = ctxmap.bean
-        def domainClassName = ctxmap.get("entityName")  //name of domain class
 
-        if (!ctxmap.value)
-            ctxmap.value = bean[property] != null ? bean[property] : '<i class="fas fa-minus" style="color: red;"></i>'
+        Map ctxmap = context?.binding.variables
+        def domainClassName = attrs.entityName ?: ctxmap?.get("entityName")  //name of domain class
 
-        ctxmap.put ('beanInst', bean)
+        if (!mapValue)
+            mapValue = bean[property] != null ? bean[property] : '<i class="fas fa-minus" style="color: red;"></i>'
+
         def propertyClassifier = propertyClassToType(ctxmap)
 
         StringBuilder mapString = new StringBuilder("[")
 
-        Map mapValue = ctxmap.value
         Set entries = mapValue.entrySet()
 
         def i= 0
@@ -53,8 +58,14 @@ class BootstrapFormsTagLib {
             }
         }
 
+        //put calculated string to output stream
+        out << mapString ?: ''
 
-        out << mapString
+        if (context) {
+            context.binding.displayMapStr = mapString
+        }
+
+        mapString
 
     }
 
@@ -92,7 +103,7 @@ class BootstrapFormsTagLib {
      */
     private def propertyClassToType(attrs) {
 
-        if (attrs.property in attrs.beanInst.getClass().transients) {
+        if (attrs.property in attrs?.bean.getClass().transients) {
             attrs.type = 'transient'
             return attrs
         }
@@ -107,12 +118,12 @@ class BootstrapFormsTagLib {
         }
         */
 
-        def beanInst = attrs.beanInst
+        def bean = attrs.bean
         def beanClassType //= attrs.beanInst.getClass().getDeclaredField(attrs.property)?.type
         def beanProperty
-        if (beanInst.hasProperty("$attrs.property")) {
-            beanProperty = beanInst.getProperty ("$attrs.property")
-            beanClassType = beanInst.getProperty("$attrs.property").getClass()
+        if (bean.hasProperty("$attrs.property")) {
+            beanProperty = bean.getProperty ("$attrs.property")
+            beanClassType = bean.getProperty("$attrs.property").getClass()
         }
         else
             return attrs

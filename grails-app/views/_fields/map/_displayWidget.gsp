@@ -21,7 +21,7 @@
                 <%
                     def map = this.pageScope.getVariable("value")
                     out << """
-<table class="table table-bordered dropdown-menu">
+<table class="table table-bordered table-striped dropdown-menu">
     <thead>
         <tr>
             <th scope="col">Tag</th>
@@ -36,8 +36,8 @@
                     map.each {t, v ->
                         out << """
 <tr>
-    <th scope="row">$t</th>
-    <th scope="row">${v.toString()}</th>
+    <td scope="row">$t</td>
+    <td scope="row">${v.toString()}</td>
 </tr>"""
                     }
                     //then finalise the table

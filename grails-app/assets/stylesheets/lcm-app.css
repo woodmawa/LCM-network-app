@@ -2,7 +2,22 @@
     border-color: red;
 }
 
-<!-- style override -->
+
 .input-append .btn.dropdown-toggle {
     float: none;
+}
+
+.table-condensed thead tr th{
+    font-size: 0.8em;
+    padding: 10px 0 5px 0 !important;
+    height: 15px;
+}
+
+.table .thead-blue th {
+    background-color: cornflowerblue;
+    foreground-color: cornflowerblue;
+}
+
+.table-hover>thead>tr.no-hover:hover {
+    background-color: cornflowerblue;
 }

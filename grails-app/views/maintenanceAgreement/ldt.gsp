@@ -9,6 +9,25 @@
 </head>
 <body>
 
+<div class="container-fluid col-sm-6" >
+        <table class='table table-bordered table-striped table-condensed ' >
+
+            <thead >
+            <tr>
+                <th class="bg-info text-white" scope="col">Tag</th>
+                <th class="bg-info text-white" scope="col">Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td scope="row">hello</td>
+                <td scope="row">william</td>
+            </tr>
+            </tbody>
+        </table>
+
+</div>
+
 
 
 <jdt:jdtScaffoldField label="fred" ldt="${java.time.LocalDateTime.now()}"/>
@@ -46,10 +65,10 @@
 <div class="row">
     <div class="col-xs-4">
 
-        <table class="table table-bordered">
+        <table class="table table-bordered table-condensed">
             <caption> Map table</caption> <!-- appears at bottom -->
-        <thead>
-        <tr>
+        <thead class="alert alert-info">
+        <tr >
             <th>tag</th>
             <th>value</th>
         </tr>
@@ -138,27 +157,32 @@
                 <input class="form-control"  type="text" placeholder="Fill me">  <!-- form-control links field with the span -->
                 <span class="input-group-addon dropdown-toggle " data-toggle="dropdown" />
 
+                <table class='table table-bordered table-striped table-condensed dropdown-menu' >
 
-               <table class='table table-bordered dropdown-menu' >
-            <thead>
-            <tr>
-                <th scope="col">Tag</th>
-                <th scope="col">Value</th>
-            </tr>
-            </thead>
-            <tbody>
+                    <thead class="alert alert-info">
+                        <tr >
+                            <th scope="col">Tag</th>
+                            <th scope="col">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="row">hello</td>
+                            <td scope="row">william</td>
+                        </tr>
+                        <tr>
+                            <td scope="row">how about </td>
+                            <td scope="row">a nice break</td>
+                        </tr>
 
-            <tr>
-                <th scope="row">hello</th>
-                <th scope="row">william</th>
-            </tr>
-            </tbody>
-        </table>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 
 </div>
+
 </body>
 </html>
 
