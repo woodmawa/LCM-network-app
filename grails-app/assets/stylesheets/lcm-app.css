@@ -14,8 +14,7 @@
 }
 
 .thead thead-blue  thead {
-    background-color: cornflowerblue;
-    foreground-color: cornflowerblue;
+    background-color: cornflowerblue !important;
 }
 
 .table-hover>thead>tr.no-hover:hover {
