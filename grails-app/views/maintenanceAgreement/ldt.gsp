@@ -2,13 +2,13 @@
 <html>
 <head>
 
-    <meta name="layout" content="bsf-main" />
+    <%--<meta name="layout" content="bsf-main" />--%>
     <title>Bootstrap try out</title>
 
-    <%--<link href="//netdna.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>--%>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 
-    <script type='text/javascript' src='//code.jquery.com/jquery-3.3.1.js'></script>
+    <script type='text/javascript' src='//code.jquery.com/jquery-3.3.1.js'></script>--%>
 
 
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
@@ -17,6 +17,7 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+
 
 </head>
 <body>

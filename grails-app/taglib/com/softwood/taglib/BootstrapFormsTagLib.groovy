@@ -25,12 +25,12 @@ class BootstrapFormsTagLib {
      */
     def displayMap = { attrs, body ->
 
+        def context = attrs.context  //parent calling context
+        Map ctxmap = context?.binding.variables
         Map mapValue = attrs.value
         def bean = attrs.bean ?: ctxmap?.bean
         def property = attrs.property ?: ctxmap?.property
-        def context = attrs.context  //parent calling context
 
-        Map ctxmap = context?.binding.variables
         def domainClassName = attrs.entityName ?: ctxmap?.get("entityName")  //name of domain class
 
         if (!mapValue)
