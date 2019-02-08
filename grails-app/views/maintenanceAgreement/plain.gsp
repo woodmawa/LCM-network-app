@@ -3,7 +3,7 @@
 <head>
     <asset:stylesheet src="lcm-app.css"/>
 
-    <%--<meta name="layout" content="main" />--%>
+    <%--<meta name="layout" content="main"  />--%>
     <title>Plain no site mesh - Bootstrap try out</title>
 
     <link href="//netdna.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
