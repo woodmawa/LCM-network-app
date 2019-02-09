@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="layout" content="main" />
+        <meta name="layout" content="bsf-main" />
         <g:set var="entityName" value="${message(code: 'maintenanceAgreement.label', default: 'MaintenanceAgreement')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>

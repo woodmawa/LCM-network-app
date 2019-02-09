@@ -45,7 +45,7 @@ class BootstrapFormsTagLib {
         def i= 0
         def len = entries.size()
         for (entry in entries) {
-            mapString << "${entry.key}:${entry.value.toString()}"
+            mapString << "${entry.key} : ${entry.value.toString()}"
             if (len == 1) {
                     mapString << "]"
                     break

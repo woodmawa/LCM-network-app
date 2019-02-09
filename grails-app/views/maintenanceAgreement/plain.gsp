@@ -11,7 +11,7 @@
 
     <script type='text/javascript' src='//code.jquery.com/jquery-3.3.1.js'></script>
 
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
 
@@ -23,6 +23,21 @@
 
 </head>
 <body>
+
+<p> awesome font</p>
+<div class="container">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <div class="input-group text"  >
+                <input type='text' readonly class="form-control" value="${value?.toString() }"/>
+                <div class="input-group-append  border rounded w-20 p-2 shadow-sm" >
+                        <i class="fas fa-pencil-alt"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <p> standalone Bootstrap datepicker </p>

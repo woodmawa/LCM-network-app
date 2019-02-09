@@ -14,9 +14,10 @@
                     <div class="form-group form-inline">
                         <div class="input-group text"  >
                             <input type='text' readonly class="form-control" value="${value?.format(DateTimeFormatter.ofPattern(localDatePattern, request.getLocale())) }"/>
-                            <span class="input-group-addon">
-                                <i class="glyphicon glyphicon-hand-left"></i>
-                            </span>
+                            <div class="input-group-append  border rounded w-20 p-2 shadow-sm" >
+                                <%--<i class="fas fa-pencil-alt"></i>--%>
+                                <i class="fa fa-calendar"></i>
+                            </div>
                         </div>
                     </div>
                 <%--</div>--%>

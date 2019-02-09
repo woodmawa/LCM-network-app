@@ -16,9 +16,15 @@
                     <%--  label output by _list <label class='control-label' > ${label} </label> --%>
                     <div class="input-group text"  >
                         <input type='text' readonly class="form-control" value="${value?.toString() }"/>
-                        <span class="input-group-addon">
-                            <i class="glyphicon glyphicon-hand-left"></i>
-                        </span>
+                        <div class="input-group-append  border rounded w-20 p-2 shadow-sm" >
+                            <%--<i class="fas fa-pencil-alt"></i>--%>
+                            <i class="fab fa-readme"></i>
+                        </div>
+
+                        <%--<span class="input-group-addon" >
+                            <i class="fas fa-pencil-alt"></i>
+                            <%--<i class="glyphicon glyphicon-hand-left"></i>
+                        </span>--%>
                     </div>
                 </div>
             <%--</div>

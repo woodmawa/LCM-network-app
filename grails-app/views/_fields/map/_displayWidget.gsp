@@ -13,8 +13,14 @@
                     <!-- Default dropright button -->
         <div class="btn-group dropright">
             <div class="input-group text dropright " >
-                <input class="form-control"  type="text" placeholder="fillme">  <!-- form-control links field with the span -->
-                <span class="input-group-addon dropdown-toggle " data-toggle="dropdown" />
+                <input class="form-control" readonly type="text" placeholder="<category map>">  <!-- form-control links field with the span -->
+                <div class="input-group-append  dropdown-toggle border rounded w-20 p-2 shadow-sm" data-toggle="dropdown">
+                    <%--<i class="fa fa-map" /> --%>
+                </div>
+
+                <%--<span class="input-group-append dropdown-toggle " data-toggle="dropdown">
+                    <i class="fa fa-map" />
+                </span>--%>
 
 
                              <!-- Dropdown menu links -->
