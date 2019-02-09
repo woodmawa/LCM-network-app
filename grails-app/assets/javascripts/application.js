@@ -6,6 +6,6 @@
 // to create separate JavaScript files as needed.
 //= require jquery-3.3.1.min
 //= require bootstrap.4.2.1/bootstrap
-// = require popper.min
+//= require popper
 //= require LCM-app
 //= require_self

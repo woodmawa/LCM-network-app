@@ -11,12 +11,23 @@
 <div class="container-fluid fieldcontain col-sm-6" >
     <div class="form-group form-inline">
                     <!-- Default dropright button -->
-        <div class="btn-group dropright">
-            <div class="input-group text dropright " >
+        <div class="btn-group ">
+            <div class="input-group text  " >
                 <input class="form-control" readonly type="text" placeholder="<category map>">  <!-- form-control links field with the span -->
-                <div class="input-group-append  dropdown-toggle border rounded w-20 p-2 shadow-sm" data-toggle="dropdown">
-                    <%--<i class="fa fa-map" /> --%>
+                <div class="input-group-append dropdown dropright">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">dd
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                        <div role="separator" class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
                 </div>
+                <%--<div class="input-group-append  dropdown-toggle border rounded w-20 p-2 shadow-sm" data-toggle="dropdown">
+                    <i class="fa fa-map" />
+                </div>--%>
 
                 <%--<span class="input-group-append dropdown-toggle " data-toggle="dropdown">
                     <i class="fa fa-map" />
