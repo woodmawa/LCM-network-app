@@ -21,7 +21,10 @@ class MaintenanceAgreementController {
     }
 
     def plain2 (Long id) {
-        respond maintenanceAgreementService.get(id)  // put  this to view
+
+        MaintenanceAgreement mag = maintenanceAgreementService.get(id)
+        assert mag.category.size() == 1
+        respond mag  // put  this to view
     }
 
     def smesh (Long id) {

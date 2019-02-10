@@ -7,6 +7,10 @@
     float: none;
 }
 
+table {
+    margin:0px !important;
+}
+
 /* this works and colours the headers */
 .table-condensed thead tr th{
     background-color: lightblue ;
