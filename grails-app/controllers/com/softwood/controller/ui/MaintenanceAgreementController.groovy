@@ -24,6 +24,10 @@ class MaintenanceAgreementController {
         respond maintenanceAgreementService.get(id)  // put  this to view
     }
 
+    def smesh (Long id) {
+        respond maintenanceAgreementService.get(id)  // put  this to view
+    }
+
     def bsf (Long id) {
         respond maintenanceAgreementService.get(id)  // put  this to bsf view
     }

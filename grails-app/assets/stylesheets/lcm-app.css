@@ -19,3 +19,6 @@
     background-color: cornflowerblue !important;
 }
 
+.btn-icon-fixed-width {
+    width: 40px !important;
+}

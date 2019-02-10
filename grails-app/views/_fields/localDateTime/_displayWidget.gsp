@@ -14,10 +14,11 @@
                     <div class="form-group form-inline">
                         <div class="input-group text"  >
                             <input type='text' readonly class="form-control" value="${value?.format(DateTimeFormatter.ofPattern(localDatePattern, request.getLocale())) }"/>
-                            <div class="input-group-append  border rounded w-20 p-2 shadow-sm" >
-                                <%--<i class="fas fa-pencil-alt"></i>--%>
-                                <i class="fa fa-calendar"></i>
-                            </div>
+                            <div class="input-group-append" >
+                                <button class="btn btn-icon-fixed-width btn-outline-secondary btn-block" type="button" >
+                                    <i class="fas fa-calendar"></i>
+                                </button>
+                             </div>
                         </div>
                     </div>
                 <%--</div>--%>

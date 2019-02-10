@@ -15,16 +15,15 @@
                 <div class="form-group form-inline">
                     <%--  label output by _list <label class='control-label' > ${label} </label> --%>
                     <div class="input-group text"  >
-                        <input type='text' readonly class="form-control" value="${value?.toString() }"/>
-                        <div class="input-group-append  border rounded w-20 p-2 shadow-sm" >
-                            <%--<i class="fas fa-pencil-alt"></i>--%>
-                            <i class="fab fa-readme"></i>
-                        </div>
+                        <input type='text' readonly class="form-control" value="${value?.toString()}" placeholder="<empty>"/>
+                        <div class="input-group-append" >
+                            <button class="btn btn-icon-fixed-width btn-outline-secondary " type="button" >
+                                <i class="fab fa-readme"></i>
 
-                        <%--<span class="input-group-addon" >
-                            <i class="fas fa-pencil-alt"></i>
-                            <%--<i class="glyphicon glyphicon-hand-left"></i>
-                        </span>--%>
+                            </button>
+
+                            <%--<i class="fas fa-pencil-alt"></i>--%>
+                        </div>
                     </div>
                 </div>
             <%--</div>

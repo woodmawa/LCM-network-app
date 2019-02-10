@@ -58,7 +58,7 @@
     <div class="input-group text dropright " >
         <input class="form-control" readonly type="text" placeholder="<category map>">  <!-- form-control links field with the span -->
         <div class="input-group-append dropdown" >
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">dd
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             </button>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="#">Action</a>
