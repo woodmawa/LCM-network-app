@@ -84,7 +84,7 @@
 <div class="container ">
         <div class="col-xs-4">
             <div class="btn-group input-group text " >
-                <input class="form-control" readonly type="text" placeholder="<category map>">  <!-- form-control links field with the span -->
+                <input class="form-control" readonly type="text" placeholder="<empty category map>">  <!-- form-control links field with the span -->
                 <div class="input-group-append dropdown dropright">
                     <button class="btn btn-icon-fixed-width btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
                     <div class="dropdown-menu">
