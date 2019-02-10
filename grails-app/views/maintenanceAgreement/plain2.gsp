@@ -51,44 +51,7 @@
 <body>
 
 
-<%--
-<div class="container">
-<p>table by itself</p>
-<div class="row">
 
-
-<table class="table table-condensed table-bordered table-striped ">
-<thead>
-<tr>
-<th scope="col">Tag</th>
-<th scope="col">Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td scope="row">hello</td>
-<td >william</td>
-</tr>
-</tbody>
-</table>
-
-<table class="table  table-bordered table-striped ">
-    <thead class="thead-blue" >
-    <tr>
-        <th scope="col">Tag</th>
-        <th scope="col">Value</th>
-    </tr>
-    </thead>
-    <tbody class="tbody-condensed">
-    <tr>
-        <td scope="row">hello</td>
-        <td >william</td>
-    </tr>
-    </tbody>
-</table>
-</div>
-</div>
---%>
 <p>f:display category </p>
 <f:display bean="maintenanceAgreement" >
 
