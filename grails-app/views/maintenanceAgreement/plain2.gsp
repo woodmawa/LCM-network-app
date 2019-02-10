@@ -52,7 +52,7 @@
 
 
 
-<p>f:display category </p>
+<p>f:display category  </p>
 <f:display bean="maintenanceAgreement" >
 
 </f:display>
