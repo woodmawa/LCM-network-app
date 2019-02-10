@@ -11,17 +11,31 @@
 <div class="container-fluid fieldcontain col-sm-6" >
     <div class="form-group form-inline">
                     <!-- Default dropright button -->
-        <div class="btn-group ">
-            <div class="input-group text  " >
+        <%--<div class="btn-group ">--%>
+            <div class="btn-group input-group text  " >
                 <input class="form-control" readonly type="text" placeholder="<category map>">  <!-- form-control links field with the span -->
                 <div class="input-group-append dropdown dropright">
                     <button class="btn btn-icon-fixed-width btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Action</a>
+                    <div class="dropdown-menu col-xs-12">
+                        <table class="table-sm table-condensed table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Tag</th>
+                                    <th scope="col">Value</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody-condensed">
+                                <tr>
+                                    <td scope="row">hello</td>
+                                    <td scope="row">william</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <%--<a class="dropdown-item" href="#">Action</a>
                         <a class="dropdown-item" href="#">Another action</a>
                         <a class="dropdown-item" href="#">Something else here</a>
                         <div role="separator" class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Separated link</a>
+                        <a class="dropdown-item" href="#">Separated link</a>-->
                     </div>
                 </div>
                 <%--<div class="input-group-append  dropdown-toggle border rounded w-20 p-2 shadow-sm" data-toggle="dropdown">
@@ -62,6 +76,6 @@
             </div>
         </div>
     </div>
-
+    </div>
 </div>
 </g:else>

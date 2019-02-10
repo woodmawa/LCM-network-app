@@ -53,7 +53,7 @@
 
 </nav>
 
-<g:layoutBody class="container-fluid"/>
+<g:layoutBody />
 
 <div class="footer row" role="contentinfo" class="container-fluid">
     <p>LCM Inventory v0.1</p>
