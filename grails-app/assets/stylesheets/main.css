@@ -210,7 +210,7 @@ fieldset,
 
 .property-list .fieldcontain {
     list-style: none;
-    overflow: hidden;
+    /* overflow: hidden;*/
     zoom: 1;
 }
 

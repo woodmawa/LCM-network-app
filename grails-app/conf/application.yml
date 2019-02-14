@@ -29,6 +29,9 @@ endpoints:
 
 ---
 grails:
+    server:
+        port:
+            http: 8090
     mime:
         disable:
             accept:
@@ -128,8 +131,8 @@ environments:
 
     test:
         dataSource:
-            username: root
-            password: Belgareth1xex49is
+            username: sa
+            password: ''
 
             #logSql: true
             dbCreate: update

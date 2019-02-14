@@ -1,4 +1,22 @@
-<ol class="property-list ${domainClass.decapitalizedName}">
+<%--
+this gsp - controls the default output for each property in a domainObject properties list
+it gets invoked by f:display when bean with no property is aksed to be rendered (i.e all props
+it renders an ordered list of labels and div for the parameter which displays
+the result of invoking the body of the tag parameterised by each param p in turn
+
+if your body is <g:render template="_fields.xxx/templ.gsp" then that template would return the
+rendered form of the parameter p
+
+you call for example call <f:widget just to render format for the field itself
+
+added card - centred content mx-auto and enabled scroll on card body
+--%>
+<div class="card mx-auto" style="width: 80rem;">
+    <h5 class="card-header">
+        DomainClass: ${domainClass.decapitalizedName}
+    </h5>
+    <div class="card-body " style="height: 300px; overflow-y: auto;">
+<ol class="property-list ${domainClass.decapitalizedName}" >
     <g:each in="${domainProperties}" var="p">
         <li class="fieldcontain">
             <span id="${p.name}-label" class="property-label"><g:message code="${domainClass.decapitalizedName}.${p.name}.label" default="${p.defaultLabel}" /></span>
@@ -6,24 +24,7 @@
         </li>
     </g:each>
 </ol>
-
-<%--<div class="fieldcontain" >
-    <div class="container">
-<g:each in="${domainProperties}" var="p">
-
-    <div class="row">
-            <div class='col-sm-6'>
-                <div class="form-group form-inline">
-                    <label class='control-label' > ${p?.getDefaultLabel()} </label>
-                    <div class="input-group text"  >
-                        <input type='text' class="form-control" value="${p.name}-label }"/>
-                        <span class="input-group-addon">
-                            <i class="glyphicon glyphicon-hand-left"></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-</g:each>
     </div>
-</div>  --%>
+</div>
+
+

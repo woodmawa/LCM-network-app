@@ -8,13 +8,13 @@
     <bsf:displayMap context="${this}" />
 </g:elseif>
 <g:else>
-<div class="container-fluid fieldcontain col-sm-6" >
+<div class="container fieldcontain col-sm-12" >
     <div class="form-group form-inline">
                     <!-- Default dropright button -->
         <%--<div class="btn-group ">--%>
-            <div class="btn-group input-group text  " >
+            <div class="btn-group input-group text col-sm-8 " >
                 <input class="form-control" readonly type="text" value="${[hi:'there']}">  <!-- form-control links field with the span -->
-                <div class="input-group-append dropdown dropright">
+                <div class="input-group-append dropdown dropright ">
                     <button class="btn btn-icon-fixed-width btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
                     <div class="dropdown-menu col-xs-12">
                         <table class="table-sm table-condensed table-bordered table-striped">
