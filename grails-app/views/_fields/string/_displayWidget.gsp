@@ -1,4 +1,8 @@
-<%-- default just render the value of the string --%>
+<%-- default just render the value of the string
+non editable read only format
+
+widget is the field and not the label - this is added by the displayWrapper.gsp
+--%>
 <%--${value} --%>
 
 <g:if test="${actionName == 'index'}">
@@ -19,11 +23,8 @@
                         <div class="input-group-append" >
                             <button class="btn btn-icon-fixed-width btn-outline-secondary " type="button" >
                                 <i class="fab fa-readme"></i>
-
                             </button>
-
-                            <%--<i class="fas fa-pencil-alt"></i>--%>
-                        </div>
+                       </div>
                     </div>
                 </div>
             <%--</div>
