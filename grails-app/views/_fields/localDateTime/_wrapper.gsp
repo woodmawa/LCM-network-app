@@ -1,7 +1,7 @@
 <%@ page import="java.time.LocalDateTime; java.time.format.DateTimeFormatter" %>
 <g:set var="localDateTimePattern" value="${message(code: 'default.localDateTime.format',default: 'yyyy-MM-dd HH:mm')}"/>
-<g:set var="propertyName" value="${this.pageScope.propertyName} " />
-<g:set var="label" value="${this.pageScope.label} " />
+<g:set var="propertyName" value="${pageScope.propertyName} " />
+<g:set var="label" value="${pageScope.label} " />
 
 <%-- <jdt:jdtScaffoldField propertyName="$propertyName" label="${label}" value="${propValue}"></jdt:jdtScaffoldField>  --%>
 
