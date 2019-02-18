@@ -2,6 +2,7 @@ package com.softwood.taglib
 
 import org.apache.commons.lang3.StringUtils
 import org.grails.datastore.mapping.model.MappingContext
+import org.grails.datastore.mapping.model.PersistentProperty
 import org.springframework.beans.factory.annotation.Autowired
 
 import java.time.LocalDate
@@ -15,6 +16,21 @@ class BootstrapFormsTagLib {
     @Autowired(required = false)
     Collection<MappingContext> mappingContexts
 
+    def getPropertyValuesController = {attrs ->
+
+        def property = attrs.property
+        Map pageMap = pageScope.variables
+        def value = pageMap.value
+        PersistentProperty perProp = pageMap.persistentProperty
+        org.grails.datastore.mapping.model.PersistentEntity pe = perProp.associatedEntity
+
+        def propertyController =  pe.getDecapitalizedName()
+        def  propertyLinkId = property?.id ?: value?.id
+        def params = [id:propertyLinkId.toString()]
+        def propLink = g.createLink (controller:"${propertyController}", action:"show",  params:params)
+        out << propLink
+
+    }
     /**
      * called from -fields/maps/_displayWidget.gsp
      * inputs:
@@ -27,7 +43,7 @@ class BootstrapFormsTagLib {
 
         def context = attrs.context  //parent calling context
         Map ctxmap = context?.binding.variables
-        Map mapValue = attrs.value
+        def mapValue = attrs.value
         def bean = attrs.bean ?: ctxmap?.bean
         def property = attrs.property ?: ctxmap?.property
 
@@ -46,7 +62,7 @@ class BootstrapFormsTagLib {
         def len = entries.size()
         for (entry in entries) {
             mapString << "${entry.key} : ${entry.value.toString()}"
-            if (len == 1) {
+            if (i++ == len) {
                     mapString << "]"
                     break
             }

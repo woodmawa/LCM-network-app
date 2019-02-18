@@ -2,10 +2,10 @@
 <%--${value} --%>
 
 <g:if test="${actionName == 'index'}">
-    <bsf:displayMap context="${this}" />
+    ${pageScope.variables.value}
 </g:if>
 <g:elseif test="${actionName == 'list'}">
-    <bsf:displayMap context="${this}" />
+    ${pageScope.variables.value}
 </g:elseif>
 <g:else>
 <div class="container fieldcontain col-sm-12" >

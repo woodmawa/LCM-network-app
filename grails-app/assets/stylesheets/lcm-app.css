@@ -29,7 +29,7 @@ table {
 
 /* added to set the width of button that sits around icon in rendered field   */
 .btn-icon-fixed-width {
-    width: 40px !important;
+    width: 60px !important;
 }
 
 /* enable auto scroll bars for cards etc */
