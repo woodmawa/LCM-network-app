@@ -14,7 +14,7 @@ you call for example call <f:widget just to render format for the field itself
 added card - centred content mx-auto and enabled scroll on card body
 --%>
 <div class="card mx-auto" style="width: 80rem;">
-    <div class="card-body " style="height: 400px; overflow-y: auto;">
+    <div class="card-body " style="height: 550px; overflow-y: auto;">
         <ol class="form-group property-list ${domainClass.decapitalizedName}" >
             <g:each in="${domainProperties}" var="p">
                 <li class="fieldcontain  ">

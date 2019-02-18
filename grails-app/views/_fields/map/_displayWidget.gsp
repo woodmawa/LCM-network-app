@@ -16,7 +16,7 @@
                 <input class="form-control" readonly type="text" value="${[hi:'there']}">  <!-- form-control links field with the span -->
                 <div class="input-group-append dropdown dropright ">
                     <button class="btn btn-icon-fixed-width btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
-                    <div class="dropdown-menu col-xs-12">
+            <div class="dropdown-menu col-xs-12">
                         <table class="table-sm table-condensed table-bordered table-striped">
                             <thead>
                                 <tr>
