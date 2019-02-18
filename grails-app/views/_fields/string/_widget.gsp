@@ -3,6 +3,7 @@ variable
 
 --%>
 
+
 <div class="container fieldcontain col-sm-12" >
     <div class="form-group form-inline">
         <%--  label output by _list <label class='control-label' > ${label} </label> --%>
