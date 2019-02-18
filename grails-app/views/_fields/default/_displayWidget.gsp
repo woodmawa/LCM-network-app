@@ -22,7 +22,7 @@
 
                     </a> --%>
                     <button class="btn btn-icon-fixed-width btn-outline-secondary btn-link"
-                            type="button" onclick="location.href='${propLink}';">
+                            type="button" onclick="location.href='${propLink}';" >
                         <i class="fas fa-link">
 
                         </i>
@@ -39,7 +39,7 @@
                 <input type='text' readonly class="form-control" value ="${pageScope.variables.value}" placeholder="<empty>" />
                 <div class="input-group-append dropdown dropright" >
                     <button class="btn btn-icon-fixed-width btn-outline-secondary  btn-link" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="badge badge-primary badge-pill">${pageScope.variables.value?.size() ?: 0 }</span>
+                        <span class="badge badge-primary badge-pill" style="background-color: DarkSeaGreen  ; ">${pageScope.variables.value?.size() ?: 0 }</span>
                         <i class="fas fa-link"></i>
                     </button>
 
@@ -53,10 +53,11 @@
                          </tr>
                         </thead>
                         <tbody>
+                        <%-- for each property createLink and use as href for anchor --%>
                         <g:each in="${pageScope.variables.value}" var="p">
                             <tr>
                                 <td scope="row"  >
-                                    <a href="${bsf.getPropertyValuesController(property:p)}">${p?.toString()}</a>
+                                    <a href="${bsf.getPropertyValuesController(property:p)}" >${p?.toString()}</a>
                                 </td>
                             </tr>
                             </g:each>
