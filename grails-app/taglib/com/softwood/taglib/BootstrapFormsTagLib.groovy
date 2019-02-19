@@ -31,8 +31,9 @@ class BootstrapFormsTagLib {
         out << propLink
 
     }
+
     /**
-     * called from -fields/maps/_displayWidget.gsp
+     * called from _fields/maps/_displayWidget.gsp
      * inputs:
      * value - map variable to render
      * context - parent tags calling page context for key variables etc
