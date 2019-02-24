@@ -37,3 +37,7 @@ table {
     max-height: 400em;
     overflow-y: auto;
 }
+
+div[aria-labelledby="references"] table {
+    width: 500px;
+}
