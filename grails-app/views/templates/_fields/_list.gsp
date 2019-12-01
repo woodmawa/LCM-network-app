@@ -4,7 +4,7 @@ it gets invoked by f:display when bean with no property is asked to be rendered 
 it renders an ordered list of labels (rather than a span) and div for the parameter which displays
 the result of invoking the body of the tag parameterised by each named param p in turn
 
-if the parameter is a required one in domain model, a * indicator is added to the label to show this 
+if the parameter is a required one in domain model, a * indicator is added to the label to show this
 
 if your body is <g:render template="_fields.xxx/templ.gsp" then that template would return the
 rendered form of the parameter p
