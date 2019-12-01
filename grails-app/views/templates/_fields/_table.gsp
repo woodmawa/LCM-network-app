@@ -23,8 +23,8 @@ so this template renders a table and calls <f:display bean: property: for each c
                     <td><g:link method="GET" resource="${bean}"><f:display bean="${bean}" property="${p.property}" displayStyle="${displayStyle?:'table'}" theme="${theme}"/></g:link></td>
                 </g:if>
                 <g:else>
-                    <%--WW correction to displayWidget <td><f:display bean="${bean}" property="${p.property}"  displayStyle="${displayStyle?:'table'}" theme="${theme}"/></td>  --%>
-                    <td><f:displayWidget bean="${bean}" property="${p.property}"  displayStyle="${displayStyle?:'table'}" theme="${theme}"/></td>
+                    <td><f:display bean="${bean}" property="${p.property}"  displayStyle="${displayStyle?:'table'}" theme="${theme}"/></td>
+                    <%--<td><f:display bean="${bean}" property="${p.property}"  displayStyle="${displayStyle?:'table'}" theme="${theme}"/></td> --%>
                 </g:else>
             </g:each>
         </tr>

@@ -28,3 +28,11 @@ function sayHelloWilliam() {
             document.write ("hello william")
         )
     }
+
+// Select all elements with data-toggle="popover" in the document
+$('[data-toggle="popover"]').popover();
+
+// Select all elements with data-toggle="tooltip" in the document
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})

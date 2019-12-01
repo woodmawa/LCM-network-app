@@ -113,9 +113,9 @@ class BootStrap {
 
         MaintenanceAgreement mag = new MaintenanceAgreement()
         mag.level = "Gold"
-        mag.category.putAll(p1:"24x7")
+        mag.category.putAll([p1:"24x7", p2:'8am-10pm Monday:Friday'])
         mag.maintainer = maintainer
-        mag.contractReference = "my cisco support contract"
+        mag.contractReference = "my main cisco support contract"
         mag.contractSignedDate = LocalDateTime.now()
         mag.status = "Active"
         //mag.save ()
@@ -123,9 +123,9 @@ class BootStrap {
 
         mag = new MaintenanceAgreement()
         mag.level = "Silver"
-        mag.category.putAll(p1:"24x5")
+        mag.category.putAll([p1:"24x5", p2:'8am-6pm Monday:Saturday', p3:'9am-5pm Monday:Friday'])
         mag.maintainer = maintainer
-        mag.contractReference = "my cisco support contract"
+        mag.contractReference = "my secondary cisco support contract"
         mag.contractSignedDate = LocalDateTime.now()
         mag.status = "Active"
         mag.save (failOnError:true)

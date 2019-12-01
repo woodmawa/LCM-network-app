@@ -13,14 +13,14 @@ you call for example call <f:widget just to render format for the field itself
 
 added card - centred content mx-auto and enabled scroll on card body
 --%>
-<div class="card mx-auto" style="width: 80rem;">
-    <div class="card-body " style="height: 400px; overflow-y: auto;">
+<div class="card mx-auto" style="width: 110rem; ">
+    <div class="card-body container-fluid " style="height: 550px; overflow-y: auto;">
         <ol class="form-group property-list ${domainClass.decapitalizedName}" >
             <g:each in="${domainProperties}" var="p">
                 <li class="fieldcontain  ">
                     <%-- replace with below <span id="${p.name}-label" class="property-label"><g:message code="${domainClass.decapitalizedName}.${p.name}.label" default="${p.defaultLabel}" /></span>  --%>
-                    <label class="property-label col-sm-6" for="${p.name}-label" aria-labelledby="${p.name}-label"> <g:message code="${domainClass.decapitalizedName}.${p.name}.label" default="${p.defaultLabel}" /> <g:if test="${p.required}"><span class="required-indicator">*</span></g:if> </label>
-                    <div class="property-value form-inline col-sm-8" aria-labelledby="${p.name}-label">${body(p)}</div>
+                    <label class="property-label col-sm-4" for="${p.name}-label" aria-labelledby="${p.name}-label"> <g:message code="${domainClass.decapitalizedName}.${p.name}.label" default="${p.defaultLabel}" /> <g:if test="${p.required}"><span class="required-indicator">*</span></g:if> </label>
+                    <div class="property-value form-inline col-sm-11" aria-labelledby="${p.name}-label">${body(p)}</div>
                 </li>
             </g:each>
         </ol>
